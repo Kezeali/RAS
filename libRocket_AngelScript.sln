@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRocket_AngelScript", "libRocket_AngelScript\libRocket_AngelScript.vcproj", "{CA162C1C-D6A0-4533-B73C-D13401FADB30}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcproj", "{6192E1F4-F70E-4A27-A934-29A887EBDD42}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA162C1C-D6A0-4533-B73C-D13401FADB30} = {CA162C1C-D6A0-4533-B73C-D13401FADB30}
+		{AF4FF882-AFD9-457B-979E-A5B482388D46} = {AF4FF882-AFD9-457B-979E-A5B482388D46}
+		{526959CC-3BDF-4E47-9027-0D49B1EE4ED7} = {526959CC-3BDF-4E47-9027-0D49B1EE4ED7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shell", "shell\Shell.vcproj", "{AF4FF882-AFD9-457B-979E-A5B482388D46}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ApplicationInheritanceWrapperGenerator", "ApplicationInheritanceWrapperGenerator\ApplicationInheritanceWrapperGenerator.vcproj", "{526959CC-3BDF-4E47-9027-0D49B1EE4ED7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CA162C1C-D6A0-4533-B73C-D13401FADB30} = {CA162C1C-D6A0-4533-B73C-D13401FADB30}
+		{AF4FF882-AFD9-457B-979E-A5B482388D46} = {AF4FF882-AFD9-457B-979E-A5B482388D46}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libRocket_AngelScript_Controls", "libRocket_AngelScript_Controls\libRocket_AngelScript_Controls.vcproj", "{2E35C19B-85EA-410D-8559-3537541F290B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA162C1C-D6A0-4533-B73C-D13401FADB30}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CA162C1C-D6A0-4533-B73C-D13401FADB30}.Debug|Win32.Build.0 = Debug|Win32
+		{CA162C1C-D6A0-4533-B73C-D13401FADB30}.Release|Win32.ActiveCfg = Release|Win32
+		{CA162C1C-D6A0-4533-B73C-D13401FADB30}.Release|Win32.Build.0 = Release|Win32
+		{6192E1F4-F70E-4A27-A934-29A887EBDD42}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6192E1F4-F70E-4A27-A934-29A887EBDD42}.Debug|Win32.Build.0 = Debug|Win32
+		{6192E1F4-F70E-4A27-A934-29A887EBDD42}.Release|Win32.ActiveCfg = Release|Win32
+		{6192E1F4-F70E-4A27-A934-29A887EBDD42}.Release|Win32.Build.0 = Release|Win32
+		{AF4FF882-AFD9-457B-979E-A5B482388D46}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AF4FF882-AFD9-457B-979E-A5B482388D46}.Debug|Win32.Build.0 = Debug|Win32
+		{AF4FF882-AFD9-457B-979E-A5B482388D46}.Release|Win32.ActiveCfg = Release|Win32
+		{AF4FF882-AFD9-457B-979E-A5B482388D46}.Release|Win32.Build.0 = Release|Win32
+		{526959CC-3BDF-4E47-9027-0D49B1EE4ED7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{526959CC-3BDF-4E47-9027-0D49B1EE4ED7}.Debug|Win32.Build.0 = Debug|Win32
+		{526959CC-3BDF-4E47-9027-0D49B1EE4ED7}.Release|Win32.ActiveCfg = Release|Win32
+		{526959CC-3BDF-4E47-9027-0D49B1EE4ED7}.Release|Win32.Build.0 = Release|Win32
+		{2E35C19B-85EA-410D-8559-3537541F290B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2E35C19B-85EA-410D-8559-3537541F290B}.Debug|Win32.Build.0 = Debug|Win32
+		{2E35C19B-85EA-410D-8559-3537541F290B}.Release|Win32.ActiveCfg = Release|Win32
+		{2E35C19B-85EA-410D-8559-3537541F290B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

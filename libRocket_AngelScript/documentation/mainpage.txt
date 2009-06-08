@@ -1,0 +1,73 @@
+﻿/*! \mainpage Main Whatsit
+
+\section intro_sec Introduction
+<strong>libRocket AngelScript</strong> is a badly written library containing functions
+and classes and some other poorly labelled utilities which facilitate the
+the usage of the 
+<a href="http://www.librocket.com">Rocket</a> GUI thing\ref def1 "[1]" 
+via 
+<a href="http://www.angelcode.com/angelscript/">AngleScript</a>.
+
+<p>
+Despite the bad design and planning, it does this quite well.
+</p>
+
+
+\section quickstart_sec Basic Usage
+<p>
+Register AngelScript binding with Rocket#AngelScript#RegisterRocketCore():<br>
+\code
+asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
+RegisterStdString(engine);
+
+// Register AngelScript binding
+Rocket::AngelScript::RegisterRocketCore(engine);
+\endcode
+</p>
+
+<p>
+Register implicit string conversion from an already registered built-in type
+to e_String (EMP#Core#String) with RegisterStringConversion():<br>
+\code
+// Register string conversion
+Rocket::AngelScript::RegisterStringConversion(engine, "string");
+\endcode
+</p>
+
+\section aknol_sec Acknowledgments
+<strong>libRocket AngelScript</strong> is made possible by:
+<br>
+<ul>
+<li>
+<strong><a href="http://www.librocket.com/">libRocket</a></strong>, 
+copyright &copy; <strong>Wandering Monster Studios Ltd.</strong>, 2007-2008.
+</li>
+
+<li>
+<strong><a href="http://www.angelcode.com/angelscript/">AngelScript</a></strong> 
+which is copyright &copy; 2003-2009 <strong>Andreas Jönsson</strong>
+</li>
+
+<li>
+Various <strong><a href="http://www.boost.org/">boost</a></strong> libraries
+</li>
+</ul>
+
+\section licence_sec Licence
+<p>
+<strong>libRocket</strong> licence:<br>
+http://www.librocket.com/wiki/LicenseAgreements
+</p>
+<p>
+<strong>AngelScript</strong> is provided under the zlib licence:<br>
+http://www.angelcode.com/angelscript/license.asp
+</p>
+<p>
+<strong>boost</strong> licence info can be found here:<br>
+http://www.boost.org/users/license.html
+</p>
+
+\section notes_sec Notes
+\anchor def1
+<strong>[1]</strong> "interface middleware package"
+*/
