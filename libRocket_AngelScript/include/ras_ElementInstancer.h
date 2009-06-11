@@ -1,7 +1,10 @@
+/*
+* libRocket AngleScript binding
+* By Elliot Hayward
+*/
 
-
-#ifndef ROCKETCOREPYTHONELEMENTINSTANCER_H
-#define ROCKETCOREPYTHONELEMENTINSTANCER_H
+#ifndef H_ROCKET_AS_ELEMENTINSTANCER
+#define H_ROCKET_AS_ELEMENTINSTANCER
 
 #include <EMP/Core/String.h>
 #include <EMP/Core/XMLParser.h>

@@ -48,13 +48,14 @@ public:
 
 	virtual void SetScriptObject(asIScriptObject *self)
 	{
-		T::RemoveReference();
+		//T::RemoveReference();
 
 		//set_obj(self);
 		_obj = self;
 		
-		//for (int i = 0; i < this->T::GetReferenceCount(); i++)
-		//	_obj->AddRef();
+		// i starts at 1 because one reference is already accounted for
+		for (int i = 1; i < this->T::GetReferenceCount(); i++)
+			_obj->AddRef();
 	}
 
 	//! Return the AS script-object associated with this element

@@ -5,8 +5,8 @@
 		<style>
 			body
 			{
-			width: 300px;
-			height: 225px;
+			width: 325px;
+			height: 580px;
 
 			margin: auto;
 			}
@@ -39,11 +39,29 @@
 		</style>
 	</head>
 	<body template="window">
-		This is a sample.
-		<progressbar id="a_progressbar"/>
-		<button onclick="CreateTextElement(event.GetType()); ChangeProgressRand(25,75);">Scripted Button</button>
-		<button onclick="ChangeProgressRand(0,25)">Another Button</button>
-		<button onclick="Element@ a; a.GetId();">Script Exception</button>
+		<p>
+			Progress bar:
+			<progressbar id="a_progressbar"/>
+			<p>
+				<form onsubmit="ChangeProgressOnSubmit(event);">
+					Set progress:
+					<input name="progress" type="range" min="0" max="100" step="1" onchange="Slider_OnValueChanged(event);"/>
+					<input type="submit" value="sub_progress">Submit</input>
+				</form>
+			</p>
+		</p>
+		<button onclick="Element@ a; a.GetId();">Cause Exception</button>
 		<button onclick="CloseDoc();">Close</button>
+		<button onclick="CreateTextElement(event.GetType()); ChangeProgressRand(25,75);">Scripted Button</button>
+		<tabset>
+			<tab>Tab1</tab>
+			<panel id="text_target">
+			Captured Events: 
+			</panel>
+			<tab>Tab2</tab>
+			<panel>
+				The second panel :)
+			</panel>
+		</tabset>
 	</body>
 </rml>

@@ -22,7 +22,7 @@ namespace Rocket { namespace AngelScript {
 	//void ActivateScriptGeneration();
 
 	//! Registers main Rocket types
-	void RegisterRocketCore(asIScriptEngine *engine);
+	void RegisterCore(asIScriptEngine *engine);
 
 	//! Allow conversion from the built-in string type to the Rocket string types
 	/*!

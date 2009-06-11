@@ -2,6 +2,7 @@
 // Test
 
 #include <Rocket/Core.h>
+#include <Rocket/Controls.h>
 #include <Rocket/Debugger.h>
 #include <Input.h>
 #include <Shell.h>
@@ -12,6 +13,8 @@
 #include <ras_ElementInstancer.h>
 #include <ras_EventListenerInstancer.h>
 //#include <ras_EventListener.h>
+
+#include <ras_Controls.h>
 
 #include <scripts/ScriptElements.h>
 
@@ -91,19 +94,22 @@ int main(int EMP_UNUSED(argc), char** EMP_UNUSED(argv))
 	Rocket::Core::SetSystemInterface(&system_interface);
 
 	Rocket::Core::Initialise();
+	Rocket::Controls::Initialise();
 
 	asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 	RegisterStdString(engine);
-	Rocket::AngelScript::RegisterRocketCore(engine);
+	Rocket::AngelScript::RegisterCore(engine);
 	Rocket::AngelScript::RegisterStringConversion(engine, "string");
 
 	Rocket::AngelScript::RegisterElementInstancer(engine);
 
-	CBufferedOutStream out;
-	engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &out, asCALL_THISCALL);
-
 	// Explicit cast - Element@ to ScriptElement@
 	Rocket::AngelScript::RegisterScriptElementConversion(engine);
+
+	Rocket::AngelScript::Controls::RegisterControls(engine);
+
+	CBufferedOutStream out;
+	engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &out, asCALL_THISCALL);
 
 	int r;
 

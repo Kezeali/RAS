@@ -3,8 +3,8 @@
 * By Elliot Hayward
 */
 
-#ifndef H_ROCKET_AS_EVENTINSTANCER
-#define H_ROCKET_AS_EVENTINSTANCER
+#ifndef H_ROCKET_AS_DECORATORINSTANCER
+#define H_ROCKET_AS_DECORATORINSTANCER
 
 #include <Rocket/Core.h>
 #include <angelscript.h>

@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 	asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 	RegisterStdString(engine);
 	// Core functionality
-	Rocket::AngelScript::RegisterRocketCore(engine);
+	Rocket::AngelScript::RegisterCore(engine);
 	Rocket::AngelScript::RegisterStringConversion(engine, "string");
 	
 	// Script Element bindings (application side - the script side stuff is generated below!)
@@ -37,8 +37,7 @@ int main(int argc, char** argv)
 	CompleteHeaderGenerator hgen("../libRocket_AngelScript/include/scripts/ScriptElements.h",
 		"Elements",
 		"<angelscript.h>", "Rocket,AngelScript");
-	hgen.Generate(engine, "Element", NULL, "IElement")
-		.Begets("Document", NULL);
+	hgen.Generate(engine, "Element", NULL, "IElement");
 
 	return 0;
 }

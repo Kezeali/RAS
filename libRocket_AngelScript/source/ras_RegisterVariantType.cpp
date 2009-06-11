@@ -95,6 +95,15 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Variant type");
 
 		// Methods
+		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(e_String &out)", asMETHODPR(EMP::Core::Variant, GetInto, (EMP::Core::String&) const, bool), asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Variant::GetInto(String)");
+		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(int &out)", asMETHODPR(EMP::Core::Variant, GetInto, (int&) const, bool), asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Variant::GetInto(int)");
+		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(float &out)", asMETHODPR(EMP::Core::Variant, GetInto, (float&) const, bool), asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Variant::GetInto(float)");
 	}
 
 	void constructDictionary(EMP::Core::Dictionary *obj)
@@ -195,6 +204,17 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_INDEX, "e_Variant& f(const e_String &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
+
+		// Methods
+		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(e_String &out)", asMETHODPR(EMP::Core::Dictionary, GetInto, (const EMP::Core::String&, EMP::Core::String&) const, bool), asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Dictionary::GetInto(String)");
+		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(int &out)", asMETHODPR(EMP::Core::Dictionary, GetInto, (const EMP::Core::String&, int&) const, bool), asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Dictionary::GetInto(int)");
+		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(float &out)", asMETHODPR(EMP::Core::Dictionary, GetInto, (const EMP::Core::String&, float&) const, bool), asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Dictionary::GetInto(float)");
 	}
 
 }}}

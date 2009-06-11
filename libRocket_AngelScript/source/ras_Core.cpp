@@ -19,7 +19,7 @@ namespace Rocket { namespace AngelScript {
 		return Rocket::Core::CreateContext(name, dimen);
 	}
 
-	void RegisterRocketCore(asIScriptEngine *engine)
+	void RegisterCore(asIScriptEngine *engine)
 	{
 		using namespace _registration_utils;
 
@@ -96,10 +96,14 @@ namespace Rocket { namespace AngelScript {
 			throw Exception("Failed to bind GetVersion()");
 	}
 
-	static void constructEString_convert_stdstring(std::string, EMP::Core::String *);
-	static void constructRString_convert_stdstring(std::string, Rocket::Core::String *);
-	static EMP::Core::String stringToEString(std::string*);
-	static Rocket::Core::String stringToRString(std::string*);
+	static void EString_construct_from_stdstring(std::string, EMP::Core::String *);
+	static void RString_construct_from_stdstring(std::string, Rocket::Core::String *);
+
+	//static void stdstring_construct_from_EString(Rocket::Core::String, std::string *);
+
+	static EMP::Core::String stringToEString(std::string *);
+	static Rocket::Core::String stringToRString(std::string *);
+	static std::string eStringToString(EMP::Core::String *);
 
 	void RegisterStringConversion(asIScriptEngine *engine, const std::string &string_typename, bool allow_implicit)
 	{
@@ -108,7 +112,7 @@ namespace Rocket { namespace AngelScript {
 		r = engine->RegisterObjectBehaviour("e_String",
 			asBEHAVE_CONSTRUCT,
 			"void f(string)",
-			asFUNCTION(constructEString_convert_stdstring),
+			asFUNCTION(EString_construct_from_stdstring),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
@@ -116,33 +120,52 @@ namespace Rocket { namespace AngelScript {
 		r = engine->RegisterObjectBehaviour("r_String",
 			asBEHAVE_CONSTRUCT,
 			"void f(string)",
-			asFUNCTION(constructRString_convert_stdstring),
+			asFUNCTION(RString_construct_from_stdstring),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register explicit string conversion constructor for r_String");
 
+		// Explicit conversion constructor from e_String to <built-in>
+		/*r = engine->RegisterObjectBehaviour(string_typename.c_str(),
+			asBEHAVE_CONSTRUCT,
+			"void f(e_String)",
+			asFUNCTION(stdstring_construct_from_EString),
+			asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register EMP String type");*/
+
 		if (allow_implicit)
 		{
-			// Implicit cast from <built-in> to e_String behaviour
+			// Implicit cast from <built-in> to e_String
 			r = engine->RegisterObjectBehaviour(string_typename.c_str(), asBEHAVE_IMPLICIT_VALUE_CAST, "e_String f()", asFUNCTION(stringToEString), asCALL_CDECL_OBJFIRST);
 			if (r < 0)
 				throw Exception("Couldn't register implicit string cast operator for " + string_typename);
-			// Implicit cast from <built-in> to r_String behaviour
+			// Implicit cast from <built-in> to r_String
 			r = engine->RegisterObjectBehaviour(string_typename.c_str(), asBEHAVE_IMPLICIT_VALUE_CAST, "r_String f()", asFUNCTION(stringToRString), asCALL_CDECL_OBJFIRST);
 			if (r < 0)
 				throw Exception("Couldn't register implicit string cast operator for " + string_typename);
+
+			// Implicit cast from e_String to <built-in>
+			r = engine->RegisterObjectBehaviour("e_String", asBEHAVE_IMPLICIT_VALUE_CAST, (string_typename + " f()").c_str(), asFUNCTION(eStringToString), asCALL_CDECL_OBJFIRST);
+			if (r < 0)
+				throw Exception("Couldn't register implicit string cast operator for e_String");
 		}
 	}
 
-	void constructEString_convert_stdstring(std::string str, EMP::Core::String *ptr)
+	void EString_construct_from_stdstring(std::string str, EMP::Core::String *ptr)
 	{
 		new(ptr) EMP::Core::String(str.c_str());
 	}
 
-	void constructRString_convert_stdstring(std::string str, Rocket::Core::String *ptr)
+	void RString_construct_from_stdstring(std::string str, Rocket::Core::String *ptr)
 	{
 		new(ptr) Rocket::Core::String(str.c_str());
 	}
+
+	//void stdstring_construct_from_EString(Rocket::Core::String str, std::string *ptr)
+	//{
+	//	new(ptr) std::string(str.CString());
+	//}
 
 	// TODO: convert these to template methods so the built-in
 	//  string type doesn't have to be convertable to std::string
@@ -156,6 +179,12 @@ namespace Rocket { namespace AngelScript {
 	{
 		Rocket::Core::String rString(script_string->c_str());
 		return rString;
+	}
+
+	std::string eStringToString(EMP::Core::String *obj)
+	{
+		std::string str(obj->CString());
+		return str;
 	}
 
 }}

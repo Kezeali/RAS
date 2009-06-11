@@ -352,7 +352,10 @@ namespace Rocket { namespace AngelScript {
 		ElementWrapper<_Element> *wrapper = dynamic_cast<ElementWrapper<_Element>*>( element );
 		if (wrapper != NULL && wrapper->GetScriptObject() != NULL)
 		{
-			return static_cast<asIScriptObject*>( wrapper->GetScriptObject() );
+			asIScriptObject *script_obj = static_cast<asIScriptObject*>( wrapper->GetScriptObject() );
+			script_obj->AddRef();
+			element->RemoveReference();
+			return script_obj;
 		}
 		else
 			return NULL;

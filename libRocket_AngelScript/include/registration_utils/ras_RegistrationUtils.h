@@ -54,7 +54,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 	void documentShow_Default(Rocket::Core::ElementDocument *obj);
 
-	//! Provides default params
+	//! Provides default param for Rocket#Core#Element#AppendChild()
 	void ElemAppendChild_default(Rocket::Core::Element *element, Rocket::Core::Element *obj);
 
 #include "ras_RegisterElementMembers.inl"

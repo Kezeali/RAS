@@ -45,7 +45,9 @@ void CreateTextElement(const e_String &in text)
 	Context@ context = GetContext("main");
 	Document@ document = context.GetDocument("demo_doc");
 	ElementText@ elem = document.CreateTextNode(text);
-	document.AppendChild(elem);
+
+	Element@ parent = document.GetElementById("text_target");
+	parent.AppendChild(elem);
 }
 
 //void CreateTextElement(Event@ ev)
@@ -56,6 +58,15 @@ void CreateTextElement(const e_String &in text)
 //	}
 //}
 
+void RefCountTest(Event@ e)
+{
+	Context@ context = GetContext("main");
+	Document@ document = context.GetDocument("demo_doc");
+	Element@ elm = document.GetElementById("a_progressbar");
+	IElement@ scElm = unwrap(elm);
+	//ProgressBar@ pbar = cast<ProgressBar>(scElm);
+}
+
 void ChangeProgress(int percent)
 {
 	Context@ context = GetContext("main");
@@ -64,11 +75,35 @@ void ChangeProgress(int percent)
 	Element@ elem = document.GetElementById("a_progressbar");
 	if (elem !is null)
 	{
-		ProgressBar @pbar = cast<ProgressBar>( unwrap(elem) );
+		ProgressBar@ pbar = cast<ProgressBar>( unwrap(elem) );
 		if (pbar !is null)
 		{
 			pbar.SetProgress(percent);
 		}
+	}
+}
+
+void ChangeProgressOnSubmit(Event@ ev)
+{
+	int progress = ev.GetParameter("progress", -1);
+	if (progress >= 0)
+		ChangeProgress(progress);
+}
+
+void Slider_OnValueChanged(Event@ ev)
+{
+	FormControlInput@ inputElement = cast<FormControlInput>( ev.GetCurrentElement() );
+	if (inputElement is null)
+	{
+		ChangeProgress(70);
+		return;
+	}
+
+	string strValue = inputElement.GetValue();
+	int progress = strValue.to_int();// ev.GetParameter("value", -1);
+	if (progress >= 0)
+	{
+		ChangeProgress(progress);
 	}
 }
 
@@ -80,7 +115,7 @@ void ChangeProgressRand(int min, int max)
 	Element@ elem = document.GetElementById("a_progressbar");
 	if (elem !is null)
 	{
-		ProgressBar @pbar = cast<ProgressBar>( unwrap(elem) );
+		ProgressBar@ pbar = cast<ProgressBar>( unwrap(elem) );
 		if (pbar !is null)
 		{
 			if (pbar.GetProgress() == min)

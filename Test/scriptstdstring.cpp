@@ -395,6 +395,38 @@ static char *StringCharAt(unsigned int i, string &str)
 	return &str[i];
 }
 
+static int ConvertStringToInt(std::string *obj)
+{
+	istringstream stream(*obj);
+	int val;
+	stream >> val;
+	return val;
+}
+
+static unsigned int ConvertStringToUInt(std::string *obj)
+{
+	istringstream stream(*obj);
+	unsigned int val;
+	stream >> val;
+	return val;
+}
+
+static float ConvertStringToFloat(std::string *obj)
+{
+	istringstream stream(*obj);
+	float val;
+	stream >> val;
+	return val;
+}
+
+static double ConvertStringToDouble(std::string *obj)
+{
+	istringstream stream(*obj);
+	double val;
+	stream >> val;
+	return val;
+}
+
 void RegisterStdString_Native(asIScriptEngine *engine)
 {
 	int r;
@@ -452,6 +484,11 @@ void RegisterStdString_Native(asIScriptEngine *engine)
 	r = engine->RegisterObjectBehaviour("string", asBEHAVE_ADD_ASSIGN, "string &f(uint)", asFUNCTION(AddAssignUIntToString), asCALL_CDECL_OBJLAST); assert( r >= 0 );
 	r = engine->RegisterGlobalBehaviour(asBEHAVE_ADD,         "string f(const string &in, uint)", asFUNCTION(AddStringUInt), asCALL_CDECL); assert( r >= 0 );
 	r = engine->RegisterGlobalBehaviour(asBEHAVE_ADD,         "string f(uint, const string &in)", asFUNCTION(AddUIntString), asCALL_CDECL); assert( r >= 0 );
+
+	r = engine->RegisterObjectMethod("string", "int to_int()", asFUNCTION(ConvertStringToInt), asCALL_CDECL_OBJLAST);
+	r = engine->RegisterObjectMethod("string", "int to_uint()", asFUNCTION(ConvertStringToUInt), asCALL_CDECL_OBJLAST);
+	r = engine->RegisterObjectMethod("string", "int to_float()", asFUNCTION(ConvertStringToFloat), asCALL_CDECL_OBJLAST);
+	r = engine->RegisterObjectMethod("string", "int to_double()", asFUNCTION(ConvertStringToDouble), asCALL_CDECL_OBJLAST);
 }
 
 void RegisterStdString(asIScriptEngine * engine)
