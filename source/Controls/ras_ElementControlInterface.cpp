@@ -3,14 +3,13 @@
 * By Elliot Hayward
 */
 
-#include "ras_ElementControlInterface.h"
+#include "../include/Rocket/AngelScript/Controls/ras_ElementControlInterface.h"
 
-#include <Rocket/Core/Factory.h>
-
-#include <registration_utils/ras_RegistrationUtils.h>
+#include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
 
 #include <Inheritance/RegisterConversion.h>
 
+#include <Rocket/Core/Factory.h>
 #include <Rocket/Controls/ElementDataGrid.h>
 #include <Rocket/Controls/ElementDataGridCell.h>
 #include <Rocket/Controls/ElementDataGridRow.h>

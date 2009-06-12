@@ -3,10 +3,10 @@
 * By Elliot Hayward
 */
 
-#include "../include/ras_EventListener.h"
+#include "../include/Rocket/AngelScript/Core/ras_EventListener.h"
 
-#include "../include/ras_ScriptedEventListener.h"
-#include "../include/ras_DelegatingEventListener.h"
+#include "../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
+#include "../include/Rocket/AngelScript/Core/ras_DelegatingEventListener.h"
 
 
 namespace Rocket { namespace AngelScript {

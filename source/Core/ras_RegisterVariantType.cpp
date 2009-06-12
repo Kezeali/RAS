@@ -3,7 +3,7 @@
 * By Elliot Hayward
 */
 
-#include "../include/registration_utils/ras_RegisterVariantType.h"
+#include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegisterVariantType.h"
 
 #include <boost/tokenizer.hpp>
 

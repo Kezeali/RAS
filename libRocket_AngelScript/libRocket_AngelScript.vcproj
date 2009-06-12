@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -153,31 +153,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\source\ras_Core.cpp"
+				RelativePath="..\source\Core\ras_Core.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ras_DelegatingEventListener.cpp"
+				RelativePath="..\source\Core\ras_DelegatingEventListener.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ras_ElementInstancer.cpp"
+				RelativePath="..\source\Core\ras_ElementInstancer.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ras_EventListener.cpp"
+				RelativePath="..\source\Core\ras_EventListener.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ras_RegisterVariantType.cpp"
+				RelativePath="..\source\Core\ras_RegisterVariantType.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ras_RegistrationUtils.cpp"
+				RelativePath="..\source\Core\ras_RegistrationUtils.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ras_ScriptedEventListener.cpp"
+				RelativePath="..\source\Core\ras_ScriptedEventListener.cpp"
 				>
 			</File>
 		</Filter>
@@ -187,82 +187,82 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\include\ras_Core.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_Core.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_Decorator.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_Decorator.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_DecoratorInstancer.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_DecoratorInstancer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_DelegatingEventListener.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_DelegatingEventListener.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_ElementInstancer.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_ElementInstancer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_ElementWrapper.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_ElementWrapper.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_EventListener.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_EventListener.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_EventListenerInstancer.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_EventListenerInstancer.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_Exception.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_Exception.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_ScriptedEventListener.h"
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_ScriptedEventListener.h"
 				>
 			</File>
 			<Filter
 				Name="registration_utils"
 				>
 				<File
-					RelativePath=".\include\registration_utils\ras_AngelScriptPrimativeTypes.h"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_AngelScriptPrimativeTypes.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\registration_utils\ras_EMPSTL.h"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\registration_utils\ras_EMPSTL.inl"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\include\registration_utils\ras_RegisterElementMembers.inl"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterElementMembers.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\include\registration_utils\ras_RegisterType.inl"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterType.inl"
 					>
 				</File>
 				<File
-					RelativePath=".\include\registration_utils\ras_RegisterVariantType.h"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterVariantType.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\registration_utils\ras_RegistrationUtils.h"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegistrationUtils.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\registration_utils\ras_Vector2.h"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.h"
 					>
 				</File>
 				<File
-					RelativePath=".\include\registration_utils\ras_Vector2.inl"
+					RelativePath="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.inl"
 					>
 				</File>
 			</Filter>

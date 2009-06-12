@@ -3,7 +3,9 @@
 * By Elliot Hayward
 */
 
-#include "ras_ElementControlInterface.h"
+#include "../include/Rocket/AngelScript/Controls/ras_Controls.h"
+
+#include "../include/Rocket/AngelScript/Controls/ras_ElementControlInterface.h"
 
 
 namespace Rocket { namespace AngelScript {

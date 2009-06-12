@@ -3,9 +3,9 @@
 * By Elliot Hayward
 */
 
-#include "../include/ras_ScriptedEventListener.h"
+#include "../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
 
-#include "../include/ras_Exception.h"
+#include "../include/Rocket/AngelScript/Core/ras_Exception.h"
 
 #include <Rocket/Core.h>
 

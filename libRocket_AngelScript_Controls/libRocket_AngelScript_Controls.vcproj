@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -151,11 +151,11 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\source\ras_Controls.cpp"
+				RelativePath="..\source\Controls\ras_Controls.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\source\ras_ElementControlInterface.cpp"
+				RelativePath="..\source\Controls\ras_ElementControlInterface.cpp"
 				>
 			</File>
 		</Filter>
@@ -165,11 +165,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\include\ras_Controls.h"
+				RelativePath="..\include\Rocket\AngelScript\Controls\ras_Controls.h"
 				>
 			</File>
 			<File
-				RelativePath=".\include\ras_ElementControlInterface.h"
+				RelativePath="..\include\Rocket\AngelScript\Controls\ras_ElementControlInterface.h"
 				>
 			</File>
 		</Filter>
