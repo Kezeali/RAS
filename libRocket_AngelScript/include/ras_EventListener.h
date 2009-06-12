@@ -6,11 +6,7 @@
 #ifndef H_ROCKET_AS_EVENTLISTENER
 #define H_ROCKET_AS_EVENTLISTENER
 
-#include <Rocket/Core.h>
 #include <angelscript.h>
-
-#include <Inheritance/ScriptObjectWrapper.h>
-#include <Calling/Caller.h>
 
 
 namespace Rocket { namespace AngelScript {
@@ -19,48 +15,26 @@ namespace Rocket { namespace AngelScript {
 	//  defined and registered in scripts.
 	//  See ras_EventListenerInstancer.h for RML inline-event implementation / handling
 
-	//! Base class for event listeners implemented in script
-	class EventListenerWrapper : public Rocket::Core::EventListener, public ScriptUtils::Inheritance::ScriptObjectWrapper
-	{
-	public:
-		ElementWrapper(asIScriptObject* self)
-			: ScriptUtils::Inheritance::ScriptObjectWrapper(self, "IEventListener")
-		{
-		}
+	//extern void RegisterEventListenerInterface(asIScriptEngine *engine);
 
-		virtual void ProcessEvent(Event& event)
-		{
-			ScriptUtils::Calling::Caller f = this->get_caller("void ProcessEvent(Event &inout)");
-			if (f.ok())
-				f(event);
-		}
-	};
+	//! Registers Add/RemoveEventListener methods for the given type
+	/*!
+	* Adds 
+	* <code>Element::AddEventListener(const e_String &in event, IEventListener@ listener)</code>
+	* and 
+	* <code>Element::AddEventListener(const e_String &in event, const e_String &in callback_decl)</code>
+	* so 'Element' must be registered as an ObjectType before this is called.
+	*
+	* \param[in] engine
+	* Script engine to register the object methods with
+	*
+	* \param[in] c_name
+	* The name of the Element derrived type these methods are being registerd for
+	*/
+	void RegisterElementEventListenerMethods(asIScriptEngine *engine, const char * c_name);
 
-	void RegisterEventListenerInterface(asIScriptEngine *engine)
-	{
-		int r = engine->RegisterInterface("IEventListener");
-		EMP_ASSERT(r);
-		r = engine->RegisterInterfaceMethod("IEventListener", "void ProcessEvent(Event &inout)");
-		EMP_ASSERT(r);
-	}
-
-
-	//! Passes an event to a registered method
-	class DelegatingEventListener : public Rocket::Core::EventListener
-	{
-	public:
-		DelegatingEventListener(asIScriptEngine *engine, const std::string &callback_decl);
-
-		virtual void ProcessEvent(Event& event);
-	};
-
-	DelegatingEventListener::DelegatingEventListener(asIScriptEngine *engine, const std::string &callback_decl)
-	{
-	}
-
-	void DelegatingEventListener::ProcessEvent(Event &event)
-	{
-	}
+	//! Registeres Add/RemoveEventListener methods for "Context"
+	void RegisterContextEventListenerMethods(asIScriptEngine *engine);
 
 }}
 

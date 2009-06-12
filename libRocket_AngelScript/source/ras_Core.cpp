@@ -8,6 +8,7 @@
 #include "../include/registration_utils/ras_RegisterVariantType.h"
 #include "../include/registration_utils/ras_EMPSTL.h"
 #include "../include/registration_utils/ras_Vector2.h"
+#include "../include/ras_ScriptedEventListener.h"
 
 #include <Inheritance/RegisterConversion.h>
 
@@ -41,11 +42,13 @@ namespace Rocket { namespace AngelScript {
 		// Register types
 		registerType::referenceCountable<Rocket::Core::Context>(engine, "Context");
 		registerType::referenceCountable<Rocket::Core::Event>(engine, "Event");
-		registerType::interface<Rocket::Core::EventListener>(engine, "EventListener");
 		//  Elements
 		registerType::referenceCountable<Rocket::Core::Element>(engine, "Element");
 		registerType::referenceCountable<Rocket::Core::ElementDocument>(engine, "Document");
 		registerType::referenceCountable<Rocket::Core::ElementText>(engine, "ElementText");
+
+		//  IEventListener
+		RegisterEventListenerInterface(engine);
 
 		// Register STL containers
 		registerStlVector<Rocket::Core::Element*>(engine, "ElementList", "Element");
@@ -72,7 +75,6 @@ namespace Rocket { namespace AngelScript {
 
 		// Event stuff
 		registerEventMembers(engine);
-		registerEventListenerMembers(engine);
 
 
 		int r;

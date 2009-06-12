@@ -157,7 +157,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\source\ras_DelegatingEventListener.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\source\ras_ElementInstancer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ras_EventListener.cpp"
 				>
 			</File>
 			<File
@@ -166,6 +174,10 @@
 			</File>
 			<File
 				RelativePath=".\source\ras_RegistrationUtils.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\source\ras_ScriptedEventListener.cpp"
 				>
 			</File>
 		</Filter>
@@ -187,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\include\ras_DelegatingEventListener.h"
+				>
+			</File>
+			<File
 				RelativePath=".\include\ras_ElementInstancer.h"
 				>
 			</File>
@@ -204,6 +220,10 @@
 			</File>
 			<File
 				RelativePath=".\include\ras_Exception.h"
+				>
+			</File>
+			<File
+				RelativePath=".\include\ras_ScriptedEventListener.h"
 				>
 			</File>
 			<Filter

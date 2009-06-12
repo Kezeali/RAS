@@ -31,12 +31,12 @@ namespace Rocket { namespace AngelScript {
 		void RegisterFormControlMembers(asIScriptEngine *engine, const char * c_name)
 		{
 			int r;
-			r = engine->RegisterObjectMethod(c_name, "e_String GetName()",
+			r = engine->RegisterObjectMethod(c_name, "e_String GetName() const",
 				asMETHOD(_ControlType, GetName), asCALL_THISCALL);
 			r = engine->RegisterObjectMethod(c_name, "void SetName(const e_String &in)",
 				asMETHOD(_ControlType, SetName), asCALL_THISCALL);
 
-			r = engine->RegisterObjectMethod(c_name, "e_String GetValue()",
+			r = engine->RegisterObjectMethod(c_name, "e_String GetValue() const",
 				asMETHOD(_ControlType, GetValue), asCALL_THISCALL);
 			r = engine->RegisterObjectMethod(c_name, "void SetValue(const e_String &in)",
 				asMETHOD(_ControlType, SetValue), asCALL_THISCALL);
@@ -45,6 +45,26 @@ namespace Rocket { namespace AngelScript {
 				asMETHOD(_ControlType, IsDisabled), asCALL_THISCALL);
 			r = engine->RegisterObjectMethod(c_name, "void SetDisabled(bool)",
 				asMETHOD(_ControlType, SetDisabled), asCALL_THISCALL);
+		}
+
+		void RegisterFormControlSelectMembers(asIScriptEngine *engine, const char * c_name)
+		{
+			int r;
+			r = engine->RegisterObjectMethod(c_name, "void Add(const e_String &in, const e_String &in, int, bool)",
+				asMETHOD(Rocket::Controls::ElementFormControlSelect, Add), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod(c_name, "void Add(const e_String &in, const e_String &in)",
+				asFUNCTION(ElementInterface::Add), asCALL_CDECL_OBJFIRST);
+			r = engine->RegisterObjectMethod(c_name, "void Add(const e_String &in, const e_String &in, int, bool)",
+				asMETHOD(Rocket::Controls::ElementFormControlSelect, Remove), asCALL_THISCALL);
+
+			r = engine->RegisterObjectMethod(c_name, "SelectOption& GetOption(int)",
+				asMETHOD(Rocket::Controls::ElementFormControlSelect, GetOption), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod(c_name, "int GetNumOptions()",
+				asMETHOD(Rocket::Controls::ElementFormControlSelect, GetNumOptions), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod(c_name, "int GetSelection()",
+				asMETHOD(Rocket::Controls::ElementFormControlSelect, GetSelection), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod(c_name, "void SetSelection(int)",
+				asMETHOD(Rocket::Controls::ElementFormControlSelect, SetSelection), asCALL_THISCALL);
 		}
 
 		void ElementInterface::InitialiseAngelScriptInterface(asIScriptEngine *engine)
@@ -123,7 +143,10 @@ namespace Rocket { namespace AngelScript {
 			}
 
 
-			// Form methods
+			// ElementForm
+			//  Base (Element) members
+			registerElementMembers<Rocket::Controls::ElementForm>(engine, "Form");
+			//  ElementForm methods
 			r = engine->RegisterObjectMethod("Form", "void Submit(const e_String &in, const e_String &in)",
 				asMETHOD(Rocket::Controls::ElementForm, Submit), asCALL_THISCALL);
 			r = engine->RegisterObjectMethod("Form", "void Submit()",
@@ -131,6 +154,8 @@ namespace Rocket { namespace AngelScript {
 			
 
 			// ElementFormControlInput
+			//  Base (Element) members
+			registerElementMembers<Rocket::Controls::ElementFormControlInput>(engine, "FormControlInput");
 			//  Base (ElementFormControl) members
 			RegisterFormControlMembers<Rocket::Controls::ElementFormControlInput>(engine, "FormControlInput");
 			//  ElementFormControlInput members
@@ -160,60 +185,57 @@ namespace Rocket { namespace AngelScript {
 				asFUNCTION(ElementInterface::SetStep), asCALL_CDECL_OBJFIRST);
 
 			// ElementFormControlTextArea
+			//  Base (Element) members
+			//registerElementMembers<Rocket::Controls::ElementFormControlTextArea>(engine, "FormControlTextArea");
 			//  Base members
-			RegisterFormControlMembers<Rocket::Controls::ElementFormControlInput>(engine, "FormControlTextArea");
+			RegisterFormControlMembers<Rocket::Controls::ElementFormControlTextArea>(engine, "FormControlTextArea");
 			//  ElementFormControlTextArea members
-			r = engine->RegisterObjectMethod("FormControlInput", "int GetNumColumns()",
+			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetNumColumns()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetNumColumns), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetNumColumns(int)",
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetNumColumns(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetNumColumns), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlInput", "int GetNumRows()",
+			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetNumRows()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetNumRows), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetNumRows(int)",
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetNumRows(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetNumRows), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlInput", "bool GetWordWrap()",
+			r = engine->RegisterObjectMethod("FormControlTextArea", "bool GetWordWrap()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetWordWrap), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetWordWrap(bool)",
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetWordWrap(bool)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetWordWrap), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlInput", "int GetMaxLength()",
+			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetMaxLength()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetMaxLength), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetMaxLength(int)",
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetMaxLength(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetMaxLength), asCALL_THISCALL);
 
-			// SelectOption
+			// SelectOption (value type)
 			r = engine->RegisterObjectMethod("SelectOption", "Element@ GetElement()",
 				asMETHOD(Rocket::Controls::SelectOption, GetElement), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("SelectOption", "e_String GetValue()",
+			r = engine->RegisterObjectMethod("SelectOption", "const e_String &GetValue() const",
 				asMETHOD(Rocket::Controls::SelectOption, GetValue), asCALL_THISCALL);
 
 			// ElementFormControlSelect
+			//  Base (Element) members
+			registerElementMembers<Rocket::Controls::ElementFormControl>(engine, "FormControlSelect");
 			//  Base members
-			RegisterFormControlMembers<Rocket::Controls::ElementFormControlInput>(engine, "FormControlSelect");
+			RegisterFormControlMembers<Rocket::Controls::ElementFormControlSelect>(engine, "FormControlSelect");
 			//  ElementFormControlSelect members
-			r = engine->RegisterObjectMethod("FormControlSelect", "void Add(const e_String &in, const e_String &in, int, bool)",
-				asMETHOD(Rocket::Controls::ElementFormControlSelect, Add), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlSelect", "void Add(const e_String &in, const e_String &in)",
-				asFUNCTION(ElementInterface::Add), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlSelect", "void Add(const e_String &in, const e_String &in, int, bool)",
-				asMETHOD(Rocket::Controls::ElementFormControlSelect, Remove), asCALL_THISCALL);
-
-			r = engine->RegisterObjectMethod("FormControlSelect", "SelectOption& GetOption(int)",
-				asMETHOD(Rocket::Controls::ElementFormControlSelect, GetOption), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlSelect", "int GetNumOptions()",
-				asMETHOD(Rocket::Controls::ElementFormControlSelect, GetNumOptions), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlSelect", "int GetSelection()",
-				asMETHOD(Rocket::Controls::ElementFormControlSelect, GetSelection), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlSelect", "void SetSelection(int)",
-				asMETHOD(Rocket::Controls::ElementFormControlSelect, SetSelection), asCALL_THISCALL);
+			RegisterFormControlSelectMembers(engine, "FormControlSelect");
 
 			// ElementFormControlDataSelect
-			//  Base members
-			RegisterFormControlMembers<Rocket::Controls::ElementFormControlInput>(engine, "FormControlDataSelect");
+			//  Base (Element) members
+			registerElementMembers<Rocket::Controls::ElementFormControl>(engine, "FormControlDataSelect");
+			//  Base (ElementFormControl) members
+			RegisterFormControlMembers<Rocket::Controls::ElementFormControlSelect>(engine, "FormControlDataSelect");
+			//  Base (ElementFormControlSelect) members
+			RegisterFormControlSelectMembers(engine, "FormControlDataSelect");
 			//  ElementFormControlDataSelect members
 			engine->RegisterObjectMethod("FormControlDataSelect", "void SetDataSouce(const e_String &in)",
 				asMETHOD(Rocket::Controls::ElementFormControlDataSelect, SetDataSource), asCALL_THISCALL);
 
-			// ElementTabSet members
+			// ElementTabSet
+			//  Base (Element) members
+			registerElementMembers<Rocket::Core::Element>(engine, "TabSet");
+			//  ElementTabSet members
 			engine->RegisterObjectMethod("TabSet", "int GetNumTabs()",
 				asMETHOD(Rocket::Controls::ElementTabSet, GetNumTabs), asCALL_THISCALL);
 			engine->RegisterObjectMethod("TabSet", "void SetTab(int, const e_String &in)",

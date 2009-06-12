@@ -1,4 +1,4 @@
-class ProgressBar : ScriptElement
+class ProgressBar : ScriptElement, IEventListener
 {
 	int _progress;
 
@@ -6,7 +6,7 @@ class ProgressBar : ScriptElement
 	{
 		ScriptElement::SetInnerRML("<progressfill/>");
 		SetProgress(0);
-		//ScriptElement::AddEventListener("setprogress", "_onSetProgress");
+		ScriptElement::AddEventListener("setprogress", this);
 	}
 
 	ProgressBar(Element@ app_element)
@@ -14,6 +14,19 @@ class ProgressBar : ScriptElement
 		super(app_element);
 
 		init();
+	}
+
+	void OnAttach(Element@) {}
+	void OnDetach(Element@) {}
+
+	void ProcessEvent(Event@ ev)
+	{
+		SetProgress( ev.GetParameter("value", _progress) );
+	}
+
+	void DetachListener()
+	{
+		ScriptElement::RemoveEventListener("setprogress", this);
 	}
 
 	void SetProgress(int progress)
@@ -44,10 +57,19 @@ void CreateTextElement(const e_String &in text)
 {
 	Context@ context = GetContext("main");
 	Document@ document = context.GetDocument("demo_doc");
-	ElementText@ elem = document.CreateTextNode(text);
+	ElementText@ elem = document.CreateTextNode(text + e_String("\n"));
 
 	Element@ parent = document.GetElementById("text_target");
 	parent.AppendChild(elem);
+}
+
+void EventCallback(Event@ ev)
+{
+	Element@ elem = ev.GetCurrentElement();
+	e_String tagName = elem.GetTagName();
+	e_String type = ev.GetType();
+	e_String text = tagName + e_String(" ") + type;
+	CreateTextElement(text);
 }
 
 //void CreateTextElement(Event@ ev)
@@ -79,6 +101,38 @@ void ChangeProgress(int percent)
 		if (pbar !is null)
 		{
 			pbar.SetProgress(percent);
+		}
+	}
+}
+
+void Send_setprogress_Event()
+{
+	Context@ context = GetContext("main");
+	Document@ document = context.GetDocument("demo_doc");
+
+	Element@ elem = document.GetElementById("a_progressbar");
+	if (elem !is null)
+	{
+		ProgressBar@ pbar = cast<ProgressBar>( unwrap(elem) );
+		if (pbar !is null)
+		{
+			pbar.DispatchEvent("setprogress", e_Dictionary("value:72"), false);
+		}
+	}
+}
+
+void DetachProgListener()
+{
+	Context@ context = GetContext("main");
+	Document@ document = context.GetDocument("demo_doc");
+
+	Element@ elem = document.GetElementById("a_progressbar");
+	if (elem !is null)
+	{
+		ProgressBar@ pbar = cast<ProgressBar>( unwrap(elem) );
+		if (pbar !is null)
+		{
+			pbar.DetachListener();
 		}
 	}
 }
@@ -145,6 +199,10 @@ Document@ LoadDoc()
 		document.Show();
 
 		ChangeProgress(50);
+
+		context.AddEventListener("testcallback", "void EventCallback(Event@)");
+		document.AddEventListener("testcallback", "void EventCallback(Event@)");
+		document.DispatchEvent("testcallback", e_Dictionary(), false);
 	}
 	return document;
 }

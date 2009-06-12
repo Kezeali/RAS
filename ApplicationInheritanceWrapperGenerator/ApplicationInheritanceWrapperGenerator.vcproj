@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="angelscriptd.lib EMPCore_d.lib RocketCore_d.lib RocketDebugger_d.lib libpng_d.lib zlib_d.lib opengl32.lib"
+				AdditionalDependencies="angelscriptd.lib ScriptUtils_d.lib EMPCore_d.lib RocketCore_d.lib RocketDebugger_d.lib libpng_d.lib zlib_d.lib opengl32.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\shell\libpng"
 				GenerateDebugInformation="true"

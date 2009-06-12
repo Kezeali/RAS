@@ -118,7 +118,6 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		String::size_type token_pos = 0, token_length = 0;
 		while (true)
 		{
-			token_pos = token_length+1;
 			token_length = entries.Find(":", token_pos);
 			if (token_length == String::npos)
 				break;
@@ -129,8 +128,6 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 			token_pos = token_length+1;
 			token_length = entries.Find(",", token_pos);
-			if (token_length == String::npos)
-				break;
 
 			if (!key.Empty())
 			{
@@ -139,6 +136,12 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 				obj->Set(key, value);
 			}
+
+			if (token_length == String::npos)
+				break; // Reached the end of the string
+
+			// Next token pos
+			token_pos = token_length+1;
 		}
 	}
 

@@ -146,39 +146,44 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		//engine->RegisterObjectBehaviour("string", asBEHAVE_IMPLICIT_VALUE_CAST, "r_String f()", asFUNCTION(stringToRString), asCALL_CDECL_OBJFIRST);
 	}
 
-	bool eStringsEqual(const Rocket::Core::String& l, const Rocket::Core::String& r)
+	bool eStringsEqual(const EMP::Core::String& l, const EMP::Core::String& r)
 	{
 		return l == r;
 	}
 
-	bool eStringsNotEqual(const Rocket::Core::String& l, const Rocket::Core::String& r)
+	bool eStringsNotEqual(const EMP::Core::String& l, const EMP::Core::String& r)
 	{
 		return !(l == r);
 	}
 
-	Rocket::Core::StringBase::size_type eStringFindNpos(const Rocket::Core::String& s, Rocket::Core::String *object)
+	EMP::Core::String eStringsAdd(const EMP::Core::String& l, const EMP::Core::String& r)
 	{
-		return object->Find(s, Rocket::Core::StringBase::npos);
+		return l + r;
 	}
 
-	Rocket::Core::StringBase::size_type eStringFind(const Rocket::Core::String& s, Rocket::Core::StringBase::size_type pos, Rocket::Core::String *object)
+	EMP::Core::String::size_type eStringFindNpos(const EMP::Core::String& s, EMP::Core::String *object)
+	{
+		return object->Find(s, EMP::Core::String::npos);
+	}
+
+	EMP::Core::String::size_type eStringFind(const EMP::Core::String& s, EMP::Core::String::size_type pos, EMP::Core::String *object)
 	{
 		return object->Find(s, pos);
 	}
 
-	static const Rocket::Core::StringBase::size_type eStringNpos()
+	static const EMP::Core::String::size_type eStringNpos()
 	{
-		return Rocket::Core::StringBase::npos;
+		return EMP::Core::String::npos;
 	}
 
-	static void constructEString(Rocket::Core::String *ptr)
+	static void constructEString(EMP::Core::String *ptr)
 	{
-		new(ptr) Rocket::Core::String();
+		new(ptr) EMP::Core::String();
 	}
 
-	static void destructEString(Rocket::Core::String *ptr)
+	static void destructEString(EMP::Core::String *ptr)
 	{
-		ptr->~String();
+		ptr->~StringBase();
 	}
 
 	void registerEString(asIScriptEngine *engine)
@@ -227,6 +232,13 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
 
+		r = engine->RegisterGlobalBehaviour(asBEHAVE_ADD,
+			"e_String f(const e_String &in, const e_String &in)",
+			asFUNCTION(eStringsAdd),
+			asCALL_CDECL);
+		if (r < 0)
+			throw Exception("Couldn't register EMP String type");
+
 		// Methods
 		r = engine->RegisterObjectMethod("e_String",
 			"uint Find(const e_String &in)",
@@ -254,7 +266,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		// Context Behaviours
 
 		// Context Methods
-		r = engine->RegisterObjectMethod("Context", "e_String GetName()", asMETHOD(Rocket::Core::Context, GetName), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "const e_String &GetName() const", asMETHOD(Rocket::Core::Context, GetName), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
 
@@ -292,13 +304,8 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
 
-
-		r = engine->RegisterObjectMethod("Context", "void AddEventListener(const e_String &in, EventListener@, bool)", asMETHOD(Rocket::Core::Context, AddEventListener), asCALL_THISCALL);
-		if (r < 0)
-			throw Exception("Couldn't register Context type");
-		r = engine->RegisterObjectMethod("Context", "void RemoveEventListener(const e_String &in, EventListener@, bool)", asMETHOD(Rocket::Core::Context, AddEventListener), asCALL_THISCALL);
-		if (r < 0)
-			throw Exception("Couldn't register Context type");
+		// See ras_EventListener.h
+		RegisterContextEventListenerMethods(engine);
 
 		r = engine->RegisterObjectMethod("Context", "Document@ CreateDocument(const e_String &in)", asMETHOD(Rocket::Core::Context, CreateDocument), asCALL_THISCALL);
 		if (r < 0)
@@ -379,6 +386,22 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		return obj->GetType();
 	}
 
+	Rocket::Core::Element *EventGetCurrentElement(Rocket::Core::Event *obj)
+	{
+		Rocket::Core::Element *current = obj->GetCurrentElement();
+		if (current != NULL)
+			current->AddReference();
+		return current;
+	}
+
+	Rocket::Core::Element *EventGetTargetElement(Rocket::Core::Event *obj)
+	{
+		Rocket::Core::Element *target = obj->GetTargetElement();
+		if (target != NULL)
+			target->AddReference();
+		return target;
+	}
+
 	void registerEventMembers(asIScriptEngine *engine)
 	{
 		int r;
@@ -397,8 +420,15 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		r = engine->RegisterObjectMethod("Event", "Element& GetTargetElement()", asMETHOD(Rocket::Core::Event, GetTargetElement), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Event type");
+		//r = engine->RegisterObjectMethod("Event", "Element@ GetCurrentElement() const", asFUNCTION(EventGetCurrentElement), asCALL_CDECL_OBJLAST);
+		//if (r < 0)
+		//	throw Exception("Couldn't register Event type");
 
-		/*r = engine->RegisterObjectMethod("Event", "e_String GetType()", asMETHOD(Rocket::Core::Event, GetType), asCALL_THISCALL);
+		//r = engine->RegisterObjectMethod("Event", "Element@ GetTargetElement() const", asFUNCTION(EventGetTargetElement), asCALL_CDECL_OBJLAST);
+		//if (r < 0)
+		//	throw Exception("Couldn't register Event type");
+
+		/*r = engine->RegisterObjectMethod("Event", "const e_String &GetType() const", asMETHOD(Rocket::Core::Event, GetType), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Event type");*/
 		r = engine->RegisterObjectMethod("Event", "e_String GetType()", asFUNCTION(EventGetType), asCALL_CDECL_OBJLAST);
@@ -408,7 +438,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		registerEventGetParameter<int>(engine, as_primative_name<int>());
 		registerEventGetParameter<float>(engine, as_primative_name<float>());
 		//! \todo TODO: Perhaps these shouldn't be registered here - they rely on types that may not be registered
-		//  perhaps: GetParameter<EMP::Core::Vector2i> could be registered in registerType::vector2<int>
+		//  perhaps: GetParameter<EMP::Core::Vector2i> could be registered in registerVector2<int>
 		registerEventGetParameter<EMP::Core::Vector2i>(engine, "e_Vector2i");
 		registerEventGetParameter<EMP::Core::Vector2f>(engine, "e_Vector2f");
 		registerEventGetParameter<EMP::Core::String>(engine, "e_String");
@@ -418,28 +448,31 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Event type");
 	}
 
-	void registerEventListenerMembers(asIScriptEngine *engine)
-	{
-		int r;
-		r = engine->RegisterInterfaceMethod("EventListener", "void ProcessEvent(Event &inout)");
-		if (r < 0)
-			throw Exception("Couldn't register EventListener type");
-		r = engine->RegisterInterfaceMethod("EventListener", "void OnAttach(Element&)");
-		if (r < 0)
-			throw Exception("Couldn't register EventListener type");
-		r = engine->RegisterInterfaceMethod("EventListener", "void OnDetach(Element&)");
-		if (r < 0)
-			throw Exception("Couldn't register EventListener type");
-	}
-
 	void documentShow_Default(Rocket::Core::ElementDocument *obj)
 	{
 		obj->Show();
 	}
 
+	void ElemAppendChild(Rocket::Core::Element *element, bool dom_element, Rocket::Core::Element *obj)
+	{
+		obj->AppendChild(element, dom_element);
+		element->RemoveReference();
+	}
+
 	void ElemAppendChild_default(Rocket::Core::Element *element, Rocket::Core::Element *obj)
 	{
 		obj->AppendChild(element, true);
+		element->RemoveReference();
+	}
+
+	bool ElemDispatchEvent_default(const EMP::Core::String &event, const EMP::Core::Dictionary &parameters, Rocket::Core::Element *obj)
+	{
+		return obj->DispatchEvent(event, parameters);
+	}
+
+	bool ElemDispatchEvent_noparams(const EMP::Core::String &event, Rocket::Core::Element *obj)
+	{
+		return obj->DispatchEvent(event, EMP::Core::Dictionary());
 	}
 
 }}}
