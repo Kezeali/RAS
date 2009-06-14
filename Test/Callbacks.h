@@ -92,6 +92,7 @@ public:
 		asIScriptFunction *fn = eng->GetFunctionDescriptorById(fnId);
 
 		std::stringstream strstr;
+		strstr << "----";
 		strstr << fn->GetName() << " (" << line << "," << column << ")" << std::endl;
 
 		int vars = ctx->GetVarCount();
@@ -101,11 +102,12 @@ public:
 			printVar(strstr, ctx, i);
 			strstr << std::endl;
 		}
+		strstr << "----" << std::endl;
 
 		std::string res = strstr.str();
 		buffer += res;
 		std::cout << res;
-		//Shell::Log(res.c_str());
+		Shell::Log(res.c_str());
 	}
 
 	void ExceptionCallback(asIScriptContext *ctx)
@@ -179,6 +181,18 @@ public:
 		{
 			strstr << *(int*)varPtr;
 		}
+		else if (typeId == eng->GetTypeIdByDecl("uint"))
+		{
+			strstr << *(unsigned int*)varPtr;
+		}
+		else if (typeId == eng->GetTypeIdByDecl("int8"))
+		{
+			strstr << *(char*)varPtr;
+		}
+		else if (typeId == eng->GetTypeIdByDecl("uint8"))
+		{
+			strstr << *(unsigned char*)varPtr;
+		}
 		else if (typeId == eng->GetTypeIdByDecl("string"))
 		{
 			std::string *str = (std::string*)varPtr;
@@ -194,6 +208,18 @@ public:
 		else if (typeId == eng->GetTypeIdByDecl("r_String"))
 		{
 			Rocket::Core::String *str = (Rocket::Core::String*)varPtr;
+			if (str)
+			{
+				strstr << str->CString();
+			}
+			else
+			{
+				strstr << "NULL";
+			}
+		}
+		else if (typeId == eng->GetTypeIdByDecl("e_String"))
+		{
+			EMP::Core::String *str = (EMP::Core::String*)varPtr;
 			if (str)
 			{
 				strstr << str->CString();

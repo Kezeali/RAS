@@ -157,6 +157,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\Core\ras_DataSource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Core\ras_Decorator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\source\Core\ras_DecoratorInstancer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Core\ras_DelegatingEventListener.cpp"
 				>
 			</File>
@@ -188,6 +200,10 @@
 			>
 			<File
 				RelativePath="..\include\Rocket\AngelScript\Core\ras_Core.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_DataSource.h"
 				>
 			</File>
 			<File

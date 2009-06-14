@@ -11,27 +11,11 @@
 
 #include "ras_Decorator.h"
 
+#include <Calling/Caller.h>
+
 namespace Rocket { namespace AngelScript {
 
-	class DecoratorInstancer : public Core::DecoratorInstancer
-	{
-	public:
-		virtual Core::Decorator* InstanceDecorator(const EMP::Core::String& name, const Core::PropertyDictionary& properties);
-
-		virtual void ReleaseDecorator(Core::Decorator* decorator);
-
-		virtual void Release();
-	};
-
-	virtual Core::Decorator* DecoratorInstancer::InstanceDecorator(const EMP::Core::String& name, const Core::PropertyDictionary& properties)
-	{
-	}
-
-	virtual void DecoratorInstancer::ReleaseDecorator(Core::Decorator* decorator)
-	{}
-
-	virtual void DecoratorInstancer::Release()
-	{}
+	void RegisterScriptedDecorator(asIScriptEngine *engine);
 
 }}
 

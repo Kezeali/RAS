@@ -31,9 +31,7 @@ namespace AngelScript { namespace Controls {
 
 	public:
 		// Sets the expanded state of a data grid row.
-		//static void SetRowExpanded(Rocket::Controls::ElementDataGridRow* element, bool row_expanded);
-		// Returns the options proxy for a select element.
-		//static SelectOptionProxy GetOptions(Rocket::Controls::ElementFormControlSelect* element);
+		static void SetRowExpanded(Rocket::Controls::ElementDataGridRow* element, bool row_expanded);
 		// Override for ElementFormControlSelect's Add() without the last parameter.
 		static int Add(Rocket::Controls::ElementFormControlSelect* element, const EMP::Core::String& rml, const EMP::Core::String& value);
 
@@ -58,15 +56,7 @@ namespace AngelScript { namespace Controls {
 
 		static int GetStep(Rocket::Controls::ElementFormControlInput* element);
 		static void SetStep(Rocket::Controls::ElementFormControlInput* element, int step);
-
-		//static DataGridRowProxy GetRows(Rocket::Controls::ElementDataGrid* element);
 	};
-
-	//class SelectObjectUtils
-	//{
-	//	static void Ctor(Rocket::Controls::SelectOption * mem);
-	//	static void Dtor(Rocket::Controls::SelectOption * obj);
-	//};
 
 }}
 }

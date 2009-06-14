@@ -6,7 +6,7 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name)
 
 	const char *c_name = name.c_str();
 	int r;
-	r = engine->RegisterObjectMethod(c_name, "Context& GetContext()", asMETHOD(T, GetContext), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "Context& GetContext()", asMETHODPR(T, GetContext, (), Rocket::Core::Context*), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
@@ -26,7 +26,10 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name)
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "void RemoveProperty(const e_String &in)", asMETHOD(T, RemoveProperty), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name,
+		"void RemoveProperty(const e_String &in)"
+		, asMETHODPR(T, RemoveProperty, (const EMP::Core::String&), void),
+		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
@@ -35,7 +38,10 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name)
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "float ResolveProperty(const e_String &in, float base_value)", asMETHOD(T, ResolveProperty), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name,
+		"float ResolveProperty(const e_String &in, float base_value)",
+		asMETHODPR(T, ResolveProperty, (const EMP::Core::String&, float), float),
+		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 

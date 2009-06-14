@@ -10,6 +10,34 @@
 
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
+	void PropertyCtor(Rocket::Core::Property *ptr)
+	{
+		new(ptr) Rocket::Core::Property();
+	}
+
+	void PropertyDtor(Rocket::Core::Property *obj)
+	{
+		obj->~Property();
+	}
+
+	void registerProperty(asIScriptEngine *engine)
+	{
+		int r;
+		r = engine->RegisterObjectType("r_Property", sizeof(Rocket::Core::Property), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+		if (r < 0)
+			throw Exception("Couldn't register Property type");
+
+		//  CTOR
+		r = engine->RegisterObjectBehaviour("r_Property", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(PropertyCtor), asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register Property type");
+
+		//  Destructor
+		r = engine->RegisterObjectBehaviour("r_Property", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(PropertyDtor), asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register Property type");
+	}
+
 	void constructVariant(EMP::Core::Variant *mem)
 	{
 		new(mem) EMP::Core::Variant();

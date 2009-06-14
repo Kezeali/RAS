@@ -18,6 +18,8 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 	//! Registers EMP#Core#Variant
 	void registerVariant(asIScriptEngine *engine);
+	//! Registers Rocket#Core#Property
+	void registerProperty(asIScriptEngine *engine);
 	//! Registers EMP#Core#Dictionary
 	void registerDictionary(asIScriptEngine *engine);
 
@@ -45,14 +47,14 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 		int r;
 		r = engine->RegisterObjectMethod("e_Variant",
-			C_STR(script_typename+" Get_"+script_typename+"()"),
+			C_STR(script_typename+" Get_"+script_typename+"() const"),
 			asMETHOD(Variant, Get<T>),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::Get<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("e_Dictionary",
-			std::string(script_typename+" Get(const e_String &in, const "+script_typename+" &in)").c_str(),
+			std::string(script_typename+" Get(const e_String &in, const "+script_typename+" &in) const").c_str(),
 			asFUNCTION(dictionaryGet<T>),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
@@ -71,6 +73,13 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::Set<"+script_typename+">");
+
+		r = engine->RegisterObjectMethod("r_Property",
+			C_STR(script_typename+" Get_"+script_typename+"() const"),
+			asMETHOD(Rocket::Core::Property, Get<T>),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Property::Get<"+script_typename+">");
 	}
 
 }}}

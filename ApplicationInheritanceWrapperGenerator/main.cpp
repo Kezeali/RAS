@@ -7,8 +7,8 @@
 
 #include <fstream>
 
-#include <ras_Core.h>
-#include <ras_ElementWrapper.h>
+#include <Rocket/AngelScript/Core/ras_Core.h>
+#include <Rocket/AngelScript/Core/ras_ElementWrapper.h>
 
 #include <Inheritance/ProxyGenerator.h>
 #include <Inheritance/CompleteHeaderGenerator.h>
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
 	using namespace ScriptUtils::Inheritance;
 
 	std::cout << "Generating ScriptElement types" << std::endl;
-	CompleteHeaderGenerator hgen("../libRocket_AngelScript/include/scripts/ScriptElements.h",
+	CompleteHeaderGenerator hgen("../scripts/ScriptElement.h",
 		"Elements",
 		"<angelscript.h>", "Rocket,AngelScript");
 	hgen.Generate(engine, "Element", NULL, "IElement");

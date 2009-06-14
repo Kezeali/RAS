@@ -26,11 +26,11 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 	//! Registers a EMP#Core#STL#set type
 	template <typename _Key>
-	static void registerStlSet(asIScriptEngine *engine, const std::string &containter_typename, const std::string &T_typename);
+	static void registerStlSet(asIScriptEngine *engine, const std::string &containter_typename, const std::string &Key_typename);
 
 	//! Registers a EMP#Core#STL#map type
 	template <typename _Key, typename _T>
-	static void registerStlMap(asIScriptEngine *engine, const std::string &containter_typename, const std::string &T_typename);
+	static void registerStlMap(asIScriptEngine *engine, const std::string &containter_typename, const std::string &Key_typename, const std::string &T_typename);
 
 	template <typename T>
 	struct registerStlVector_Util
@@ -69,6 +69,48 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			}
 
 			return &(*obj)[i];
+		}
+
+		static size_type size(vector_type *obj)
+		{
+			return obj->size();
+		}
+
+		static void push_back(const T &item, vector_type *obj)
+		{
+			obj->push_back(item);
+		}
+	};
+
+	template <typename _Key, typename _T>
+	struct registerStlMap_Util
+	{
+		typedef EMP::Core::STL::map<_Key, _T> map_type;
+		typedef typename map_type::size_type size_type;
+
+		static void construct(map_type *ptr)
+		{
+			new(ptr) map_type();
+		}
+
+		static void construct_copy(const map_type &copy, map_type *ptr)
+		{
+			new(ptr) map_type(copy);
+		}
+
+		static void destruct(map_type *ptr)
+		{
+			ptr->~map_type();
+		}
+
+		static _T* index(_Key key, map_type *obj)
+		{
+			return &(*obj)[key];
+		}
+
+		static size_type size(map_type *obj)
+		{
+			return obj->size();
 		}
 	};
 

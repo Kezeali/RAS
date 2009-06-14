@@ -336,11 +336,11 @@ namespace Rocket { namespace AngelScript {
 
 	void RegisterBindElementInstancer(asIScriptEngine *engine)
 	{
-		int r = engine->RegisterGlobalFunction("void BindElementType(const e_String &in rml_name, const e_String &in decl)",
+		int r = engine->RegisterGlobalFunction("void RegisterElementType(const e_String &in rml_name, const e_String &in decl)",
 			asFUNCTION(BindElementInstancer_Wrapper), asCALL_CDECL);
 		EMP_ASSERT(r >= 0);
 
-		r = engine->RegisterGlobalFunction("void BindElementFactory(const e_String &in rml_name, const e_String &in decl)",
+		r = engine->RegisterGlobalFunction("void RegisterElementFactory(const e_String &in rml_name, const e_String &in decl)",
 			asFUNCTION(BindElementFactory_Wrapper), asCALL_CDECL);
 		EMP_ASSERT(r >= 0);
 	}

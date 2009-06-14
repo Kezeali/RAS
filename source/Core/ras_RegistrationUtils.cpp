@@ -475,4 +475,52 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		return obj->DispatchEvent(event, EMP::Core::Dictionary());
 	}
 
+	void PropertyDictionaryCtor(Rocket::Core::PropertyDictionary *ptr)
+	{
+		new(ptr) Rocket::Core::PropertyDictionary();
+	}
+
+	void PropertyDictionaryDtor(Rocket::Core::PropertyDictionary *obj)
+	{
+		obj->~PropertyDictionary();
+	}
+
+	void registerPropertyDictionary(asIScriptEngine *engine)
+	{
+		int r;
+		r = engine->RegisterObjectType("PropertyDictionary", sizeof(Rocket::Core::PropertyDictionary), asOBJ_VALUE | asOBJ_APP_CLASS_CD);
+		if (r < 0)
+			throw Exception("Couldn't register PropertyDictionary type");
+
+		r = engine->RegisterObjectBehaviour("PropertyDictionary",
+			asBEHAVE_CONSTRUCT,
+			"void f()",
+			asFUNCTION(PropertyDictionaryCtor),
+			asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register PropertyDictionary type");
+
+		r = engine->RegisterObjectBehaviour("PropertyDictionary",
+			asBEHAVE_DESTRUCT,
+			"void f()",
+			asFUNCTION(PropertyDictionaryDtor),
+			asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register PropertyDictionary type");
+
+		r = engine->RegisterObjectMethod("PropertyDictionary",
+			"const r_Property &GetProperty() const",
+			asMETHOD(Rocket::Core::PropertyDictionary, GetProperty),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register PropertyDictionary type");
+
+		r = engine->RegisterObjectMethod("PropertyDictionary",
+			"int GetNumProperties() const",
+			asMETHOD(Rocket::Core::PropertyDictionary, GetNumProperties),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register PropertyDictionary type");
+	}
+
 }}}

@@ -42,6 +42,98 @@ class ProgressBar : ScriptElement, IEventListener
 	}
 }
 
+class Option
+{
+	e_String name;
+	string value;
+}
+
+const uint NUM_OPTS = 11;
+
+class ScriptDS : IDataSource
+{
+	Option[] options;
+
+	ScriptDS()
+	{
+		e_String[] names = { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Many", "Many One", "Many Two"};
+
+		options.resize(NUM_OPTS);
+		for (uint i = 0; i < NUM_OPTS; i++)
+		{
+			options[i].name = names[i];
+			options[i].value = i;
+		}
+	}
+
+	void GetRow(StringList&out row, const e_String&in table, int row_index, const StringList&in columns)
+	{
+		//row = StringList();
+		if (row_index >= NUM_OPTS)
+			return;
+
+		if (table == e_String("numbers"))
+		{
+			for (uint i = 0; i < columns.size(); i++)
+			{
+				if (columns[i] == e_String("name"))
+				{
+					row.push_back(options[row_index].name);
+				}
+				else if (columns[i] == e_String("value"))
+				{
+					row.push_back( e_String(options[row_index].value) );
+				}
+			}
+		}
+	}
+
+	int GetNumRows(const e_String&in table)
+	{
+		if (table == e_String("numbers"))
+		{
+			return NUM_OPTS;
+		}
+
+		return 0;
+	}
+}
+
+class MyDecoratorData : IDecoratorData
+{
+}
+
+class MyDecorator : IDecorator
+{
+	e_String image;
+	void Initialize(const PropertyMap&in props)
+	{
+		image = props["image-src"].Get_e_String();
+		done = false;
+	}
+
+	IDecoratorData@ GenerateElementData(Element@ element)
+	{
+		return MyDecoratorData();
+	}
+
+	void ReleaseElementData(IDecoratorData@ data)
+	{
+	}
+
+	void RenderElement(Element@ element, IDecoratorData@ data)
+	{
+		if (!done)
+		{
+			Document@ doc = element.GetOwnerDocument();
+			ElementText@ text = doc.CreateTextNode(image);
+			element.AppendChild(text);
+			done = true;
+		}
+	}
+	bool done;
+}
+
 int main()
 {
 	return 0;
@@ -61,6 +153,11 @@ void CreateTextElement(const e_String &in text)
 
 	Element@ parent = document.GetElementById("text_target");
 	parent.AppendChild(elem);
+}
+
+void DSChanged(Event@ e)
+{
+	CreateTextElement( e_String("Selected index: ") + e.GetParameter('value', e_String("nothing")) );
 }
 
 void EventCallback(Event@ ev)
@@ -182,7 +279,10 @@ void ChangeProgressRand(int min, int max)
 
 Context@ Init()
 {
-	BindElementFactory("progressbar", "ProgressBar@ ProgressBar_Factory(Element@)");
+	RegisterElementFactory("progressbar", "ProgressBar@ ProgressBar_Factory(Element@)");
+	RegisterDecorator("mydecorator", "MyDecorator");
+
+	AddDataSource("scripted_data", ScriptDS());
 
 	e_Vector2i d(1024,768);
 	Context@ ctx = CreateContext("main", d);

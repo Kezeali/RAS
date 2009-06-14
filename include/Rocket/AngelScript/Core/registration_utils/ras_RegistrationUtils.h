@@ -44,8 +44,10 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	//! Registers members of Rocket#Core#Event
 	void registerEventMembers(asIScriptEngine *engine);
 
+	void registerPropertyDictionary(asIScriptEngine *engine);
+
 	//! Registers members of Rocket#Core#EventListener interface
-	void registerEventListenerMembers(asIScriptEngine *engine);
+	//void registerEventListenerMembers(asIScriptEngine *engine);
 
 	//! Registers members of Rocket#Core#Element
 	template<class T>

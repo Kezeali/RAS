@@ -73,41 +73,16 @@ namespace Rocket { namespace AngelScript {
 			int r;
 			// Register types
 
-			// NOT YET REGISTERED: DataGrid
-
-			// ElementDataGrid.
-			/*bool (ElementDataGrid::*AddColumn)(const EMP::Core::String&, const EMP::Core::String&, float, const EMP::Core::String&) = &ElementDataGrid::AddColumn;
-			class_definitions["DataGrid"] = python::class_< ElementDataGrid, Core::Python::ElementWrapper< ElementDataGrid >, boost::noncopyable, python::bases< Core::Element > >("ElementDataGrid", python::init< const char* >())
-				.def("AddColumn", AddColumn)
-				.def("SetDataSource", &ElementDataGrid::SetDataSource)
-				.add_property("rows", &ElementInterface::GetRows)
-				.ptr();*/
-
-			//EMP::Core::Python::ConverterScriptObject< ElementDataGrid > datagrid_converter;
-
-			// ElementDataGridRow.
-			//class_definitions["DataGridRow"] = python::class_< ElementDataGridRow, Core::Python::ElementWrapper< ElementDataGridRow >, boost::noncopyable, python::bases< Core::Element > >("ElementDataGridRow", python::init< const char* >())
-			//	.add_property("row_expanded", &ElementDataGridRow::IsRowExpanded, &ElementInterface::SetRowExpanded)
-			//	.add_property("parent_grid", python::make_function(&ElementDataGridRow::GetParentGrid, python::return_value_policy< python::return_by_value >()))
-			//	.add_property("parent_row", python::make_function(&ElementDataGridRow::GetParentRow, python::return_value_policy< python::return_by_value >()))
-			//	.add_property("parent_relative_index", &ElementDataGridRow::GetParentRelativeIndex)
-			//	.add_property("table_relative_index", &ElementDataGridRow::GetTableRelativeIndex)
-			//	.ptr();
-
-			//DataGridRowProxy::InitialisePythonInterface();
-			//EMP::Core::Python::ConverterScriptObject< ElementDataGridRow > datagridrow_converter;
-
-			//// ElementDataGridCell.
-			//class_definitions["DataGridCell"] = python::class_< ElementDataGridCell, Core::Python::ElementWrapper< ElementDataGridCell >, boost::noncopyable, python::bases< Core::Element > >("ElementDataGridCell", python::init< const char* >())
-			//	.ptr();
-
-			//// ElementDataGridCell.
-			//class_definitions["DataGridExpand"] = python::class_< ElementDataGridExpandButton, Core::Python::ElementWrapper< ElementDataGridExpandButton >, boost::noncopyable, python::bases< Core::Element > >("ElementDataGridExpand", python::init< const char* >())
-			//	.ptr();
-
-
+			//  DataGrid
+			registerType::referenceCountable<Rocket::Controls::ElementDataGrid>(engine, "DataGrid");
+			//  DataGrid Row
+			registerType::referenceCountable<Rocket::Controls::ElementDataGridRow>(engine, "DataGridRow");
+			//  DataGrid Cell
+			registerType::referenceCountable<Rocket::Controls::ElementDataGridCell>(engine, "DataGridCell");
+			//  DataGrid Expand-Button
+			registerType::referenceCountable<Rocket::Controls::ElementDataGridExpandButton>(engine, "DataGridExpandButton");
 			//  Form
-			registerType::referenceCountable<Rocket::Core::Element>(engine, "Form");
+			registerType::referenceCountable<Rocket::Controls::ElementForm>(engine, "Form");
 			//   Form Controls
 			registerType::referenceCountable<Rocket::Controls::ElementFormControl>(engine, "FormControl");
 			registerType::referenceCountable<Rocket::Controls::ElementFormControlInput>(engine, "FormControlInput");
@@ -116,12 +91,20 @@ namespace Rocket { namespace AngelScript {
 			registerType::referenceCountable<Rocket::Controls::ElementFormControlDataSelect>(engine, "FormControlDataSelect");
 			//  Tab Set
 			registerType::referenceCountable<Rocket::Controls::ElementTabSet>(engine, "TabSet");
-			//  SelectOption
+			//  SelectOption (value type)
 			r = engine->RegisterObjectType("SelectOption", sizeof(Rocket::Controls::SelectOption), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS);
 
-			// Hierarchy
+			// Hierarchy (register valid type-casts)
 			{
 				using namespace ScriptUtils::Inheritance;
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGrid>(engine, "Element", "DataGrid");
+
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridRow>(engine, "Element", "DataGridRow");
+
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridCell>(engine, "Element", "DataGridCell");
+
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridExpandButton>(engine, "Element", "DataGridExpandButton");
+
 				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementForm>(engine, "Element", "Form");
 
 				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControl>(engine, "Element", "FormControl");
@@ -140,6 +123,51 @@ namespace Rocket { namespace AngelScript {
 
 				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementTabSet>(engine, "Element", "TabSet");
 			}
+
+
+			// ElementDataGrid
+			//  Base (Element) members
+			registerElementMembers<Rocket::Core::Element>(engine, "DataGrid");
+			//  ElementDataGrid methods
+			r = engine->RegisterObjectMethod("DataGrid", "bool AddColumn(const e_String &in, const e_String &in, float, const e_String &in)",
+				asMETHODPR(Rocket::Controls::ElementDataGrid, AddColumn, (const EMP::Core::String&, const EMP::Core::String&, float, const EMP::Core::String&), bool), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGrid", "void SetDataSource(const e_String &in)",
+				asMETHOD(Rocket::Controls::ElementDataGrid, SetDataSource), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGrid", "int GetNumRows() const",
+				asMETHOD(Rocket::Controls::ElementDataGrid, GetRow), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGrid", "DataGridRow& GetRow(int) const",
+				asMETHOD(Rocket::Controls::ElementDataGrid, GetRow), asCALL_THISCALL);
+
+			// ElementDataGridRow
+			//  Base (Element) members
+			registerElementMembers<Rocket::Core::Element>(engine, "DataGridRow");
+			//  ElementDataGridRow methods
+			r = engine->RegisterObjectMethod("DataGridRow", "void SetRowExpanded(bool)",
+				asFUNCTION(ElementInterface::SetRowExpanded), asCALL_CDECL_OBJFIRST);
+			r = engine->RegisterObjectMethod("DataGridRow", "bool IsRowExpanded()",
+				asMETHOD(Rocket::Controls::ElementDataGridRow, IsRowExpanded), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGridRow", "void ExpandRow()",
+				asMETHOD(Rocket::Controls::ElementDataGridRow, ExpandRow), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGridRow", "void CollapseRow()",
+				asMETHOD(Rocket::Controls::ElementDataGridRow, CollapseRow), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGridRow", "void ToggleRow()",
+				asMETHOD(Rocket::Controls::ElementDataGridRow, ToggleRow), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGridRow", "DataGrid& GetParentGrid()",
+				asMETHOD(Rocket::Controls::ElementDataGridRow, GetParentGrid), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGridRow", "DataGridRow& GetParentRow()",
+				asMETHOD(Rocket::Controls::ElementDataGridRow, GetParentRow), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGridRow", "int GetParentRelativeIndex()",
+				asMETHOD(Rocket::Controls::ElementDataGridRow, GetParentRelativeIndex), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("DataGridRow", "int GetTableRelativeIndex()",
+				asMETHOD(Rocket::Controls::ElementDataGridRow, GetTableRelativeIndex), asCALL_THISCALL);
+
+			// ElementDataGridCell
+			//  Base (Element) members
+			registerElementMembers<Rocket::Core::Element>(engine, "DataGridCell");
+
+			// ElementDataGridExpandButton
+			//  Base (Element) members
+			registerElementMembers<Rocket::Controls::ElementDataGridExpandButton>(engine, "DataGridExpandButton");
 
 
 			// ElementForm
@@ -252,19 +280,13 @@ namespace Rocket { namespace AngelScript {
 		}
 
 		// Sets the expanded state of a data grid row.
-		//void ElementInterface::SetRowExpanded(ElementDataGridRow* element, bool row_expanded)
-		//{
-		//	if (row_expanded)
-		//		element->ExpandRow();
-		//	else
-		//		element->CollapseRow();
-		//}
-
-		// Returns the options proxy for a select element.
-		//SelectOptionProxy ElementInterface::GetOptions(ElementFormControlSelect* element)
-		//{
-		//	return SelectOptionProxy(element);
-		//}
+		void ElementInterface::SetRowExpanded(Rocket::Controls::ElementDataGridRow* element, bool row_expanded)
+		{
+			if (row_expanded)
+				element->ExpandRow();
+			else
+				element->CollapseRow();
+		}
 
 		// Override for ElementFormControlSelect's Add() without the last parameter.
 		int ElementInterface::Add(Rocket::Controls::ElementFormControlSelect* element, const EMP::Core::String& rml, const EMP::Core::String& value)
@@ -340,20 +362,6 @@ namespace Rocket { namespace AngelScript {
 		{
 			element->SetAttribute("step", step);
 		}
-
-		//DataGridRowProxy ElementInterface::GetRows(Rocket::Controls::ElementDataGrid* element)
-		//{
-		//	return DataGridRowProxy(element);
-		//}
-
-		//void SelectObjectUtils::Ctor(Rocket::Controls::SelectOption * mem)
-		//{
-		//	new(mem) Rocket::Controls::SelectObject();
-		//}
-
-		//void SelectObjectUtils::Dtor(Rocket::Controls::SelectOption * obj)
-		//{
-		//}
 
 	}
 }}

@@ -9,14 +9,16 @@
 
 #include <angelscript.h>
 
-#include <ras_Core.h>
-#include <ras_ElementInstancer.h>
-#include <ras_EventListenerInstancer.h>
+#include <Rocket/AngelScript/Core/ras_Core.h>
+#include <Rocket/AngelScript/Core/ras_ElementInstancer.h>
+#include <Rocket/AngelScript/Core/ras_EventListenerInstancer.h>
 //#include <ras_EventListener.h>
 
-#include <ras_Controls.h>
+#include <Rocket/AngelScript/Controls/ras_Controls.h>
 
-#include <scripts/ScriptElements.h>
+#include <EMP/Core/DataSource.h>
+
+#include "../scripts/ScriptElement.h"
 
 #include <Calling/Caller.h>
 #include <boost/bind.hpp>
@@ -59,6 +61,57 @@ int AddScriptFile(asIScriptModule *module, const std::string &filename)
 	return module->AddScriptSection(filename.c_str(), code.c_str(), code.length());
 }
 
+
+class SimpleSource : public EMP::Core::DataSource
+{
+public:
+	static const unsigned int NUM_OPTS = 5;
+
+	class Option
+	{
+	public:
+		EMP::Core::String name;
+		int value;
+	};
+
+public:
+	SimpleSource()
+		: EMP::Core::DataSource("simple")
+	{
+		static const EMP::Core::String names[] = { "One", "Two", "Three", "Four", "Five" };
+
+		for (unsigned int i = 0; i < NUM_OPTS; i++)
+		{
+			options[i].name = names[i];
+			options[i].value = i;
+		}
+	}
+
+	void GetRow(EMP::Core::StringList& row, const EMP::Core::String& table, int row_index, const EMP::Core::StringList& columns)
+	{
+		if (table == "numbers")
+		{
+			for (size_t i = 0; i < columns.size(); i++)
+			{
+				if (columns[i] == "name")
+				{
+					row.push_back(options[row_index].name);
+				}
+				else if (columns[i] == "value")
+				{
+					row.push_back( EMP::Core::String(32, "%d", options[row_index].value) );
+				}
+			}
+		}
+	}
+	int GetNumRows(const EMP::Core::String& table)
+	{
+		return NUM_OPTS;
+	}
+
+	Option options[NUM_OPTS];
+};
+
 Rocket::Core::Context* context = NULL;
 
 void GameLoop()
@@ -98,18 +151,27 @@ int main(int EMP_UNUSED(argc), char** EMP_UNUSED(argv))
 
 	asIScriptEngine *engine = asCreateScriptEngine(ANGELSCRIPT_VERSION);
 	RegisterStdString(engine);
-	Rocket::AngelScript::RegisterCore(engine);
-	Rocket::AngelScript::RegisterStringConversion(engine, "string");
-
-	Rocket::AngelScript::RegisterElementInstancer(engine);
-
-	// Explicit cast - Element@ to ScriptElement@
-	Rocket::AngelScript::RegisterScriptElementConversion(engine);
-
-	Rocket::AngelScript::Controls::RegisterControls(engine);
 
 	CBufferedOutStream out;
 	engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &out, asCALL_THISCALL);
+
+	try
+	{
+		Rocket::AngelScript::RegisterCore(engine);
+		Rocket::AngelScript::RegisterStringConversion(engine, "string");
+
+		Rocket::AngelScript::RegisterElementInstancer(engine);
+
+		// Unwrap Element@ to IElement@ (which can be casted to ScriptElement@)
+		Rocket::AngelScript::RegisterScriptElementConversion(engine);
+
+		Rocket::AngelScript::Controls::RegisterControls(engine);
+	}
+	catch (Rocket::AngelScript::Exception &ex)
+	{
+		std::cout << ex.GetMessage() << std::endl;
+		std::cout << out.buffer << std::endl;
+	}
 
 	int r;
 
@@ -139,6 +201,8 @@ int main(int EMP_UNUSED(argc), char** EMP_UNUSED(argv))
 	//asIScriptContext *ctx = engine->CreateContext();
 	//int fnId = mod->GetFunctionIdByDecl("Context@ Init()");
 	//r = ctx->Prepare(fnId);
+
+	SimpleSource *blah = new SimpleSource();
 
 	using namespace ScriptUtils::Calling;
 
