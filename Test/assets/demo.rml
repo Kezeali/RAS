@@ -67,8 +67,9 @@
 		<button onclick="CloseDoc();">Close</button>
 		<dataselect source="scripted_data.numbers" fields="name,value" valuefield="value" onchange="DSChanged(event)" />
 		<datagrid source="scripted_data.numbers">
-			<col fields="name" width="50%">Item:</col>
-			<col fields="value" width="50%">Index:</col>
+			<col fields="name" width="35%">Item:</col>
+			<col fields="value" width="28%">Index:</col>
+			<col fields="value" width="37%" formatter="Format_IndexPlusOne">+1 (formatter):</col>
 		</datagrid>
 		<button onclick="CreateTextElement(event.GetType()); ChangeProgressRand(25,75);">Scripted Button</button>
 		<tabset>

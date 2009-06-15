@@ -80,13 +80,13 @@ namespace Rocket { namespace AngelScript {
 		//    Register base conversions
 		ScriptUtils::Inheritance::RegisterBaseOf<Core::Element, Core::ElementText>(engine, "Element", "ElementText");
 
-		// Event stuff
+		// Event
 		registerEventMembers(engine);
 
 		// DataSource
-		RegisterDataSourceInterface(engine);
-		RegisterDataSourceCreator(engine);
+		RegisterDataSource(engine);
 
+		// Decorator
 		RegisterScriptedDecorator(engine);
 		RegisterDecoratorInterfaces(engine);
 

@@ -4,7 +4,7 @@
 */
 
 #ifndef H_ROCKET_AS_CONTROLS
-#define H_ROCKET_AS_CONTROLSv
+#define H_ROCKET_AS_CONTROLS
 
 #include <angelscript.h>
 

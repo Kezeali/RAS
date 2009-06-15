@@ -99,6 +99,16 @@ class ScriptDS : IDataSource
 	}
 }
 
+class ScriptDF : IDataFormatter
+{
+	e_String FormatData(const StringList &in raw_data)
+	{
+		string data = raw_data[0];
+		data = data.to_int() + 1;
+		return e_String(data);
+	}
+}
+
 class MyDecoratorData : IDecoratorData
 {
 }
@@ -283,6 +293,7 @@ Context@ Init()
 	RegisterDecorator("mydecorator", "MyDecorator");
 
 	AddDataSource("scripted_data", ScriptDS());
+	AddDataFormatter("Format_IndexPlusOne", ScriptDF());
 
 	e_Vector2i d(1024,768);
 	Context@ ctx = CreateContext("main", d);

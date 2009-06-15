@@ -155,6 +155,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\Controls\ras_DataFormatter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Controls\ras_ElementControlInterface.cpp"
 				>
 			</File>
@@ -166,6 +170,10 @@
 			>
 			<File
 				RelativePath="..\include\Rocket\AngelScript\Controls\ras_Controls.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\Rocket\AngelScript\Controls\ras_DataFormatter.h"
 				>
 			</File>
 			<File
