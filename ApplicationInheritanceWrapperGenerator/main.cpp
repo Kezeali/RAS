@@ -8,7 +8,7 @@
 #include <fstream>
 
 #include <Rocket/AngelScript/Core/ras_Core.h>
-#include <Rocket/AngelScript/Core/ras_ElementWrapper.h>
+//#include <Rocket/AngelScript/Core/ras_ElementWrapper.h>
 
 #include <Inheritance/ProxyGenerator.h>
 #include <Inheritance/CompleteHeaderGenerator.h>
@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 	Rocket::AngelScript::RegisterStringConversion(engine, "string");
 	
 	// Script Element bindings (application side - the script side stuff is generated below!)
-	Rocket::AngelScript::RegisterElementInterface(engine);
+	//Rocket::AngelScript::RegisterElementInterface(engine);
 
 	COutStream out;
 	engine->SetMessageCallback(asMETHOD(COutStream,Callback), &out, asCALL_THISCALL);

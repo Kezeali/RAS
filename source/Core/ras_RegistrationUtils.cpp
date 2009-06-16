@@ -448,33 +448,6 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Event type");
 	}
 
-	void documentShow_Default(Rocket::Core::ElementDocument *obj)
-	{
-		obj->Show();
-	}
-
-	void ElemAppendChild(Rocket::Core::Element *element, bool dom_element, Rocket::Core::Element *obj)
-	{
-		obj->AppendChild(element, dom_element);
-		element->RemoveReference();
-	}
-
-	void ElemAppendChild_default(Rocket::Core::Element *element, Rocket::Core::Element *obj)
-	{
-		obj->AppendChild(element, true);
-		element->RemoveReference();
-	}
-
-	bool ElemDispatchEvent_default(const EMP::Core::String &event, const EMP::Core::Dictionary &parameters, Rocket::Core::Element *obj)
-	{
-		return obj->DispatchEvent(event, parameters);
-	}
-
-	bool ElemDispatchEvent_noparams(const EMP::Core::String &event, Rocket::Core::Element *obj)
-	{
-		return obj->DispatchEvent(event, EMP::Core::Dictionary());
-	}
-
 	void PropertyDictionaryCtor(Rocket::Core::PropertyDictionary *ptr)
 	{
 		new(ptr) Rocket::Core::PropertyDictionary();

@@ -6,6 +6,8 @@
 #ifndef H_ROCKET_AS_EVENTLISTENER
 #define H_ROCKET_AS_EVENTLISTENER
 
+#include "ras_Config.h"
+
 #include <angelscript.h>
 
 
@@ -31,7 +33,7 @@ namespace Rocket { namespace AngelScript {
 	* \param[in] c_name
 	* The name of the Element derrived type these methods are being registerd for
 	*/
-	void RegisterElementEventListenerMethods(asIScriptEngine *engine, const char * c_name);
+	RASCOREDLL_API void RegisterElementEventListenerMethods(asIScriptEngine *engine, const char * c_name);
 
 	//! Registeres Add/RemoveEventListener methods for "Context"
 	void RegisterContextEventListenerMethods(asIScriptEngine *engine);

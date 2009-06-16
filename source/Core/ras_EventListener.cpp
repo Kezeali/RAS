@@ -16,7 +16,7 @@ namespace Rocket { namespace AngelScript {
 	//	RegisterIEventListener(engine);
 	//}
 
-	void RegisterElementEventListenerMethods(asIScriptEngine *engine, const char *c_name)
+	RASCOREDLL_API void RegisterElementEventListenerMethods(asIScriptEngine *engine, const char *c_name)
 	{
 		RegisterScriptedEventListenerMethods_ForElement(engine, c_name);
 		RegisterDelegatingEventListenerMethods_ForElement(engine, c_name);

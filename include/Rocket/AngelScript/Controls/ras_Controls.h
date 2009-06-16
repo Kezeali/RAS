@@ -6,6 +6,8 @@
 #ifndef H_ROCKET_AS_CONTROLS
 #define H_ROCKET_AS_CONTROLS
 
+#include "ras_Config.h"
+
 #include <angelscript.h>
 
 
@@ -13,7 +15,7 @@ namespace Rocket { namespace AngelScript {
 	//! Functions / utilities for registering Controls
 	namespace Controls {
 
-		void RegisterControls(asIScriptEngine *engine);
+		RASCONTROLSDLL_API void RegisterControls(asIScriptEngine *engine);
 
 	}
 }}

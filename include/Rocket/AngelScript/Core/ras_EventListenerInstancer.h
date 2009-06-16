@@ -17,39 +17,6 @@
 
 namespace Rocket { namespace AngelScript {
 
-	static Core::Event *g_CurrentEvent;
-
-	static Core::Event *getCurrentEvent()
-	{
-		return g_CurrentEvent;
-	}
-
-	static EMP::Core::String getCurrentEventType()
-	{
-		return g_CurrentEvent->GetType();
-	}
-
-	static Rocket::Core::Element* getCurrentEventTarget()
-	{
-		return g_CurrentEvent->GetTargetElement();
-	}
-
-	static void clearCurrentEvent()
-	{
-		if (g_CurrentEvent != NULL)
-			g_CurrentEvent->RemoveReference();
-		g_CurrentEvent = NULL;
-	}
-
-	static void setCurrentEvent(Core::Event *ev)
-	{
-		EMP_ASSERT(ev != NULL);
-		clearCurrentEvent();
-
-		g_CurrentEvent = ev;
-		ev->AddReference();
-	}
-
 	//! Executes script code
 	class InlineEventListener : public Rocket::Core::EventListener
 	{

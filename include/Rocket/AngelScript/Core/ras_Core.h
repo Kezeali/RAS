@@ -7,6 +7,8 @@
 #ifndef H_ROCKET_AS_CORE
 #define H_ROCKET_AS_CORE
 
+#include "ras_Config.h"
+
 #include <Rocket/Core.h>
 #include <angelscript.h>
 
@@ -17,16 +19,22 @@ namespace Rocket {
 	namespace AngelScript {}
 }
 
-//////////////////////////////////////////////////
-// TODO: Formatter and DLL (for controls and core)
-//////////////////////////////////////////////////
 
 namespace Rocket { namespace AngelScript {
 
 	//void ActivateScriptGeneration();
 
 	//! Registers main Rocket types
-	void RegisterCore(asIScriptEngine *engine);
+	RASCOREDLL_API void RegisterCore(asIScriptEngine *engine);
+
+	//! Sets up the given module to use certain Rocket functionality
+	/*!
+	* Loads ScriptElement code into the given module, so custom element classes can
+	* be written in AngelScript.<br>
+	* Initializes and registers the InlineEventListenerInstancer for executing in-line
+	* AngelScript code in RML events.
+	*/
+	RASCOREDLL_API void InitialiseModule(asIScriptEngine *engine, const char *module_name);
 
 	//! Allow conversion from the built-in string type to the Rocket string types
 	/*!
@@ -52,9 +60,10 @@ namespace Rocket { namespace AngelScript {
 	 *
 	 * \see StringConversion
 	 */
-	void RegisterStringConversion(asIScriptEngine *engine, const std::string &builtin_string_typename, bool allow_implicit = true);
+	RASCOREDLL_API void RegisterStringConversion(asIScriptEngine *engine, const std::string &builtin_string_typename, bool allow_implicit = true);
 
-	struct std_converter
+	//! Converts between std#string and EMP#Core#String
+	struct RASCOREDLL_API std_converter
 	{
 		typedef std::string string_type;
 

@@ -12,7 +12,7 @@
 namespace Rocket { namespace AngelScript {
 	namespace Controls {
 
-		void RegisterControls(asIScriptEngine *engine)
+		RASCONTROLSDLL_API void RegisterControls(asIScriptEngine *engine)
 		{
 			ElementInterface::InitialiseAngelScriptInterface(engine);
 

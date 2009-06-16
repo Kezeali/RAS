@@ -8,9 +8,13 @@
 #include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegisterVariantType.h"
 #include "../include/Rocket/AngelScript/Core/registration_utils/ras_EMPSTL.h"
 #include "../include/Rocket/AngelScript/Core/registration_utils/ras_Vector2.h"
-#include "../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
 #include "../include/Rocket/AngelScript/Core/ras_DataSource.h"
+#include "../include/Rocket/AngelScript/Core/ras_ElementInstancer.h"
 #include "../include/Rocket/AngelScript/Core/ras_DecoratorInstancer.h"
+#include "../include/Rocket/AngelScript/Core/ras_EventListenerInstancer.h"
+#include "../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
+
+#include "../include/Rocket/AngelScript/Core/ScriptElement.h"
 
 
 
@@ -24,7 +28,7 @@ namespace Rocket { namespace AngelScript {
 		return Rocket::Core::CreateContext(name, dimen);
 	}
 
-	void RegisterCore(asIScriptEngine *engine)
+	RASCOREDLL_API void RegisterCore(asIScriptEngine *engine)
 	{
 		using namespace _registration_utils;
 
@@ -80,6 +84,11 @@ namespace Rocket { namespace AngelScript {
 		//    Register base conversions
 		ScriptUtils::Inheritance::RegisterBaseOf<Core::Element, Core::ElementText>(engine, "Element", "ElementText");
 
+		// ElementInstancer for ScriptElement wrapper
+		Rocket::AngelScript::RegisterElementInstancer(engine);
+		// Unwrap Element@ to IElement@ (which can be casted to ScriptElement@)
+		Rocket::AngelScript::RegisterScriptElementConversion(engine);
+
 		// Event
 		registerEventMembers(engine);
 
@@ -112,6 +121,15 @@ namespace Rocket { namespace AngelScript {
 			throw Exception("Failed to bind GetVersion()");
 	}
 
+	RASCOREDLL_API void InitialiseModule(asIScriptEngine *engine, const char *module_name)
+	{
+		Rocket::Core::Factory::RegisterEventListenerInstancer( new Rocket::AngelScript::InlineEventListenerInstancer(engine, "main") )
+			->RemoveReference();
+
+		int r = AddElementsScriptSection(engine, module_name);
+		EMP_ASSERTMSG(r >= 0, "Failed to add ScriptElement code to the given module");
+	}
+
 	std_converter::string_type std_converter::operator ()(const EMP::Core::String &from) const
 	{
 		std::string to(from.CString());
@@ -124,7 +142,7 @@ namespace Rocket { namespace AngelScript {
 		return to;
 	}
 
-	void RegisterStringConversion(asIScriptEngine *engine, const std::string &builtin_string_typename, bool allow_implicit)
+	RASCOREDLL_API void RegisterStringConversion(asIScriptEngine *engine, const std::string &builtin_string_typename, bool allow_implicit)
 	{
 		StringConversion<std_converter>::Register(engine, builtin_string_typename, allow_implicit);
 	}

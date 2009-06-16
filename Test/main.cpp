@@ -7,18 +7,15 @@
 #include <Input.h>
 #include <Shell.h>
 
+#ifdef EMP_PLATFORM_WIN32
+#define ANGELSCRIPT_DLL_LIBRARY_IMPORT
+#endif
 #include <angelscript.h>
+//#include "ImportAS.h"
 
 #include <Rocket/AngelScript/Core/ras_Core.h>
-#include <Rocket/AngelScript/Core/ras_ElementInstancer.h>
-#include <Rocket/AngelScript/Core/ras_EventListenerInstancer.h>
-//#include <ras_EventListener.h>
-
 #include <Rocket/AngelScript/Controls/ras_Controls.h>
 
-#include <EMP/Core/DataSource.h>
-
-#include "../scripts/ScriptElement.h"
 
 #include <Calling/Caller.h>
 #include <boost/bind.hpp>
@@ -32,6 +29,11 @@
 #include <io.h>
 #endif
 
+
+void onFail(const char *message)
+{
+	Rocket::Core::Log::Message(EMP::Core::Log::LT_ERROR, message);
+}
 
 int AddScriptFile(asIScriptModule *module, const std::string &filename)
 {
@@ -62,56 +64,6 @@ int AddScriptFile(asIScriptModule *module, const std::string &filename)
 }
 
 
-class SimpleSource : public EMP::Core::DataSource
-{
-public:
-	static const unsigned int NUM_OPTS = 5;
-
-	class Option
-	{
-	public:
-		EMP::Core::String name;
-		int value;
-	};
-
-public:
-	SimpleSource()
-		: EMP::Core::DataSource("simple")
-	{
-		static const EMP::Core::String names[] = { "One", "Two", "Three", "Four", "Five" };
-
-		for (unsigned int i = 0; i < NUM_OPTS; i++)
-		{
-			options[i].name = names[i];
-			options[i].value = i;
-		}
-	}
-
-	void GetRow(EMP::Core::StringList& row, const EMP::Core::String& table, int row_index, const EMP::Core::StringList& columns)
-	{
-		if (table == "numbers")
-		{
-			for (size_t i = 0; i < columns.size(); i++)
-			{
-				if (columns[i] == "name")
-				{
-					row.push_back(options[row_index].name);
-				}
-				else if (columns[i] == "value")
-				{
-					row.push_back( EMP::Core::String(32, "%d", options[row_index].value) );
-				}
-			}
-		}
-	}
-	int GetNumRows(const EMP::Core::String& table)
-	{
-		return NUM_OPTS;
-	}
-
-	Option options[NUM_OPTS];
-};
-
 Rocket::Core::Context* context = NULL;
 
 void GameLoop()
@@ -131,6 +83,12 @@ int APIENTRY WinMain(HINSTANCE EMP_UNUSED(instance_handle), HINSTANCE EMP_UNUSED
 int main(int EMP_UNUSED(argc), char** EMP_UNUSED(argv))
 #endif
 {
+	//if (!LinkAS())
+	//{
+	//	onFail("AngelScript library failed to load!\n");
+	//	return -1;
+	//}
+
 	// Generic OS initialisation, creates a window and attaches OpenGL.
 	if (!Shell::Initialise("../") ||
 		!Shell::OpenWindow("AngelScript Test", true))
@@ -155,17 +113,16 @@ int main(int EMP_UNUSED(argc), char** EMP_UNUSED(argv))
 	CBufferedOutStream out;
 	engine->SetMessageCallback(asMETHOD(CBufferedOutStream,Callback), &out, asCALL_THISCALL);
 
+	asIScriptModule *mod = engine->GetModule("main", asGM_ALWAYS_CREATE);
+
 	try
 	{
 		Rocket::AngelScript::RegisterCore(engine);
 		Rocket::AngelScript::RegisterStringConversion(engine, "string");
 
-		Rocket::AngelScript::RegisterElementInstancer(engine);
-
-		// Unwrap Element@ to IElement@ (which can be casted to ScriptElement@)
-		Rocket::AngelScript::RegisterScriptElementConversion(engine);
-
 		Rocket::AngelScript::Controls::RegisterControls(engine);
+
+		Rocket::AngelScript::InitialiseModule(engine, "main");
 	}
 	catch (Rocket::AngelScript::Exception &ex)
 	{
@@ -175,19 +132,13 @@ int main(int EMP_UNUSED(argc), char** EMP_UNUSED(argv))
 
 	int r;
 
-	asIScriptModule *mod = engine->GetModule("main", asGM_ALWAYS_CREATE);
-
-	r = Rocket::AngelScript::AddElementsScriptSection(engine, "main");
-	EMP_ASSERT(r >= 0);
+	//r = Rocket::AngelScript::AddElementsScriptSection(engine, "main");
+	//EMP_ASSERT(r >= 0);
 
 	//CScriptBuilder builder;
 	//r = builder.BuildScriptFromFile(engine, "main", "scripts/main.as");
 	r = AddScriptFile(mod, "scripts/main.as");
 	EMP_ASSERT(r >= 0);
-
-	Rocket::Core::Factory::RegisterEventListenerInstancer(
-		new Rocket::AngelScript::InlineEventListenerInstancer(engine, "main")
-		);
 
 	r = mod->Build();
 	if( r < 0 )
@@ -201,8 +152,6 @@ int main(int EMP_UNUSED(argc), char** EMP_UNUSED(argv))
 	//asIScriptContext *ctx = engine->CreateContext();
 	//int fnId = mod->GetFunctionIdByDecl("Context@ Init()");
 	//r = ctx->Prepare(fnId);
-
-	SimpleSource *blah = new SimpleSource();
 
 	using namespace ScriptUtils::Calling;
 
