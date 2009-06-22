@@ -56,6 +56,7 @@
 			<p>
 				<form onsubmit="ChangeProgressOnSubmit(event);">
 					Set progress:
+					<textarea name="text" rows="3" cols="50" maxlength="600" />
 					<input name="progress" type="range" min="0" max="100" step="1" onchange="Slider_OnValueChanged(event);"/>
 					<input type="submit" value="sub_progress">Submit</input>
 				</form>

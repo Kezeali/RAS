@@ -98,6 +98,8 @@ public:
 
 	virtual void OnUpdate()
 	{
+		Core::Element::OnUpdate();
+
 		SC::Caller f = this->get_caller("void OnUpdate()");
 		if ( f.ok() )
 			f();
@@ -105,7 +107,18 @@ public:
 
 	virtual void OnRender()
 	{
+		Core::Element::OnRender();
+
 		SC::Caller f = this->get_caller("void OnRender()");
+		if ( f.ok() )
+			f();
+	}
+
+	virtual void OnLayout()
+	{
+		Core::Element::OnLayout();
+
+		SC::Caller f = this->get_caller("void OnLayout()");
 		if ( f.ok() )
 			f();
 	}
@@ -127,10 +140,10 @@ void RegisterElementInterface(asIScriptEngine *engine)
 	r = engine->RegisterInterface("IElement");
 	EMP_ASSERT(r >= 0);
 
-	r = engine->RegisterInterfaceMethod("IElement", "void OnUpdate()");
-	EMP_ASSERT(r >= 0);
-	r = engine->RegisterInterfaceMethod("IElement", "void OnRender()");
-	EMP_ASSERT(r >= 0);
+	//r = engine->RegisterInterfaceMethod("IElement", "void OnUpdate()");
+	//EMP_ASSERT(r >= 0);
+	//r = engine->RegisterInterfaceMethod("IElement", "void OnRender()");
+	//EMP_ASSERT(r >= 0);
 }
 
 }}

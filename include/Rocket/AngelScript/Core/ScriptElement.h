@@ -71,8 +71,6 @@ namespace Rocket { namespace AngelScript {
 			"bool HasChildNodes() { return __inner.HasChildNodes(); }\n"
 			"Element@ GetElementById(const e_String&in p1) { return __inner.GetElementById(p1); }\n"
 			"void GetElementsByTag(ElementList&out p1, const e_String&in p2) { __inner.GetElementsByTag(p1, p2); }\n"
-			"void OnUpdate() { }\n"
-			"void OnRender() { }\n"
 			"}\n"
 		;
 		bool copy = engine->GetEngineProperty(asEP_COPY_SCRIPT_SECTIONS) == 1;

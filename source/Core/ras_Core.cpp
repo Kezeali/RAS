@@ -60,6 +60,11 @@ namespace Rocket { namespace AngelScript {
 		//  IEventListener
 		RegisterEventListenerInterface(engine);
 
+		// EventListenerInstancer (simply holds a reference, so it
+		//  gets deleted when the module gets destroyed - see InitialiseModule
+		//  for where this is used.)
+		//registerType::referenceCountable<Rocket::Core::EventListenerInstancer>(engine, "__EventListenerInstancer");
+
 		// Register STL containers
 		registerStlVector<Rocket::Core::Element*>(engine, "ElementList", "Element@");
 		registerStlVector<EMP::Core::String>(engine, "StringList", "e_String");
@@ -123,8 +128,12 @@ namespace Rocket { namespace AngelScript {
 
 	RASCOREDLL_API void InitialiseModule(asIScriptEngine *engine, const char *module_name)
 	{
-		Rocket::Core::Factory::RegisterEventListenerInstancer( new Rocket::AngelScript::InlineEventListenerInstancer(engine, "main") )
+		Rocket::Core::Factory::RegisterEventListenerInstancer( new Rocket::AngelScript::InlineEventListenerInstancer(engine, module_name) )
 			->RemoveReference();
+
+		// Holds the InlineEventListenerInstancer so it will be removed when the module is
+		//const char script[] = "__EventListenerInstancer@ __internal_EventListenerInstancerHolder;\0";
+		//engine->GetModule(module_name)->AddScriptSection("EventListenerInstancerHolder", &script);
 
 		int r = AddElementsScriptSection(engine, module_name);
 		EMP_ASSERTMSG(r >= 0, "Failed to add ScriptElement code to the given module");

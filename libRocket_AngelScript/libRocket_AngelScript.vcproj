@@ -192,6 +192,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="angelscriptd.lib ScriptUtils_d.lib RocketCore_d.lib EMPCore_d.lib"
 				OutputFile="$(OutDir)\$(ProjectName)_d.dll"
+				GenerateDebugInformation="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
