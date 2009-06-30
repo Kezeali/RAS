@@ -231,11 +231,11 @@ int main(int EMP_UNUSED(argc), char** EMP_UNUSED(argv))
 	//	document->Show();
 	//	document->RemoveReference();
 	//}
-	//Rocket::Core::ElementDocument * document = context->GetDocument("demo_doc");
-	//if (document != NULL)
-	//{
-	//	context->UnloadDocument(document);
-	//}
+	Rocket::Core::ElementDocument *document = context->GetDocument("demo_doc");
+	if (document != NULL)
+	{
+		document->GetAttribute("blah", false);
+	}
 
 	Shell::EventLoop(GameLoop);
 

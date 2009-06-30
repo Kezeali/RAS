@@ -176,12 +176,12 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		return EMP::Core::String::npos;
 	}
 
-	static void constructEString(EMP::Core::String *ptr)
+	static void eStringConstruct(EMP::Core::String *ptr)
 	{
 		new(ptr) EMP::Core::String();
 	}
 
-	static void destructEString(EMP::Core::String *ptr)
+	static void eStringDestruct(EMP::Core::String *ptr)
 	{
 		ptr->~StringBase();
 	}
@@ -197,7 +197,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		r = engine->RegisterObjectBehaviour("e_String",
 			asBEHAVE_CONSTRUCT,
 			"void f()",
-			asFUNCTION(constructEString),
+			asFUNCTION(eStringConstruct),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
@@ -205,7 +205,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		r = engine->RegisterObjectBehaviour("e_String",
 			asBEHAVE_DESTRUCT,
 			"void f()",
-			asFUNCTION(destructEString),
+			asFUNCTION(eStringDestruct),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
@@ -214,6 +214,14 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			asBEHAVE_ASSIGNMENT,
 			"e_String &f(e_String &in)",
 			asMETHODPR(EMP::Core::String, operator=, (const EMP::Core::String&), EMP::Core::String&),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register EMP String type");
+
+		r = engine->RegisterObjectBehaviour("e_String",
+			asBEHAVE_ADD_ASSIGN,
+			"e_String &f(e_String &in)",
+			asMETHODPR(EMP::Core::String, operator+=, (const EMP::Core::String&), EMP::Core::String&),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
@@ -253,6 +261,26 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
+
+		r = engine->RegisterObjectMethod("e_String",
+			"e_String ToUpper()",
+			asMETHOD(EMP::Core::String, ToUpper),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register EMP::Core::String::ToUpper");
+		r = engine->RegisterObjectMethod("e_String",
+			"e_String ToLower()",
+			asMETHOD(EMP::Core::String, ToLower),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register EMP::Core::String::ToLower");
+
+		r = engine->RegisterObjectMethod("e_String",
+			"void Resize(uint)",
+			asMETHOD(EMP::Core::String, Resize),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register EMP::Core::String::ToLower");
 	}
 
 	void ContextUnloadDocument(const EMP::Core::String &name, Core::Context *obj)

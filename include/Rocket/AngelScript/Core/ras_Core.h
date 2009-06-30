@@ -173,7 +173,7 @@ namespace Rocket { namespace AngelScript {
 			// Explicit conversion constructor from <built-in> to e_String
 			r = engine->RegisterObjectBehaviour("e_String",
 				asBEHAVE_CONSTRUCT,
-				("void f("+string_typename+"@)").c_str(),
+				("void f("+string_typename+"&in)").c_str(),
 				asFUNCTION(EString_construct_from_string),
 				asCALL_CDECL_OBJLAST);
 			if (r < 0)
@@ -181,50 +181,56 @@ namespace Rocket { namespace AngelScript {
 			// Explicit conversion constructor from <built-in> to r_String
 			r = engine->RegisterObjectBehaviour("r_String",
 				asBEHAVE_CONSTRUCT,
-				("void f("+string_typename+"@)").c_str(),
+				("void f("+string_typename+"&in)").c_str(),
 				asFUNCTION(RString_construct_from_string),
 				asCALL_CDECL_OBJLAST);
 			if (r < 0)
 				throw Exception("Couldn't register explicit "+string_typename+" conversion constructor for r_String");
 
-			// Explicit conversion constructor from e_String to <built-in>
-			/*r = engine->RegisterObjectBehaviour(string_typename.c_str(),
-				asBEHAVE_CONSTRUCT,
-				"void f(e_String)",
-				asFUNCTION(string_construct_from_EString),
-				asCALL_CDECL_OBJLAST);
-			if (r < 0)
-				throw Exception("Couldn't register EMP String type");*/
-
 			if (allow_implicit)
 			{
-				// Implicit cast from <built-in> to e_String
-				r = engine->RegisterObjectBehaviour(string_typename.c_str(),
-					asBEHAVE_IMPLICIT_VALUE_CAST,
-					"e_String f()",
-					asFUNCTION(stringToEString), asCALL_CDECL_OBJFIRST);
+				r = engine->RegisterObjectBehaviour("e_String",
+					asBEHAVE_ASSIGNMENT,
+					("e_String& f(const "+string_typename+"&in)").c_str(),
+					asFUNCTION(EString_assign_string),
+					asCALL_CDECL_OBJLAST);
 				if (r < 0)
-					throw Exception("Couldn't register implicit string cast operator for " + string_typename);
-				// Implicit cast from <built-in> to r_String
-				r = engine->RegisterObjectBehaviour(string_typename.c_str(),
-					asBEHAVE_IMPLICIT_VALUE_CAST,
-					"r_String f()",
-					asFUNCTION(stringToRString), asCALL_CDECL_OBJFIRST);
-				if (r < 0)
-					throw Exception("Couldn't register implicit string cast operator for " + string_typename);
+					throw Exception("Couldn't register "+string_typename+" assignment for e_String");
 
-				//// Implicit cast from e_String to <built-in>
-				//r = engine->RegisterObjectBehaviour("e_String",
-				//	asBEHAVE_IMPLICIT_VALUE_CAST,
-				//	(string_typename + " f()").c_str(),
-				//	asFUNCTION(eStringToString), asCALL_CDECL_OBJFIRST);
+				r = engine->RegisterObjectBehaviour("e_String",
+					asBEHAVE_ADD_ASSIGN,
+					("e_String& f(const "+string_typename+"&in)").c_str(),
+					asFUNCTION(EString_addassign_string),
+					asCALL_CDECL_OBJLAST);
+				if (r < 0)
+					throw Exception("Couldn't register e_String::+= "+string_typename+"@");
+
+				// Can't do add operator because it isn't clear what the result should be
+				//r = engine->RegisterGlobalBehaviour("e_String",
+				//	asBEHAVE_ADD,
+				//	("e_String f(const e_String &in, const "+string_typename+"&in)").c_str(),
+				//	asFUNCTION(add_eString_string),
+				//	asCALL_CDECL_OBJLAST);
 				//if (r < 0)
-				//	throw Exception("Couldn't register implicit string cast operator for e_String");
+				//	throw Exception("Couldn't register e_String + "+string_typename);
+				//r = engine->RegisterGlobalBehaviour(string_typename.c_str(),
+				//	asBEHAVE_ADD,
+				//	("e_String f(const "+string_typename+"&in, const e_String &in)").c_str(),
+				//	asFUNCTION(add_string_eString),
+				//	asCALL_CDECL_OBJLAST);
+				//if (r < 0)
+				//	throw Exception("Couldn't register "+string_typename+" + e_String");
 			}
 		}
 
 		static void EString_construct_from_string(typename _Converter::string_type str, EMP::Core::String *);
 		static void RString_construct_from_string(typename _Converter::string_type str, Rocket::Core::String *);
+
+		static EMP::Core::String& EString_assign_string(typename _Converter::string_type str, EMP::Core::String *);
+		static EMP::Core::String& EString_addassign_string(typename _Converter::string_type str, EMP::Core::String *);
+
+		static EMP::Core::String add_eString_string(EMP::Core::String left, typename _Converter::string_type right);
+		static EMP::Core::String add_string_eString(typename _Converter::string_type left, EMP::Core::String right);
 
 		//static void string_construct_from_EString(Rocket::Core::String, std::string *);
 		//static void string_construct_from_RString(Rocket::Core::String, std::string *);
@@ -257,6 +263,30 @@ namespace Rocket { namespace AngelScript {
 	void StringConversion<_Converter>::RString_construct_from_string(typename _Converter::string_type str, Rocket::Core::String *ptr)
 	{
 		new(ptr) Rocket::Core::String(stringToEString(&str));
+	}
+
+	template <class _Converter>
+	EMP::Core::String& StringConversion<_Converter>::EString_assign_string(typename _Converter::string_type str, EMP::Core::String *obj)
+	{
+		return obj->Assign(stringToEString(&str));
+	}
+
+	template <class _Converter>
+	EMP::Core::String& StringConversion<_Converter>::EString_addassign_string(typename _Converter::string_type str, EMP::Core::String *obj)
+	{
+		return obj->Append(stringToEString(&str));
+	}
+
+	template <class _Converter>
+	EMP::Core::String StringConversion<_Converter>::add_eString_string(EMP::Core::String left, typename _Converter::string_type right)
+	{
+		return left + stringToEstring(&right);
+	}
+
+	template <class _Converter>
+	EMP::Core::String StringConversion<_Converter>::add_string_eString(typename _Converter::string_type left, EMP::Core::String right)
+	{
+		return stringToEString(&left) + right;
 	}
 
 	//void string_construct_from_EString(Rocket::Core::String str, std::string *ptr)

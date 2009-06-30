@@ -339,6 +339,10 @@
 				RelativePath="..\source\Core\ras_ScriptedEventListener.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\source\Core\ras_ScriptInstancer.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -391,6 +395,10 @@
 			</File>
 			<File
 				RelativePath="..\include\Rocket\AngelScript\Core\ras_ScriptedEventListener.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_ScriptInstancer.h"
 				>
 			</File>
 			<Filter
