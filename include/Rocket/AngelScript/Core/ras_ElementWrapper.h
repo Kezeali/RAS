@@ -31,9 +31,10 @@ public:
 		: T( tag ),
 		ScriptUtils::Inheritance::ScriptObjectWrapper( self )
 	{
-		T::RemoveReference();
+		//T::RemoveReference();
 		
-		for (int i = 0; i < this->T::GetReferenceCount(); i++)
+		//for (int i = 0; i < this->T::GetReferenceCount(); i++)
+		if (T::GetReferenceCount() >= 2)
 			_obj->AddRef();
 	}
 
@@ -50,12 +51,14 @@ public:
 	{
 		//T::RemoveReference();
 
-		//set_obj(self);
-		_obj = self;
+		set_obj(self);
+		//_obj = self;
 		
 		// i starts at 1 because one reference is already accounted for
-		for (int i = 1; i < this->T::GetReferenceCount(); i++)
-			_obj->AddRef();
+		//for (int i = 1; i < this->T::GetReferenceCount(); i++)
+
+		//if (T::GetReferenceCount() >= 2)
+		//	_obj->AddRef();
 	}
 
 	//! Return the AS script-object associated with this element
@@ -69,31 +72,56 @@ public:
 	{
 		T::AddReference();
 
-		if (!locked)
-		{
-			locked = true;
-			if (_obj != NULL)
-				_obj->AddRef();
-			locked = false;
-		}
+		//if (_obj != NULL && T::GetReferenceCount() == 2)
+		//	_obj->AddRef();
+
+		//if (!locked)
+		//{
+		//	locked = true;
+		//	if (_obj != NULL)
+		//		_obj->AddRef();
+		//	locked = false;
+		//}
 	}
 
 	// Propogate remove ref's into AS mirror obj
 	virtual void RemoveReference()
 	{
-		if (!locked)
+		//if (!locked)
+		//{
+		//	locked = true;
+		//	if (_obj != NULL && _obj->Release() == 0)
+		//	{
+		//		_obj = NULL;
+		//		delete this;
+		//		return;
+		//	}
+		//	locked = false;
+		//}
+
+		if (_obj != NULL && T::GetReferenceCount() == 2)
 		{
-			locked = true;
-			if (_obj != NULL && _obj->Release() == 0)
+			if (_obj->Release() == 1)
 			{
+				// Pre-empt garbage collection
+				asIScriptObject *temp = _obj;
 				_obj = NULL;
-				delete this;
-				return;
+				temp->Release();
 			}
-			locked = false;
 		}
 
-		T::RemoveReference();
+		if (!locked)
+			T::RemoveReference();
+		else
+			EMP_ASSERTMSG(!locked, "Tried to remove Element ref. after deactivation");
+	}
+
+	virtual void OnReferenceDeactivate()
+	{
+		locked = true;
+		//_obj->GetEngine()->GarbageCollect();
+		_obj = NULL;
+		delete this;
 	}
 
 	virtual void OnUpdate()
@@ -121,10 +149,6 @@ public:
 		SC::Caller f = this->get_caller("void OnLayout()");
 		if ( f.ok() )
 			f();
-	}
-
-	virtual void OnReferenceDeactivate()
-	{
 	}
 
 	bool locked;

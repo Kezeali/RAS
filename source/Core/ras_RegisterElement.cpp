@@ -26,6 +26,13 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		element->RemoveReference();
 	}
 
+	RASCOREDLL_API bool ElemRemoveChild(Rocket::Core::Element *element, Rocket::Core::Element *obj)
+	{
+		bool success = obj->RemoveChild(element);
+		element->RemoveReference();
+		return success;
+	}
+
 	RASCOREDLL_API bool ElemDispatchEvent_default(const EMP::Core::String &event, const EMP::Core::Dictionary &parameters, Rocket::Core::Element *obj)
 	{
 		return obj->DispatchEvent(event, parameters);

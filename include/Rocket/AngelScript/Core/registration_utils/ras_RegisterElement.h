@@ -30,6 +30,8 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	RASCOREDLL_API void ElemAppendChild(Rocket::Core::Element *element, bool dom_element, Rocket::Core::Element *obj);
 	//! Provides default param for Rocket#Core#Element#AppendChild()
 	RASCOREDLL_API void ElemAppendChild_default(Rocket::Core::Element *element, Rocket::Core::Element *obj);
+	//! Wrapper for Element#RemoveChild() - removes reference to element after method is complete
+	RASCOREDLL_API bool ElemRemoveChild(Rocket::Core::Element *element, Rocket::Core::Element *obj);
 
 	//! Dispatches an event
 	RASCOREDLL_API bool ElemDispatchEvent_default(const EMP::Core::String &event, const EMP::Core::Dictionary &parameters, Rocket::Core::Element *obj);

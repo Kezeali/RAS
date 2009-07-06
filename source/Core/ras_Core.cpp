@@ -32,6 +32,9 @@ namespace Rocket { namespace AngelScript {
 	{
 		using namespace _registration_utils;
 
+		// Flags which can be passed to Document::Show()
+		registerFocusFlagsEnum(engine);
+
 		// Rocket::Core::String
 		registerRString(engine);
 		// EMP::Core::String
@@ -44,10 +47,6 @@ namespace Rocket { namespace AngelScript {
 		registerProperty(engine);
 		registerDictionary(engine);
 		registerPropertyDictionary(engine);
-		// Register Get/Set methods for Dictionary and Variant
-		registerVariantGetSet<EMP::Core::String>(engine, "e_String");
-		//registerVariantGetSet<EMP::Core::Vector2i>(engine, "e_Vector2i");
-		registerVariantGetSet<EMP::Core::Vector2f>(engine, "e_Vector2f");
 
 		// Register types
 		registerType::referenceCountable<Rocket::Core::Context>(engine, "Context");
@@ -56,6 +55,16 @@ namespace Rocket { namespace AngelScript {
 		registerType::referenceCountable<Rocket::Core::Element>(engine, "Element");
 		registerType::referenceCountable<Rocket::Core::ElementDocument>(engine, "Document");
 		registerType::referenceCountable<Rocket::Core::ElementText>(engine, "ElementText");
+
+		// Register Get/Set methods for Dictionary and Variant 
+		//  (and some helper methods for classes that use Variant and
+		//  Dictionary internally)
+		registerVariantGetSet<bool>(engine, "bool");
+		registerVariantGetSet<int>(engine, "int");
+		registerVariantGetSet<float>(engine, "float");
+		registerVariantGetSet<EMP::Core::String>(engine, "e_String");
+		//registerVariantGetSet<EMP::Core::Vector2i>(engine, "e_Vector2i");
+		registerVariantGetSet<EMP::Core::Vector2f>(engine, "e_Vector2f");
 
 		//  IEventListener
 		RegisterEventListenerInterface(engine);

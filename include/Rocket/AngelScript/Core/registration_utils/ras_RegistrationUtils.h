@@ -38,7 +38,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	void registerContextMembers(asIScriptEngine *engine);
 
 	//! Registers ElementDocument#FocusFlags enumeration
-	void registerFocusFlagsEnum(asIScriptEngine *engine, const std::string& script_typename);
+	void registerFocusFlagsEnum(asIScriptEngine *engine);
 
 	//! Registers members of Rocket#Core#Event
 	void registerEventMembers(asIScriptEngine *engine);

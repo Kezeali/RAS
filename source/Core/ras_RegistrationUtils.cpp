@@ -249,6 +249,27 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 		// Methods
 		r = engine->RegisterObjectMethod("e_String",
+			"bool Empty() const",
+			asMETHOD(EMP::Core::String, Empty),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register EMP::Core::String::Empty");
+
+		r = engine->RegisterObjectMethod("e_String",
+			"void Clear()",
+			asMETHOD(EMP::Core::String, Clear),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register EMP::Core::String::Clear");
+
+		r = engine->RegisterObjectMethod("e_String",
+			"uint Length() const",
+			asMETHOD(EMP::Core::String, Length),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register EMP::Core::String::Length");
+
+		r = engine->RegisterObjectMethod("e_String",
 			"uint Find(const e_String &in)",
 			asFUNCTION(eStringFindNpos),
 			asCALL_CDECL_OBJLAST);
@@ -280,12 +301,17 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			asMETHOD(EMP::Core::String, Resize),
 			asCALL_THISCALL);
 		if (r < 0)
-			throw Exception("Couldn't register EMP::Core::String::ToLower");
+			throw Exception("Couldn't register EMP::Core::String::Resize");
 	}
 
-	void ContextUnloadDocument(const EMP::Core::String &name, Core::Context *obj)
+	Rocket::Core::ElementDocument *ContextCreateDocument_default(Core::Context &obj)
 	{
-		obj->UnloadDocument( obj->GetDocument(name) );
+		return obj.CreateDocument();
+	}
+
+	void ContextUnloadDocument(const EMP::Core::String &name, Core::Context &obj)
+	{
+		obj.UnloadDocument( obj.GetDocument(name) );
 	}
 
 	void registerContextMembers(asIScriptEngine *engine)
@@ -335,6 +361,9 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		// See ras_EventListener.h
 		RegisterContextEventListenerMethods(engine);
 
+		r = engine->RegisterObjectMethod("Context", "Document@ CreateDocument()", asFUNCTION(ContextCreateDocument_default), asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register Context type");
 		r = engine->RegisterObjectMethod("Context", "Document@ CreateDocument(const e_String &in)", asMETHOD(Rocket::Core::Context, CreateDocument), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
@@ -465,6 +494,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 		registerEventGetParameter<int>(engine, as_primative_name<int>());
 		registerEventGetParameter<float>(engine, as_primative_name<float>());
+		registerEventGetParameter<EMP::Core::word>(engine, as_primative_name<EMP::Core::word>());
 		//! \todo TODO: Perhaps these shouldn't be registered here - they rely on types that may not be registered
 		//  perhaps: GetParameter<EMP::Core::Vector2i> could be registered in registerVector2<int>
 		registerEventGetParameter<EMP::Core::Vector2i>(engine, "e_Vector2i");

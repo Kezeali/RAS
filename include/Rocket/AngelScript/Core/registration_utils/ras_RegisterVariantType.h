@@ -39,6 +39,8 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	/*! 
 	 * Registers e_Variant#Get_<script_typename>
 	 * Registers e_Dictionary#Get(e_String key, <script_typename> default_value)
+	 * Registers Element#GetAttribute (which thinly wraps e_Dictionary#Get)
+	 * \todo Register Variant#GetInto(), Dictionary#GetInto() here
 	 */
 	template <typename T>
 	void registerVariantGetSet(asIScriptEngine *engine, const std::string &script_typename)
@@ -80,6 +82,20 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Property::Get<"+script_typename+">");
+
+		r = engine->RegisterObjectMethod("Element",
+			std::string(script_typename+" GetAttribute(const e_String &in, const "+script_typename+" &in) const").c_str(),
+			asMETHODPR(Rocket::Core::Element, GetAttribute<T>, (const String&, const T&) const, T),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Element::GetAttribute<"+script_typename+">");
+
+		r = engine->RegisterObjectMethod("Element",
+			C_STR("void SetAttribute(const e_String &in, const "+script_typename+" &in) const"),
+			asMETHODPR(Rocket::Core::Element, SetAttribute<T>, (const String&, const T&), void),
+			asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register Element::SetAttribute<"+script_typename+">");
 	}
 
 }}}

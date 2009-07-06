@@ -77,6 +77,7 @@ namespace Rocket { namespace AngelScript {
 		asIScriptObject *obj = NULL;
 		try
 		{
+			elementWrapper->AddReference();
 			obj = *static_cast<asIScriptObject**>( callCtor(elementWrapper) );
 		}
 		catch (ScriptUtils::Exception) {
@@ -86,6 +87,7 @@ namespace Rocket { namespace AngelScript {
 			return NULL;
 
 		elementWrapper->SetScriptObject( obj );
+		//obj->Release();
 
 		return dynamic_cast<Core::Element*>( elementWrapper );
 	}
@@ -160,6 +162,7 @@ namespace Rocket { namespace AngelScript {
 		asIScriptObject *obj = NULL;
 		try
 		{
+			elementWrapper->AddReference();
 			// Create the actual element, passing it the wrapper
 			obj = *static_cast<asIScriptObject**>( callFactory(elementWrapper/*, attributes*/) );
 		}
@@ -173,6 +176,7 @@ namespace Rocket { namespace AngelScript {
 
 		// Set the script object for running overrided methods
 		elementWrapper->SetScriptObject(obj);
+		obj->Release();
 
 		// I guess this is what you are supposed to do with the attributes param...
 		elementWrapper->SetAttributes(&attributes);

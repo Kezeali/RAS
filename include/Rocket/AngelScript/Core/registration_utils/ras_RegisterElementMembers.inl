@@ -27,8 +27,8 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name)
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
-		"void RemoveProperty(const e_String &in)"
-		, asMETHODPR(T, RemoveProperty, (const EMP::Core::String&), void),
+		"void RemoveProperty(const e_String &in)",
+		asMETHODPR(T, RemoveProperty, (const EMP::Core::String&), void),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
@@ -46,6 +46,18 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name)
 		throw Exception("Couldn't register " + name + " class");
 
 	// Attributes
+	r = engine->RegisterObjectMethod(c_name,
+		"bool HasAttribute(const e_String &in)",
+		asMETHODPR(T, HasAttribute, (const EMP::Core::String &), bool),
+		asCALL_THISCALL);
+	if (r < 0)
+		throw Exception("Couldn't register " + name + " class");
+	r = engine->RegisterObjectMethod(c_name,
+		"void RemoveAttribute(const e_String &in)",
+		asMETHODPR(T, RemoveAttribute, (const EMP::Core::String&), void),
+		asCALL_THISCALL);
+	if (r < 0)
+		throw Exception("Couldn't register " + name + " class");
 
 	// DOM Properties
 	r = engine->RegisterObjectMethod(c_name, "const e_String &GetTagName() const", asMETHOD(T, GetTagName), asCALL_THISCALL);
@@ -189,7 +201,7 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name)
 	r = engine->RegisterObjectMethod(c_name, "bool ReplaceChild(Element@, Element@)", asMETHOD(T, ReplaceChild), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "bool RemoveChild(Element@)", asMETHOD(T, RemoveChild), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "bool RemoveChild(Element@)", asFUNCTION(ElemRemoveChild), asCALL_CDECL_OBJLAST);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name, "bool HasChildNodes()", asMETHOD(T, HasChildNodes), asCALL_THISCALL);
