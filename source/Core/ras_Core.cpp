@@ -35,6 +35,10 @@ namespace Rocket { namespace AngelScript {
 		// Flags which can be passed to Document::Show()
 		registerFocusFlagsEnum(engine);
 
+		// Key flags
+		registerKeyIdentifierEnum(engine);
+		registerKeyModifierEnum(engine);
+
 		// Rocket::Core::String
 		registerRString(engine);
 		// EMP::Core::String

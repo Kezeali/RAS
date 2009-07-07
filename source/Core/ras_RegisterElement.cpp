@@ -43,4 +43,9 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		return obj->DispatchEvent(event, EMP::Core::Dictionary());
 	}
 
+	RASCOREDLL_API void ElemScrollIntoView_default(Rocket::Core::Element *obj)
+	{
+		obj->ScrollIntoView();
+	}
+
 }}}

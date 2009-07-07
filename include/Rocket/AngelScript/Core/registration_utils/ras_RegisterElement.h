@@ -16,9 +16,32 @@
 
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
+	enum ElementVirtualMembers
+	{
+		GetStyleSheet          = 1 << 0,
+		GetBaseline            = 1 << 1,
+		GetIntrinsicDimensions = 1 << 2,
+		IsPointWithinElement   = 1 << 3,
+		GetOwnerDocument       = 1 << 4,
+		GetInnerRML            = 1 << 5,
+		ProcessEvent           = 1 << 6,
+	};
+
 	//! Registers members of Rocket#Core#Element
+	/*!
+	* \param[in] engine
+	* AS engine to register the given class' members with
+	*
+	* \param[in] script_typename
+	* Type-name with which the class will be referenced in scripts.
+	*
+	* \param[in] excluded_virtual_methods
+	* Flags from ElementVirtualMembers - virtual methods which shouldn't be bound
+	* for this class. Generally, this will be used when a class derived from Element
+	* defines the given methods as private. 
+	*/
 	template<class T>
-	void registerElementMembers(asIScriptEngine *engine, const std::string& script_typename);
+	void registerElementMembers(asIScriptEngine *engine, const std::string& script_typename, int excluded_virtual_methods = 0);
 	//! Registers members of Rocket#Core#ElementDocument
 	template<class T>
 	void registerDocumentMembers(asIScriptEngine *engine, const std::string& script_typename);
@@ -38,6 +61,9 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 	//! Dispatches an event with an empty dictionary for the parameters
 	RASCOREDLL_API bool ElemDispatchEvent_noparams(const EMP::Core::String &event, Rocket::Core::Element *obj);
+
+	//! Calls ScrollIntoView() with default param.
+	RASCOREDLL_API void ElemScrollIntoView_default(Rocket::Core::Element *obj);
 
 #include "ras_RegisterElementMembers.inl"
 

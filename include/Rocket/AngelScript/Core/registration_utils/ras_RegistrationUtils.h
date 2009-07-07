@@ -40,6 +40,11 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	//! Registers ElementDocument#FocusFlags enumeration
 	void registerFocusFlagsEnum(asIScriptEngine *engine);
 
+	//! Registers ElementDocument#FocusFlags enumeration
+	void registerKeyIdentifierEnum(asIScriptEngine *engine);
+	//! Registers ElementDocument#FocusFlags enumeration
+	void registerKeyModifierEnum(asIScriptEngine *engine);
+
 	//! Registers members of Rocket#Core#Event
 	void registerEventMembers(asIScriptEngine *engine);
 

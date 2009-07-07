@@ -44,6 +44,11 @@ namespace Rocket { namespace AngelScript {
 				asMETHOD(_ControlType, IsDisabled), asCALL_THISCALL);
 			r = engine->RegisterObjectMethod(c_name, "void SetDisabled(bool)",
 				asMETHOD(_ControlType, SetDisabled), asCALL_THISCALL);
+
+			r = engine->RegisterObjectMethod(c_name, "bool IsReadOnly()",
+				asMETHOD(_ControlType, IsReadOnly), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod(c_name, "void SetReadOnly(bool)",
+				asMETHOD(_ControlType, SetReadOnly), asCALL_THISCALL);
 		}
 
 		void RegisterFormControlSelectMembers(asIScriptEngine *engine, const char * c_name)
@@ -127,7 +132,7 @@ namespace Rocket { namespace AngelScript {
 
 			// ElementDataGrid
 			//  Base (Element) members
-			registerElementMembers<Rocket::Core::Element>(engine, "DataGrid");
+			registerElementMembers<Rocket::Core::Element>(engine, "DataGrid", _registration_utils::GetInnerRML);
 			//  ElementDataGrid methods
 			r = engine->RegisterObjectMethod("DataGrid", "bool AddColumn(const e_String &in, const e_String &in, float, const e_String &in)",
 				asMETHODPR(Rocket::Controls::ElementDataGrid, AddColumn, (const EMP::Core::String&, const EMP::Core::String&, float, const EMP::Core::String&), bool), asCALL_THISCALL);
@@ -212,8 +217,8 @@ namespace Rocket { namespace AngelScript {
 				asFUNCTION(ElementInterface::SetStep), asCALL_CDECL_OBJFIRST);
 
 			// ElementFormControlTextArea
-			//  Base (Element) members
-			//registerElementMembers<Rocket::Controls::ElementFormControlTextArea>(engine, "FormControlTextArea");
+			//  Base (Element) members (excluding GetInnerRML, which is defined as private in ElementFormControlTextArea)
+			registerElementMembers<Rocket::Core::Element>(engine, "FormControlTextArea", _registration_utils::GetInnerRML);
 			//  Base members
 			RegisterFormControlMembers<Rocket::Controls::ElementFormControlTextArea>(engine, "FormControlTextArea");
 			//  ElementFormControlTextArea members
@@ -233,6 +238,9 @@ namespace Rocket { namespace AngelScript {
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetMaxLength), asCALL_THISCALL);
 			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetMaxLength(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetMaxLength), asCALL_THISCALL);
+
+			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetCursorIndex() const",
+				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetCursorIndex), asCALL_THISCALL);
 
 			// SelectOption (value type)
 			r = engine->RegisterObjectMethod("SelectOption", "Element@ GetElement()",
