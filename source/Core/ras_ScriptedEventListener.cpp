@@ -127,7 +127,7 @@ namespace Rocket { namespace AngelScript {
 	void RegisterScriptedEventListenerMethods(asIScriptEngine *engine, const char *c_name)
 	{
 		int r;
-		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const e_String &in, IEventListener@)",
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const e_String &in, IEventListener@, bool)",
 			asFUNCTIONPR(AddScriptedEventListener, (const EMP::Core::String&, asIScriptObject*, bool, T*), EventConnection*), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Element::AddEventListener(event,IEventListener)");
