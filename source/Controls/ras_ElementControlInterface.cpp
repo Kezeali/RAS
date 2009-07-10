@@ -26,6 +26,9 @@
 namespace Rocket { namespace AngelScript {
 	namespace Controls {
 
+		void SetCursorIndex_default(Rocket::Controls::ElementFormControlTextArea* element, int index);
+		void ShowCursor_default(Rocket::Controls::ElementFormControlTextArea* element, bool show);
+
 		template <class _ControlType>
 		void RegisterFormControlMembers(asIScriptEngine *engine, const char * c_name)
 		{
@@ -241,6 +244,18 @@ namespace Rocket { namespace AngelScript {
 
 			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetCursorIndex() const",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetCursorIndex), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetCursorIndex(int,bool)",
+				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetCursorIndex), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetCursorIndex(int)",
+				asFUNCTION(SetCursorIndex_default), asCALL_CDECL_OBJFIRST);
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void ShowCursor(bool,bool)",
+				asMETHOD(Rocket::Controls::ElementFormControlTextArea, ShowCursor), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void ShowCursor(bool)",
+				asFUNCTION(ShowCursor_default), asCALL_CDECL_OBJFIRST);
+			r = engine->RegisterObjectMethod("FormControlTextArea", "void ScrollToCursor()",
+				asMETHOD(Rocket::Controls::ElementFormControlTextArea, ScrollToCursor), asCALL_THISCALL);
+			r = engine->RegisterObjectMethod("FormControlTextArea", "const e_Vector2f &GetCursorPosition() const",
+				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetCursorPosition), asCALL_THISCALL);
 
 			// SelectOption (value type)
 			r = engine->RegisterObjectMethod("SelectOption", "Element@ GetElement()",
@@ -300,6 +315,16 @@ namespace Rocket { namespace AngelScript {
 		int ElementInterface::Add(Rocket::Controls::ElementFormControlSelect* element, const EMP::Core::String& rml, const EMP::Core::String& value)
 		{
 			return element->Add(rml, value);
+		}
+
+		void SetCursorIndex_default(Rocket::Controls::ElementFormControlTextArea* element, int index)
+		{
+			element->SetCursorIndex(index);
+		}
+
+		void ShowCursor_default(Rocket::Controls::ElementFormControlTextArea* element, bool show)
+		{
+			element->ShowCursor(show);
 		}
 
 		// Default parameter submit for forms

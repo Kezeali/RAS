@@ -28,8 +28,6 @@ namespace Rocket { namespace AngelScript {
 	* \code
 	* IElement@ unwrap(Element@)
 	* \endcode
-	*
-	* \todo Should this be called from RegisterElementInstancer()? (at the moment it has to be called manually)
 	*/
 	void RegisterScriptElementConversion(asIScriptEngine *engine);
 

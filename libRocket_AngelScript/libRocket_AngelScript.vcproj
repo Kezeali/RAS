@@ -320,6 +320,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\Core\ras_EventConnection.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Core\ras_EventListener.cpp"
 				>
 			</File>
@@ -337,10 +341,6 @@
 			</File>
 			<File
 				RelativePath="..\source\Core\ras_ScriptedEventListener.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\source\Core\ras_ScriptInstancer.cpp"
 				>
 			</File>
 		</Filter>
@@ -382,6 +382,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_EventConnection.h"
+				>
+			</File>
+			<File
 				RelativePath="..\include\Rocket\AngelScript\Core\ras_EventListener.h"
 				>
 			</File>
@@ -395,10 +399,6 @@
 			</File>
 			<File
 				RelativePath="..\include\Rocket\AngelScript\Core\ras_ScriptedEventListener.h"
-				>
-			</File>
-			<File
-				RelativePath="..\include\Rocket\AngelScript\Core\ras_ScriptInstancer.h"
 				>
 			</File>
 			<Filter

@@ -6,6 +6,7 @@
 #include "../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
 
 #include "../include/Rocket/AngelScript/Core/ras_Exception.h"
+#include "../include/Rocket/AngelScript/Core/ras_EventConnection.h"
 
 #include <Rocket/Core.h>
 
@@ -22,6 +23,7 @@ namespace Rocket { namespace AngelScript {
 		EventListenerWrapper(asIScriptObject* self)
 			: ScriptUtils::Inheritance::ScriptObjectWrapper(self, "IEventListener")
 		{
+			_obj->Release();
 		}
 
 		virtual void ProcessEvent(Rocket::Core::Event& event)
@@ -80,16 +82,26 @@ namespace Rocket { namespace AngelScript {
 	static ListenerRegistry listenerRegistry;
 
 	template <class T>
-	void AddScriptedEventListener(const EMP::Core::String &event, asIScriptObject *listener, T *obj)
+	EventConnection *AddScriptedEventListener(const EMP::Core::String &event_type, asIScriptObject *listener, bool in_capture_phase, T *obj)
 	{
 		if (listener != NULL)
 		{
 			EventListenerWrapper *listenerWrapper = new EventListenerWrapper(listener);
-			obj->AddEventListener(event, listenerWrapper);
+			obj->AddEventListener(event_type, listenerWrapper, in_capture_phase);
 
-			listenerRegistry[listener] = listenerWrapper;
+			//listenerRegistry[listener] = listenerWrapper;
 			listener->Release();
+
+			return new EventConnectionTemplate<T>(obj, event_type, listenerWrapper, in_capture_phase);
 		}
+		else
+			return NULL;
+	}
+
+	template <class T>
+	EventConnection *AddScriptedEventListener(const EMP::Core::String &event_type, asIScriptObject *listener, T *obj)
+	{
+		return AddScriptedEventListener(event_type, listener, false, obj);
 	}
 
 	template <class T>
@@ -115,15 +127,19 @@ namespace Rocket { namespace AngelScript {
 	void RegisterScriptedEventListenerMethods(asIScriptEngine *engine, const char *c_name)
 	{
 		int r;
-		r = engine->RegisterObjectMethod(c_name, "void AddEventListener(const e_String &in, IEventListener@)",
-			asFUNCTIONPR(AddScriptedEventListener, (const EMP::Core::String&, asIScriptObject*, T*), void), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const e_String &in, IEventListener@)",
+			asFUNCTIONPR(AddScriptedEventListener, (const EMP::Core::String&, asIScriptObject*, bool, T*), EventConnection*), asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register Element::AddEventListener(event,IEventListener)");
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const e_String &in, IEventListener@)",
+			asFUNCTIONPR(AddScriptedEventListener, (const EMP::Core::String&, asIScriptObject*, T*), EventConnection*), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Element::AddEventListener(event,IEventListener)");
 
-		r = engine->RegisterObjectMethod(c_name, "void RemoveEventListener(const e_String &in, IEventListener@)",
+		/*r = engine->RegisterObjectMethod(c_name, "void RemoveEventListener(const e_String &in, IEventListener@)",
 			asFUNCTIONPR(RemoveScriptedEventListener, (const EMP::Core::String&, asIScriptObject*, T*), void), asCALL_CDECL_OBJLAST);
 		if (r < 0)
-			throw Exception("Couldn't register Element::RemoveEventListener(event,IEventListener) class");
+			throw Exception("Couldn't register Element::RemoveEventListener(event,IEventListener) class");*/
 	}
 
 	void RegisterScriptedEventListenerMethods_ForElement(asIScriptEngine *engine, const char *c_name)

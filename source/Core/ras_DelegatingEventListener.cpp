@@ -6,6 +6,7 @@
 #include "../include/Rocket/AngelScript/Core/ras_DelegatingEventListener.h"
 
 #include "../include/Rocket/AngelScript/Core/ras_Exception.h"
+#include "../include/Rocket/AngelScript/Core/ras_EventConnection.h"
 
 #include <Rocket/Core.h>
 
@@ -70,7 +71,7 @@ namespace Rocket { namespace AngelScript {
 	* This must be called during script execution, as it finds the function
 	* module by checking the active context.
 	*/
-	DelegatingEventListener * Make_DelegatingEventListener(const EMP::Core::String &callback_decl)
+	DelegatingEventListener *Make_DelegatingEventListener(const EMP::Core::String &callback_decl)
 	{
 		asIScriptContext *ctx = asGetActiveContext();
 		if (ctx != NULL)
@@ -87,15 +88,24 @@ namespace Rocket { namespace AngelScript {
 	}
 
 	template <class T>
-	void AddDelegatingEventListener(const EMP::Core::String &event, const EMP::Core::String &callback_decl, T *obj)
+	EventConnection *AddDelegatingEventListener(const EMP::Core::String &event_type, const EMP::Core::String &callback_decl, bool in_capture_phase, T *obj)
 	{
 		DelegatingEventListener *listener = Make_DelegatingEventListener(callback_decl);
 		if (listener)
 		{
-			obj->AddEventListener(event, listener);
+			obj->AddEventListener(event_type, listener);
 
-			listenerCallbacks[callback_decl.CString()] = listener;
+			//listenerCallbacks[callback_decl.CString()] = listener;
+			return new EventConnectionTemplate<T>(obj, event_type, listener, in_capture_phase);
 		}
+		else
+			return NULL;
+	}
+
+	template <class T>
+	EventConnection *AddDelegatingEventListener(const EMP::Core::String &event_type, const EMP::Core::String &callback_decl, T *obj)
+	{
+		return AddDelegatingEventListener(event_type, callback_decl, false, obj);
 	}
 
 	template <class T>
@@ -116,15 +126,19 @@ namespace Rocket { namespace AngelScript {
 	void RegisterDelegatingEventListenerMethods(asIScriptEngine *engine, const char *c_name)
 	{
 		int r;
-		r = engine->RegisterObjectMethod(c_name, "void AddEventListener(const e_String &in, const e_String &in)",
-			asFUNCTIONPR(AddDelegatingEventListener, (const EMP::Core::String&, const EMP::Core::String&, T*), void), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const e_String &in, const e_String &in)",
+			asFUNCTIONPR(AddDelegatingEventListener, (const EMP::Core::String&, const EMP::Core::String&, bool, T*), EventConnection*), asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register Element::AddEventListener(event, callback-fn)");
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const e_String &in, const e_String &in)",
+			asFUNCTIONPR(AddDelegatingEventListener, (const EMP::Core::String&, const EMP::Core::String&, T*), EventConnection*), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Element::AddEventListener(event, callback-fn)");
 
-		r = engine->RegisterObjectMethod(c_name, "void RemoveEventListener(const e_String &in, const e_String &in)",
-			asFUNCTIONPR(RemoveDelegatingEventListener, (const EMP::Core::String&, const EMP::Core::String&, T*), void), asCALL_CDECL_OBJLAST);
-		if (r < 0)
-			throw Exception("Couldn't register Element::RemoveEventListener(event, callback-fn)");
+		//r = engine->RegisterObjectMethod(c_name, "void RemoveEventListener(const e_String &in, const e_String &in)",
+		//	asFUNCTIONPR(RemoveDelegatingEventListener, (const EMP::Core::String&, const EMP::Core::String&, T*), void), asCALL_CDECL_OBJLAST);
+		//if (r < 0)
+		//	throw Exception("Couldn't register Element::RemoveEventListener(event, callback-fn)");
 
 		//r = engine->RegisterObjectMethod(c_name, "void RemoveAllEventListeners()",
 		//	asFUNCTIONPR(RemoveAllDelegatingEventListeners, (const EMP::Core::String&, const EMP::Core::String&, T*), void), asCALL_CDECL_OBJLAST);
