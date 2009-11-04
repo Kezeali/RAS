@@ -24,7 +24,6 @@ namespace Rocket { namespace AngelScript {
 
 	void EventConnection::RemoveListener()
 	{
-		throw Exception("Abstract EventConnection type used");
 	}
 
 	//ElementEventConnection::ElementEventConnection(Rocket::Core::Element *element, const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)

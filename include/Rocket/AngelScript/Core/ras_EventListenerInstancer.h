@@ -18,35 +18,18 @@
 namespace Rocket { namespace AngelScript {
 
 	//! Executes script code
+	/*!
+	* \todo Move implementation into a cpp file
+	*/
 	class InlineEventListener : public Rocket::Core::EventListener
 	{
 	public:
-		//InlineEventListener(asIScriptEngine *engine, const char * module, const std::string &script_string,
-		//	asSFuncPtr line_callback, void *line_callback_obj,
-		//	asSFuncPtr exception_callback, void *exception_callback_obj)
-		//	: m_Engine(engine),
-		//	m_Module(module),
-		//	m_ScriptString(script_string)
-		//{
-		//	//m_Ctx = m_Engine->CreateContext();
-		//	//m_Ctx->SetLineCallback(line_callback, line_callback_obj, asCALL_THISCALL);
-		//	//m_Ctx->SetExceptionCallback(exception_callback, exception_callback_obj, asCALL_THISCALL);
-		//}
-
 		InlineEventListener(asIScriptEngine *engine, const char * module, const std::string &script_string,
 			const std::string& uid, Rocket::Core::Event **event)
 			: m_Engine(engine),
 			m_Module(module),
 			m_ScriptString(script_string)
 		{
-			/*EMP::Core::String id = event.GetType();
-			Rocket::Core::Element *target = event.GetTargetElement();
-			if (target != NULL)
-			{
-			id += target->GetId();
-			id += target->GetTagName();
-			}*/
-			//generateEventFunction(uid);
 		}
 
 		InlineEventListener(asIScriptEngine *engine, const char * module, const std::string &script_string)
@@ -54,13 +37,10 @@ namespace Rocket { namespace AngelScript {
 			m_Module(module),
 			m_ScriptString(script_string)
 		{
-			//m_Ctx = m_Engine->CreateContext();
-			//m_Ctx->SetExceptionCallback(asMETHOD(InlineEventListener, ExceptionCallback), this, asCALL_THISCALL);
 		}
 
 		~InlineEventListener()
 		{
-			//m_Ctx->Release();
 		}
 
 		void ExceptionCallback(asIScriptContext *ctx)
@@ -95,7 +75,7 @@ namespace Rocket { namespace AngelScript {
 		{
 			// String is compiled every time the event is fired, since the module might have been re-compiled in the interim
 			//  (ExecuteString compiles the fn. with reguard to the module)
-			int r = m_Engine->PrepareString(m_Module, "Event @ event", m_ScriptString.c_str(), &m_Ctx/*, asEXECSTRING_USE_MY_CONTEXT*/);
+			int r = m_Engine->PrepareString(m_Module.c_str(), "Event @ event", m_ScriptString.c_str(), &m_Ctx/*, asEXECSTRING_USE_MY_CONTEXT*/);
 			EMP_ASSERTMSG(r >= 0, "Error while compiling inline-event function");
 			EMP_ASSERTMSG(r == asEXECUTION_PREPARED, "Failed to prepare inline-event function");
 			if (r < 0) return;
@@ -115,42 +95,18 @@ namespace Rocket { namespace AngelScript {
 			m_Ctx->Release();
 		}
 
-	protected:
-		//void generateEventFunction(const std::string &name)
-		//{
-		//	//if (m_EventType.Empty())
-		//	{
-		//		//m_EventType = event_type;
-
-		//		//std::string name(m_EventType.CString());
-		//		std::string decl = "void _Process"+name+"(Event &in event)";
-		//		std::string script = decl+" {\n"+m_ScriptString+"\n; }";
-
-		//		asIScriptModule *mod = m_Engine->GetModule(m_Module, asGM_CREATE_IF_NOT_EXISTS);
-		//		int r = mod->AddScriptSection(name.c_str(), script.c_str(), script.size());
-		//		EMP_ASSERT(r >= 0);
-
-		//		r = mod->Build();
-		//		EMP_ASSERT(r >= 0);
-
-		//		m_Caller = ScriptUtils::Calling::Caller(m_Engine->GetModule(m_Module), decl.c_str());
-		//	}
-		//	//else if (m_EventType != event_type)
-		//	//throw Exception("Wrong event-type fool!");
-		//}
-
 	private:
 		asIScriptEngine *m_Engine;
-		const char * m_Module;
+		std::string m_Module;
 		std::string m_ScriptString;
 
 		asIScriptContext *m_Ctx;
-
-		//EMP::Core::String m_EventType;
-		//std::string m_EventType;
 	};
 
 	//! Creates a script code executor for an inline (RML) defined event
+	/*!
+	* \todo Move implementation into a cpp file
+	*/
 	class InlineEventListenerInstancer : public Rocket::Core::EventListenerInstancer
 	{
 	public:
@@ -174,7 +130,7 @@ namespace Rocket { namespace AngelScript {
 
 	protected:
 		asIScriptEngine *m_Engine;
-		const char *m_Module;
+		const char *m_DefaultModule;
 
 		int m_NextId;
 
@@ -194,7 +150,7 @@ namespace Rocket { namespace AngelScript {
 
 	InlineEventListenerInstancer::InlineEventListenerInstancer(asIScriptEngine *engine, const char *module)
 		: m_Engine(engine),
-		m_Module(module)
+		m_DefaultModule(module)
 	{
 	}
 
@@ -202,16 +158,30 @@ namespace Rocket { namespace AngelScript {
 		asSFuncPtr line_callback, void *line_callback_obj,
 		asSFuncPtr exception_callback, void *exception_callback_obj)
 		: m_Engine(engine),
-		m_Module(module),
+		m_DefaultModule(module),
 		m_LineCallback(line_callback, line_callback_obj),
 		m_ExceptionCallback(exception_callback, exception_callback_obj)
 	{}
 
 	Core::EventListener * InlineEventListenerInstancer::InstanceEventListener(const EMP::Core::String &value)
 	{
-		/*std::stringstream stream;
-		stream << "Event" << m_NextId++;*/
-		return new InlineEventListener(m_Engine, m_Module, value.CString());
+		// Check for non-default module specifier
+		if (value[0] == '%')
+		{
+			EMP::Core::String module;
+			EMP::Core::String::size_type end = value.Find(":", 1);
+			if (end > 1 && end != EMP::Core::String::npos)
+				module = value.Substring(1, end-1);
+			else
+			{
+				EMP_ERRORMSG(("The following inline event script has an invalid module directive: " + value).CString());
+				end = 0;
+			}
+
+			return new InlineEventListener(m_Engine, module.CString(), value.CString() + end+1);
+		}
+		else
+			return new InlineEventListener(m_Engine, m_DefaultModule, value.CString());
 	}
 
 	void InlineEventListenerInstancer::Release()

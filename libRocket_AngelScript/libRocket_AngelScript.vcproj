@@ -316,6 +316,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\Core\ras_ElementDocument.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Core\ras_ElementInstancer.cpp"
 				>
 			</File>
@@ -371,6 +375,10 @@
 			</File>
 			<File
 				RelativePath="..\include\Rocket\AngelScript\Core\ras_DelegatingEventListener.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\Rocket\AngelScript\Core\ras_ElementDocument.h"
 				>
 			</File>
 			<File

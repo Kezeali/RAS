@@ -20,50 +20,31 @@
 			{
 			text-align: left;
 			}
-
-			progressbar
-			{
-			display: block;
-			width: auto;
-			height: 30px;
-			background: #000000;
-			padding: 5px;
-			}
-
-			progressfill
-			{
-			display: block;
-			height: 100%;
-			background: #efbf00;
-			}
-
-			deco
-			{
-			display: block;
-			width: 64px;
-			height: 16px;
-
-			deco-decorator: mydecorator;
-			deco-image-src: high_scores_defender.png;
-			}
 		</style>
+		<script>
+			void CreateTextElement(const e_String &in text)
+			{
+			Context@ context = GetContext("main");
+			Document@ document = context.GetDocument("demo_doc");
+			ElementText@ elem = document.CreateTextNode(text + e_String("\n"));
+
+			Element@ parent = document.GetElementById("text_target");
+			parent.AppendChild(elem);
+			}
+			void TestInlineScript(Event@ ev)
+			{
+			CreateTextElement(ev.GetType());
+			}
+		</script>
+		<script>
+			void TestMultipleScriptTags(Event@ ev)
+			{
+			TestInlineScript(ev);
+			}
+		</script>
 	</head>
 	<body template="window">
-		<deco />
-		<p>
-			Progress bar:
-			<progressbar id="a_progressbar"/>
-			<p>
-				<form onsubmit="ChangeProgressOnSubmit(event);">
-					Set progress:
-					<textarea name="text" rows="3" cols="50" maxlength="600" />
-					<input name="progress" type="range" min="0" max="100" step="1" onchange="Slider_OnValueChanged(event);"/>
-					<input type="submit" value="sub_progress">Submit</input>
-				</form>
-			</p>
-		</p>
-		<button onclick="Send_setprogress_Event();">Dispatch Event</button>
-		<button onclick="DetachProgListener();">Detach listener</button>
+		<button onclick="%Demo: TestMultipleScriptTags(event);">'script' tag button</button>
 		<button onclick="Element@ a; a.GetId();">Cause Exception</button>
 		<button onclick="CloseDoc();">Close</button>
 		<dataselect source="scripted_data.numbers" fields="name,value" valuefield="value" onchange="DSChanged(event)" />
@@ -72,7 +53,7 @@
 			<col fields="value" width="28%">Index:</col>
 			<col fields="value" width="37%" formatter="Format_IndexPlusOne">+1 (formatter):</col>
 		</datagrid>
-		<button onclick="CreateTextElement(event.GetType()); ChangeProgressRand(25,75);">Scripted Button</button>
+		<button onclick="CreateTextElement(event.GetType());">Scripted Button</button>
 		<tabset>
 			<tab>Tab1</tab>
 			<panel id="text_target">

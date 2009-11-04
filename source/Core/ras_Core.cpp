@@ -14,6 +14,7 @@
 #include "../include/Rocket/AngelScript/Core/ras_EventListenerInstancer.h"
 #include "../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
 #include "../include/Rocket/AngelScript/Core/ras_EventConnection.h"
+#include "../include/Rocket/AngelScript/Core/ras_ElementDocument.h"
 
 #include "../include/Rocket/AngelScript/Core/ScriptElement.h"
 
@@ -74,6 +75,9 @@ namespace Rocket { namespace AngelScript {
 		RegisterEventListenerInterface(engine);
 		// EventConnection
 		RegisterEventConnectionType(engine);
+
+		Rocket::Core::Factory::RegisterElementInstancer("body", new Rocket::AngelScript::ScriptableDocumentInstancer(engine))
+			->RemoveReference();
 
 		// EventListenerInstancer (simply holds a reference, so it
 		//  gets deleted when the module gets destroyed - see InitialiseModule
