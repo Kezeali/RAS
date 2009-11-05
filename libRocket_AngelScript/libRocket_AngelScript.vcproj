@@ -332,6 +332,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\source\Core\ras_EventListenerInstancer.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\source\Core\ras_RegisterElement.cpp"
 				>
 			</File>

@@ -6,6 +6,8 @@
 #ifndef H_ROCKET_AS_ELEMENTDOCUMENT
 #define H_ROCKET_AS_ELEMENTDOCUMENT
 
+#include "ras_Config.h"
+
 #include <Rocket/Core/ElementDocument.h>
 #include <Rocket/Core/ElementInstancer.h>
 
@@ -64,8 +66,9 @@ namespace Rocket { namespace AngelScript {
 	protected:
 		asIScriptEngine *m_Engine;
 		const char *m_DefaultModuleName;
-
 	};
+
+	RASCOREDLL_API void RegisterScriptableDocumentInstancer(asIScriptEngine *engine);
 
 }}
 

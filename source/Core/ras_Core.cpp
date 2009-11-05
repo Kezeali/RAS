@@ -76,9 +76,6 @@ namespace Rocket { namespace AngelScript {
 		// EventConnection
 		RegisterEventConnectionType(engine);
 
-		Rocket::Core::Factory::RegisterElementInstancer("body", new Rocket::AngelScript::ScriptableDocumentInstancer(engine))
-			->RemoveReference();
-
 		// EventListenerInstancer (simply holds a reference, so it
 		//  gets deleted when the module gets destroyed - see InitialiseModule
 		//  for where this is used.)
@@ -148,6 +145,9 @@ namespace Rocket { namespace AngelScript {
 	RASCOREDLL_API void InitialiseModule(asIScriptEngine *engine, const char *module_name)
 	{
 		Rocket::Core::Factory::RegisterEventListenerInstancer( new Rocket::AngelScript::InlineEventListenerInstancer(engine, module_name) )
+			->RemoveReference();
+
+		Rocket::Core::Factory::RegisterElementInstancer("body", new Rocket::AngelScript::ScriptableDocumentInstancer(engine))
 			->RemoveReference();
 
 		// Holds the InlineEventListenerInstancer so it will be removed when the module is

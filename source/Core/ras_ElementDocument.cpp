@@ -8,6 +8,7 @@
 #include <EMP/Core/String.h>
 #include <EMP/Core/Stream.h>
 #include <Rocket/Core/Event.h>
+#include <Rocket/Core/Factory.h>
 
 #include <sstream>
 
@@ -71,7 +72,18 @@ namespace Rocket { namespace AngelScript {
 			{
 				asIScriptModule *module = m_Engine->GetModule(it->CString());
 				if (module != NULL)
-					module->Build();
+				{
+					int r;
+					r = module->AddScriptSection("document_handle", "Document@ document;", 19);
+					r = module->Build();
+					EMP_ASSERTMSG(r >= 0, "Failed to build <script> module");
+					if (r >= 0)
+					{
+						r = module->GetGlobalVarIndexByDecl("Document@ document");
+						void* prop = module->GetAddressOfGlobalVar(r);
+						*((ElementDocument**)prop) = this;
+					}
+				}
 			}
 		}
 	}
@@ -96,6 +108,12 @@ namespace Rocket { namespace AngelScript {
 
 	void ScriptableDocumentInstancer::ReleaseElement(Rocket::Core::Element* element)
 	{
+	}
+
+	RASCOREDLL_API void RegisterScriptableDocumentInstancer(asIScriptEngine *engine)
+	{
+		Rocket::Core::Factory::RegisterElementInstancer("body", new Rocket::AngelScript::ScriptableDocumentInstancer(engine))
+			->RemoveReference();
 	}
 
 }}

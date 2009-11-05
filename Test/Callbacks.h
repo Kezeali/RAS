@@ -107,7 +107,7 @@ public:
 		std::string res = strstr.str();
 		buffer += res;
 		std::cout << res;
-		Shell::Log(res.c_str());
+		//Shell::Log(res.c_str());
 	}
 
 	void ExceptionCallback(asIScriptContext *ctx)
