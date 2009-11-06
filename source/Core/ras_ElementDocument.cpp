@@ -62,6 +62,18 @@ namespace Rocket { namespace AngelScript {
 		module->AddScriptSection(sectionName.CString(), code.CString(), source_length);
 	}
 
+//#define RAS_DOCUMENT__USE_PROPERTIES_OBJECT
+
+#ifdef RAS_DOCUMENT__USE_PROPERTIES_OBJECT
+	static const char *s_ModulePropertiesScript =
+		"class ModuleProperties {\n"
+		"Document@ document;\n"
+		"}\n"
+		"ModuleProperties module;";
+
+	static const size_t s_ModulePropertiesScriptLength = 71;
+#endif
+
 	void ElementScriptableDocument::ProcessEvent(Rocket::Core::Event& e)
 	{
 		Rocket::Core::ElementDocument::ProcessEvent(e);
@@ -74,13 +86,24 @@ namespace Rocket { namespace AngelScript {
 				if (module != NULL)
 				{
 					int r;
-					r = module->AddScriptSection("document_handle", "Document@ document;", 19);
+#ifdef RAS_DOCUMENT__USE_PROPERTIES_OBJECT
+					r = module->AddScriptSection("module_properties", s_ModulePropertiesScript, s_ModulePropertiesScriptLength);
+#else
+					r = module->AddScriptSection("module_properties", "Document@ module_document;", 26);
+#endif
 					r = module->Build();
 					EMP_ASSERTMSG(r >= 0, "Failed to build <script> module");
 					if (r >= 0)
 					{
-						r = module->GetGlobalVarIndexByDecl("Document@ document");
+#ifdef RAS_DOCUMENT__USE_PROPERTIES_OBJECT
+						r = module->GetGlobalVarIndexByDecl("ModuleProperties module");
+						void* var = module->GetAddressOfGlobalVar(r);
+						asIScriptObject *moduleProperties = (asIScriptObject*)var;
+						void* prop = moduleProperties->GetPropertyPointer(0);
+#else
+						r = module->GetGlobalVarIndexByDecl("Document@ module_document");
 						void* prop = module->GetAddressOfGlobalVar(r);
+#endif
 						*((ElementDocument**)prop) = this;
 					}
 				}

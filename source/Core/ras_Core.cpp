@@ -147,6 +147,8 @@ namespace Rocket { namespace AngelScript {
 		Rocket::Core::Factory::RegisterEventListenerInstancer( new Rocket::AngelScript::InlineEventListenerInstancer(engine, module_name) )
 			->RemoveReference();
 
+		// TODO: Assuming I modify the RAS implementation to utilise the Rocket::Plugin interface, setting the body instancer
+		//  should happen in the initialise method
 		Rocket::Core::Factory::RegisterElementInstancer("body", new Rocket::AngelScript::ScriptableDocumentInstancer(engine))
 			->RemoveReference();
 
