@@ -12,6 +12,8 @@
 
 #include <sstream>
 
+//#define RAS_DOCUMENT__USE_PROPERTIES_OBJECT
+
 
 namespace Rocket { namespace AngelScript {
 
@@ -23,6 +25,28 @@ namespace Rocket { namespace AngelScript {
 
 	ElementScriptableDocument::~ElementScriptableDocument()
 	{
+		for (ModuleNameSet::iterator it = m_ModuleNames.begin(), end = m_ModuleNames.end(); it != end; ++it)
+		{
+			// Prevent the reference count from going below zero (the reference count is not incremented
+			//  for the module_document var, so disguarding the module would erroniously decrease the ref-count)
+			//this->AddReference();
+			asIScriptModule *module = m_Engine->GetModule(it->CString());
+			if (module != NULL)
+			{
+				int varInd;
+#ifdef RAS_DOCUMENT__USE_PROPERTIES_OBJECT
+				varInd = module->GetGlobalVarIndexByDecl("ModuleProperties module");
+				void* var = module->GetAddressOfGlobalVar(varInd);
+				asIScriptObject *moduleProperties = (asIScriptObject*)var;
+				void* prop = moduleProperties->GetPropertyPointer(0);
+#else
+				varInd = module->GetGlobalVarIndexByDecl("Document@ module_document");
+				void* prop = module->GetAddressOfGlobalVar(varInd);
+#endif
+				*((ElementDocument**)prop) = NULL;
+			}
+			m_Engine->DiscardModule(it->CString());
+		}
 	}
 
 	void ElementScriptableDocument::LoadScript(EMP::Core::Stream* stream, const EMP::Core::String& source_name)
@@ -61,8 +85,6 @@ namespace Rocket { namespace AngelScript {
 
 		module->AddScriptSection(sectionName.CString(), code.CString(), source_length);
 	}
-
-//#define RAS_DOCUMENT__USE_PROPERTIES_OBJECT
 
 #ifdef RAS_DOCUMENT__USE_PROPERTIES_OBJECT
 	static const char *s_ModulePropertiesScript =
@@ -131,6 +153,7 @@ namespace Rocket { namespace AngelScript {
 
 	void ScriptableDocumentInstancer::ReleaseElement(Rocket::Core::Element* element)
 	{
+		delete element;
 	}
 
 	RASCOREDLL_API void RegisterScriptableDocumentInstancer(asIScriptEngine *engine)

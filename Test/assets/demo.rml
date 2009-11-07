@@ -21,7 +21,7 @@
 			text-align: left;
 			}
 		</style>
-		<script src="main.as" />
+		<script src="../scripts/main.as" />
 		<script>
 			void TestInlineScript(Event@ ev)
 			{
@@ -38,7 +38,7 @@
 	<body template="window">
 		<button onclick="%Demo: TestMultipleScriptTags(event);">'script' tag button</button>
 		<button onclick="Element@ a; a.GetId();">Cause Exception</button>
-		<button onclick="%Demo: document.Close();">Close</button>
+		<button onclick="%Demo: module_document.Close();">Close</button>
 		<dataselect source="scripted_data.numbers" fields="name,value" valuefield="value" onchange="DSChanged(event)" />
 		<datagrid source="scripted_data.numbers">
 			<col fields="name" width="35%">Item:</col>
