@@ -23,6 +23,12 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	}
 
 	template <>
+	static const char * as_primative_name<bool>()
+	{
+		return "bool";
+	}
+
+	template <>
 	static const char * as_primative_name<int>()
 	{
 		return "int";

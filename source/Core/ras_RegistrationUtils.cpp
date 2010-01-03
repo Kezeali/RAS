@@ -705,6 +705,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register Event::GetType");
 
+		registerEventGetParameter<bool>(engine, as_primative_name<bool>());
 		registerEventGetParameter<int>(engine, as_primative_name<int>());
 		registerEventGetParameter<float>(engine, as_primative_name<float>());
 		registerEventGetParameter<EMP::Core::word>(engine, as_primative_name<EMP::Core::word>());
