@@ -51,7 +51,13 @@ namespace Rocket { namespace AngelScript {
 
 	void ElementScriptableDocument::LoadScript(EMP::Core::Stream* stream, const EMP::Core::String& source_name)
 	{ 
-		EMP::Core::String moduleName = GetAttribute("module", GetTitle());
+		EMP::Core::String moduleName = GetTitle();
+		if (moduleName.Empty())
+		{
+			EMP::Core::URL sourceUrl = EMP::Core::URL(GetSourceURL());
+			moduleName = sourceUrl.GetFileName();
+		}
+
 		EMP::Core::String sectionName = source_name;
 		if (sectionName.Empty())
 		{
