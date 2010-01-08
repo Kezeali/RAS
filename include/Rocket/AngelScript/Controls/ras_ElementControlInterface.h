@@ -32,6 +32,7 @@ namespace AngelScript { namespace Controls {
 	public:
 		// Sets the expanded state of a data grid row.
 		static void SetRowExpanded(Rocket::Controls::ElementDataGridRow* element, bool row_expanded);
+		static int Add(Rocket::Controls::ElementFormControlSelect* element, const EMP::Core::String& rml, const EMP::Core::String& value, asIScriptObject *data, int before, bool selectable);
 		// Override for ElementFormControlSelect's Add() without the last parameter.
 		static int Add(Rocket::Controls::ElementFormControlSelect* element, const EMP::Core::String& rml, const EMP::Core::String& value);
 

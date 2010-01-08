@@ -57,11 +57,16 @@ namespace Rocket { namespace AngelScript {
 		void RegisterFormControlSelectMembers(asIScriptEngine *engine, const char * c_name)
 		{
 			int r;
-			r = engine->RegisterObjectMethod(c_name, "void Add(const e_String &in, const e_String &in, int, bool)",
-				asMETHOD(Rocket::Controls::ElementFormControlSelect, Add), asCALL_THISCALL);
+			// The original Add() method from the official lib.
+			r = engine->RegisterObjectMethod(c_name, "int Add(const e_String &in, const e_String &in, int, bool)",
+				asMETHODPR(Rocket::Controls::ElementFormControlSelect, Add, (const EMP::Core::String&, const EMP::Core::String&, int, bool), int), asCALL_THISCALL);
+			// My custom Add method with user-data
+			r = engine->RegisterObjectMethod(c_name, "int Add(const e_String &in, const e_String &in, int, bool)",
+				asFUNCTIONPR(ElementInterface::Add, (Rocket::Controls::ElementFormControlSelect*, const EMP::Core::String&, const EMP::Core::String&, asIScriptObject*, int, bool), int), asCALL_CDECL_OBJFIRST);
+			// Vanilla add with default params. dropped
 			r = engine->RegisterObjectMethod(c_name, "void Add(const e_String &in, const e_String &in)",
-				asFUNCTION(ElementInterface::Add), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod(c_name, "void Add(const e_String &in, const e_String &in, int, bool)",
+				asFUNCTIONPR(ElementInterface::Add, (Rocket::Controls::ElementFormControlSelect*, const EMP::Core::String&, const EMP::Core::String&), int), asCALL_CDECL_OBJFIRST);
+			r = engine->RegisterObjectMethod(c_name, "void Remove(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlSelect, Remove), asCALL_THISCALL);
 
 			r = engine->RegisterObjectMethod(c_name, "SelectOption& GetOption(int)",
@@ -309,6 +314,12 @@ namespace Rocket { namespace AngelScript {
 				element->ExpandRow();
 			else
 				element->CollapseRow();
+		}
+
+		int ElementInterface::Add(Rocket::Controls::ElementFormControlSelect* element, const EMP::Core::String& rml, const EMP::Core::String& value, asIScriptObject *data, int before, bool selectable)
+		{
+			data->Release();
+			return element->Add(rml, value, (void*)data, before, selectable);
 		}
 
 		// Override for ElementFormControlSelect's Add() without the last parameter.
