@@ -57,14 +57,11 @@ namespace Rocket { namespace AngelScript {
 		void RegisterFormControlSelectMembers(asIScriptEngine *engine, const char * c_name)
 		{
 			int r;
-			// The original Add() method from the official lib.
+			// The original Add() method
 			r = engine->RegisterObjectMethod(c_name, "int Add(const e_String &in, const e_String &in, int, bool)",
 				asMETHODPR(Rocket::Controls::ElementFormControlSelect, Add, (const EMP::Core::String&, const EMP::Core::String&, int, bool), int), asCALL_THISCALL);
-			// My custom Add method with user-data
-			r = engine->RegisterObjectMethod(c_name, "int Add(const e_String &in, const e_String &in, int, bool)",
-				asFUNCTIONPR(ElementInterface::Add, (Rocket::Controls::ElementFormControlSelect*, const EMP::Core::String&, const EMP::Core::String&, asIScriptObject*, int, bool), int), asCALL_CDECL_OBJFIRST);
-			// Vanilla add with default params. dropped
-			r = engine->RegisterObjectMethod(c_name, "void Add(const e_String &in, const e_String &in)",
+			// add with default params. dropped
+			r = engine->RegisterObjectMethod(c_name, "int Add(const e_String &in, const e_String &in)",
 				asFUNCTIONPR(ElementInterface::Add, (Rocket::Controls::ElementFormControlSelect*, const EMP::Core::String&, const EMP::Core::String&), int), asCALL_CDECL_OBJFIRST);
 			r = engine->RegisterObjectMethod(c_name, "void Remove(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlSelect, Remove), asCALL_THISCALL);
@@ -87,179 +84,179 @@ namespace Rocket { namespace AngelScript {
 			// Register types
 
 			//  DataGrid
-			registerType::referenceCountable<Rocket::Controls::ElementDataGrid>(engine, "DataGrid");
+			registerType::referenceCountable<Rocket::Controls::ElementDataGrid>(engine, "ElementDataGrid");
 			//  DataGrid Row
-			registerType::referenceCountable<Rocket::Controls::ElementDataGridRow>(engine, "DataGridRow");
+			registerType::referenceCountable<Rocket::Controls::ElementDataGridRow>(engine, "ElementDataGridRow");
 			//  DataGrid Cell
-			registerType::referenceCountable<Rocket::Controls::ElementDataGridCell>(engine, "DataGridCell");
+			registerType::referenceCountable<Rocket::Controls::ElementDataGridCell>(engine, "ElementDataGridCell");
 			//  DataGrid Expand-Button
-			registerType::referenceCountable<Rocket::Controls::ElementDataGridExpandButton>(engine, "DataGridExpandButton");
+			registerType::referenceCountable<Rocket::Controls::ElementDataGridExpandButton>(engine, "ElementDataGridExpandButton");
 			//  Form
-			registerType::referenceCountable<Rocket::Controls::ElementForm>(engine, "Form");
+			registerType::referenceCountable<Rocket::Controls::ElementForm>(engine, "ElementForm");
 			//   Form Controls
-			registerType::referenceCountable<Rocket::Controls::ElementFormControl>(engine, "FormControl");
-			registerType::referenceCountable<Rocket::Controls::ElementFormControlInput>(engine, "FormControlInput");
-			registerType::referenceCountable<Rocket::Controls::ElementFormControlTextArea>(engine, "FormControlTextArea");
-			registerType::referenceCountable<Rocket::Controls::ElementFormControlSelect>(engine, "FormControlSelect");
-			registerType::referenceCountable<Rocket::Controls::ElementFormControlDataSelect>(engine, "FormControlDataSelect");
+			registerType::referenceCountable<Rocket::Controls::ElementFormControl>(engine, "ElementFormControl");
+			registerType::referenceCountable<Rocket::Controls::ElementFormControlInput>(engine, "ElementFormControlInput");
+			registerType::referenceCountable<Rocket::Controls::ElementFormControlTextArea>(engine, "ElementFormControlTextArea");
+			registerType::referenceCountable<Rocket::Controls::ElementFormControlSelect>(engine, "ElementFormControlSelect");
+			registerType::referenceCountable<Rocket::Controls::ElementFormControlDataSelect>(engine, "ElementFormControlDataSelect");
 			//  Tab Set
-			registerType::referenceCountable<Rocket::Controls::ElementTabSet>(engine, "TabSet");
+			registerType::referenceCountable<Rocket::Controls::ElementTabSet>(engine, "ElementTabSet");
 			//  SelectOption (value type)
 			r = engine->RegisterObjectType("SelectOption", sizeof(Rocket::Controls::SelectOption), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS);
 
 			// Hierarchy (register valid type-casts)
 			{
 				using namespace ScriptUtils::Inheritance;
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGrid>(engine, "Element", "DataGrid");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGrid>(engine, "Element", "ElementDataGrid");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridRow>(engine, "Element", "DataGridRow");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridRow>(engine, "Element", "ElementDataGridRow");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridCell>(engine, "Element", "DataGridCell");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridCell>(engine, "Element", "ElementDataGridCell");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridExpandButton>(engine, "Element", "DataGridExpandButton");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementDataGridExpandButton>(engine, "Element", "ElementDataGridExpandButton");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementForm>(engine, "Element", "Form");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementForm>(engine, "Element", "ElementForm");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControl>(engine, "Element", "FormControl");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControl>(engine, "Element", "ElementFormControl");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControlInput>(engine, "Element", "FormControlInput");
-				RegisterBaseOf<Rocket::Controls::ElementFormControl, Rocket::Controls::ElementFormControlInput>(engine, "FormControl", "FormControlInput");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControlInput>(engine, "Element", "ElementFormControlInput");
+				RegisterBaseOf<Rocket::Controls::ElementFormControl, Rocket::Controls::ElementFormControlInput>(engine, "ElementFormControl", "ElementFormControlInput");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControlTextArea>(engine, "Element", "FormControlTextArea");
-				RegisterBaseOf<Rocket::Controls::ElementFormControl, Rocket::Controls::ElementFormControlTextArea>(engine, "FormControl", "FormControlTextArea");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControlTextArea>(engine, "Element", "ElementFormControlTextArea");
+				RegisterBaseOf<Rocket::Controls::ElementFormControl, Rocket::Controls::ElementFormControlTextArea>(engine, "ElementFormControl", "ElementFormControlTextArea");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControlSelect>(engine, "Element", "FormControlSelect");
-				RegisterBaseOf<Rocket::Controls::ElementFormControl, Rocket::Controls::ElementFormControlSelect>(engine, "FormControl", "FormControlSelect");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControlSelect>(engine, "Element", "ElementFormControlSelect");
+				RegisterBaseOf<Rocket::Controls::ElementFormControl, Rocket::Controls::ElementFormControlSelect>(engine, "ElementFormControl", "ElementFormControlSelect");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControlDataSelect>(engine, "Element", "FormControlDataSelect");
-				RegisterBaseOf<Rocket::Controls::ElementFormControl, Rocket::Controls::ElementFormControlDataSelect>(engine, "FormControl", "FormControlDataSelect");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementFormControlDataSelect>(engine, "Element", "ElementFormControlDataSelect");
+				RegisterBaseOf<Rocket::Controls::ElementFormControl, Rocket::Controls::ElementFormControlDataSelect>(engine, "ElementFormControl", "ElementFormControlDataSelect");
 
-				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementTabSet>(engine, "Element", "TabSet");
+				RegisterBaseOf<Rocket::Core::Element, Rocket::Controls::ElementTabSet>(engine, "Element", "ElementTabSet");
 			}
 
 
 			// ElementDataGrid
 			//  Base (Element) members
-			registerElementMembers<Rocket::Core::Element>(engine, "DataGrid", _registration_utils::GetInnerRML);
+			registerElementMembers<Rocket::Core::Element>(engine, "ElementDataGrid", _registration_utils::GetInnerRML);
 			//  ElementDataGrid methods
-			r = engine->RegisterObjectMethod("DataGrid", "bool AddColumn(const e_String &in, const e_String &in, float, const e_String &in)",
+			r = engine->RegisterObjectMethod("ElementDataGrid", "bool AddColumn(const e_String &in, const e_String &in, float, const e_String &in)",
 				asMETHODPR(Rocket::Controls::ElementDataGrid, AddColumn, (const EMP::Core::String&, const EMP::Core::String&, float, const EMP::Core::String&), bool), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGrid", "void SetDataSource(const e_String &in)",
+			r = engine->RegisterObjectMethod("ElementDataGrid", "void SetDataSource(const e_String &in)",
 				asMETHOD(Rocket::Controls::ElementDataGrid, SetDataSource), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGrid", "int GetNumRows() const",
+			r = engine->RegisterObjectMethod("ElementDataGrid", "int GetNumRows() const",
 				asMETHOD(Rocket::Controls::ElementDataGrid, GetRow), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGrid", "DataGridRow& GetRow(int) const",
+			r = engine->RegisterObjectMethod("ElementDataGrid", "ElementDataGridRow& GetRow(int) const",
 				asMETHOD(Rocket::Controls::ElementDataGrid, GetRow), asCALL_THISCALL);
 
 			// ElementDataGridRow
 			//  Base (Element) members
-			registerElementMembers<Rocket::Core::Element>(engine, "DataGridRow");
+			registerElementMembers<Rocket::Core::Element>(engine, "ElementDataGridRow");
 			//  ElementDataGridRow methods
-			r = engine->RegisterObjectMethod("DataGridRow", "void SetRowExpanded(bool)",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "void SetRowExpanded(bool)",
 				asFUNCTION(ElementInterface::SetRowExpanded), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("DataGridRow", "bool IsRowExpanded()",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "bool IsRowExpanded()",
 				asMETHOD(Rocket::Controls::ElementDataGridRow, IsRowExpanded), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGridRow", "void ExpandRow()",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "void ExpandRow()",
 				asMETHOD(Rocket::Controls::ElementDataGridRow, ExpandRow), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGridRow", "void CollapseRow()",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "void CollapseRow()",
 				asMETHOD(Rocket::Controls::ElementDataGridRow, CollapseRow), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGridRow", "void ToggleRow()",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "void ToggleRow()",
 				asMETHOD(Rocket::Controls::ElementDataGridRow, ToggleRow), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGridRow", "DataGrid& GetParentGrid()",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "ElementDataGrid& GetParentGrid()",
 				asMETHOD(Rocket::Controls::ElementDataGridRow, GetParentGrid), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGridRow", "DataGridRow& GetParentRow()",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "ElementDataGridRow& GetParentRow()",
 				asMETHOD(Rocket::Controls::ElementDataGridRow, GetParentRow), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGridRow", "int GetParentRelativeIndex()",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "int GetParentRelativeIndex()",
 				asMETHOD(Rocket::Controls::ElementDataGridRow, GetParentRelativeIndex), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("DataGridRow", "int GetTableRelativeIndex()",
+			r = engine->RegisterObjectMethod("ElementDataGridRow", "int GetTableRelativeIndex()",
 				asMETHOD(Rocket::Controls::ElementDataGridRow, GetTableRelativeIndex), asCALL_THISCALL);
 
 			// ElementDataGridCell
 			//  Base (Element) members
-			registerElementMembers<Rocket::Core::Element>(engine, "DataGridCell");
+			registerElementMembers<Rocket::Core::Element>(engine, "ElementDataGridCell");
 
 			// ElementDataGridExpandButton
 			//  Base (Element) members
-			registerElementMembers<Rocket::Controls::ElementDataGridExpandButton>(engine, "DataGridExpandButton");
+			registerElementMembers<Rocket::Controls::ElementDataGridExpandButton>(engine, "ElementDataGridExpandButton");
 
 
 			// ElementForm
 			//  Base (Element) members
-			registerElementMembers<Rocket::Controls::ElementForm>(engine, "Form");
+			registerElementMembers<Rocket::Controls::ElementForm>(engine, "ElementForm");
 			//  ElementForm methods
-			r = engine->RegisterObjectMethod("Form", "void Submit(const e_String &in, const e_String &in)",
+			r = engine->RegisterObjectMethod("ElementForm", "void Submit(const e_String &in, const e_String &in)",
 				asMETHOD(Rocket::Controls::ElementForm, Submit), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("Form", "void Submit()",
+			r = engine->RegisterObjectMethod("ElementForm", "void Submit()",
 				asFUNCTION(ElementInterface::Submit), asCALL_CDECL_OBJFIRST);
 			
 
 			// ElementFormControlInput
 			//  Base (Element) members
-			registerElementMembers<Rocket::Controls::ElementFormControlInput>(engine, "FormControlInput");
+			registerElementMembers<Rocket::Controls::ElementFormControlInput>(engine, "ElementFormControlInput");
 			//  Base (ElementFormControl) members
-			RegisterFormControlMembers<Rocket::Controls::ElementFormControlInput>(engine, "FormControlInput");
+			RegisterFormControlMembers<Rocket::Controls::ElementFormControlInput>(engine, "ElementFormControlInput");
 			//  ElementFormControlInput members
-			r = engine->RegisterObjectMethod("FormControlInput", "bool GetChecked()",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "bool GetChecked()",
 				asFUNCTION(ElementInterface::GetChecked), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetChecked(bool)",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "void SetChecked(bool)",
 				asFUNCTION(ElementInterface::SetChecked), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "int GetMaxLength()",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "int GetMaxLength()",
 				asFUNCTION(ElementInterface::GetMaxLength), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetMaxLength(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "void SetMaxLength(int)",
 				asFUNCTION(ElementInterface::SetMaxLength), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "int GetSize()",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "int GetSize()",
 				asFUNCTION(ElementInterface::GetSize), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetSize(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "void SetSize(int)",
 				asFUNCTION(ElementInterface::SetSize), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "int GetMax()",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "int GetMax()",
 				asFUNCTION(ElementInterface::GetMax), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetMax(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "void SetMax(int)",
 				asFUNCTION(ElementInterface::SetMax), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "int GetMin()",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "int GetMin()",
 				asFUNCTION(ElementInterface::GetMin), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetMin(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "void SetMin(int)",
 				asFUNCTION(ElementInterface::SetMin), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "int GetStep()",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "int GetStep()",
 				asFUNCTION(ElementInterface::GetStep), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlInput", "void SetStep(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlInput", "void SetStep(int)",
 				asFUNCTION(ElementInterface::SetStep), asCALL_CDECL_OBJFIRST);
 
 			// ElementFormControlTextArea
 			//  Base (Element) members (excluding GetInnerRML, which is defined as private in ElementFormControlTextArea)
-			registerElementMembers<Rocket::Core::Element>(engine, "FormControlTextArea", _registration_utils::GetInnerRML);
+			registerElementMembers<Rocket::Core::Element>(engine, "ElementFormControlTextArea", _registration_utils::GetInnerRML);
 			//  Base members
-			RegisterFormControlMembers<Rocket::Controls::ElementFormControlTextArea>(engine, "FormControlTextArea");
+			RegisterFormControlMembers<Rocket::Controls::ElementFormControlTextArea>(engine, "ElementFormControlTextArea");
 			//  ElementFormControlTextArea members
-			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetNumColumns()",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "int GetNumColumns()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetNumColumns), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetNumColumns(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void SetNumColumns(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetNumColumns), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetNumRows()",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "int GetNumRows()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetNumRows), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetNumRows(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void SetNumRows(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetNumRows), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "bool GetWordWrap()",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "bool GetWordWrap()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetWordWrap), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetWordWrap(bool)",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void SetWordWrap(bool)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetWordWrap), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetMaxLength()",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "int GetMaxLength()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetMaxLength), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetMaxLength(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void SetMaxLength(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetMaxLength), asCALL_THISCALL);
 
-			r = engine->RegisterObjectMethod("FormControlTextArea", "int GetCursorIndex() const",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "int GetCursorIndex() const",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetCursorIndex), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetCursorIndex(int,bool)",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void SetCursorIndex(int,bool)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, SetCursorIndex), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void SetCursorIndex(int)",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void SetCursorIndex(int)",
 				asFUNCTION(SetCursorIndex_default), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void ShowCursor(bool,bool)",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void ShowCursor(bool,bool)",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, ShowCursor), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void ShowCursor(bool)",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void ShowCursor(bool)",
 				asFUNCTION(ShowCursor_default), asCALL_CDECL_OBJFIRST);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "void ScrollToCursor()",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void ScrollToCursor()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, ScrollToCursor), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("FormControlTextArea", "const e_Vector2f &GetCursorPosition() const",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "const e_Vector2f &GetCursorPosition() const",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetCursorPosition), asCALL_THISCALL);
 
 			// SelectOption (value type)
@@ -270,36 +267,36 @@ namespace Rocket { namespace AngelScript {
 
 			// ElementFormControlSelect
 			//  Base (Element) members
-			registerElementMembers<Rocket::Controls::ElementFormControl>(engine, "FormControlSelect");
+			registerElementMembers<Rocket::Controls::ElementFormControl>(engine, "ElementFormControlSelect");
 			//  Base members
-			RegisterFormControlMembers<Rocket::Controls::ElementFormControlSelect>(engine, "FormControlSelect");
+			RegisterFormControlMembers<Rocket::Controls::ElementFormControlSelect>(engine, "ElementFormControlSelect");
 			//  ElementFormControlSelect members
-			RegisterFormControlSelectMembers(engine, "FormControlSelect");
+			RegisterFormControlSelectMembers(engine, "ElementFormControlSelect");
 
 			// ElementFormControlDataSelect
 			//  Base (Element) members
-			registerElementMembers<Rocket::Controls::ElementFormControl>(engine, "FormControlDataSelect");
+			registerElementMembers<Rocket::Controls::ElementFormControl>(engine, "ElementFormControlDataSelect");
 			//  Base (ElementFormControl) members
-			RegisterFormControlMembers<Rocket::Controls::ElementFormControlSelect>(engine, "FormControlDataSelect");
+			RegisterFormControlMembers<Rocket::Controls::ElementFormControlSelect>(engine, "ElementFormControlDataSelect");
 			//  Base (ElementFormControlSelect) members
-			RegisterFormControlSelectMembers(engine, "FormControlDataSelect");
+			RegisterFormControlSelectMembers(engine, "ElementFormControlDataSelect");
 			//  ElementFormControlDataSelect members
-			engine->RegisterObjectMethod("FormControlDataSelect", "void SetDataSouce(const e_String &in)",
+			engine->RegisterObjectMethod("ElementFormControlDataSelect", "void SetDataSouce(const e_String &in)",
 				asMETHOD(Rocket::Controls::ElementFormControlDataSelect, SetDataSource), asCALL_THISCALL);
 
 			// ElementTabSet
 			//  Base (Element) members
-			registerElementMembers<Rocket::Core::Element>(engine, "TabSet");
+			registerElementMembers<Rocket::Core::Element>(engine, "ElementTabSet");
 			//  ElementTabSet members
-			engine->RegisterObjectMethod("TabSet", "int GetNumTabs()",
+			engine->RegisterObjectMethod("ElementTabSet", "int GetNumTabs()",
 				asMETHOD(Rocket::Controls::ElementTabSet, GetNumTabs), asCALL_THISCALL);
-			engine->RegisterObjectMethod("TabSet", "void SetTab(int, const e_String &in)",
+			engine->RegisterObjectMethod("ElementTabSet", "void SetTab(int, const e_String &in)",
 				asMETHODPR(Rocket::Controls::ElementTabSet, SetTab, (int, const EMP::Core::String&), void), asCALL_THISCALL);
-			engine->RegisterObjectMethod("TabSet", "void SetPanel(int, const e_String &in)",
+			engine->RegisterObjectMethod("ElementTabSet", "void SetPanel(int, const e_String &in)",
 				asMETHODPR(Rocket::Controls::ElementTabSet, SetPanel, (int, const EMP::Core::String&), void), asCALL_THISCALL);
-			engine->RegisterObjectMethod("TabSet", "int GetActiveTab()",
+			engine->RegisterObjectMethod("ElementTabSet", "int GetActiveTab()",
 				asMETHOD(Rocket::Controls::ElementTabSet, GetActiveTab), asCALL_THISCALL);
-			engine->RegisterObjectMethod("TabSet", "void SetActiveTab(int)",
+			engine->RegisterObjectMethod("ElementTabSet", "void SetActiveTab(int)",
 				asMETHOD(Rocket::Controls::ElementTabSet, SetActiveTab), asCALL_THISCALL);
 		}
 
