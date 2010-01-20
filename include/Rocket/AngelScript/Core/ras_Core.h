@@ -25,6 +25,7 @@ namespace Rocket { namespace AngelScript {
 	//void ActivateScriptGeneration();
 
 	//! Registers main Rocket types
+	//! \todo TODO: rewrite Element bindings to use AngelScript 1.17.1's property accessor support (to be more simmilar to the python plugin)
 	RASCOREDLL_API void RegisterCore(asIScriptEngine *engine);
 
 	//! Sets up the given module to use certain Rocket functionality
