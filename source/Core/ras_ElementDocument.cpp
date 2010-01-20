@@ -43,7 +43,8 @@ namespace Rocket { namespace AngelScript {
 				varInd = module->GetGlobalVarIndexByDecl("Document@ module_document");
 				void* prop = module->GetAddressOfGlobalVar(varInd);
 #endif
-				*((ElementDocument**)prop) = NULL;
+				if (prop != NULL)
+					*((ElementDocument**)prop) = NULL;
 			}
 			m_Engine->DiscardModule(it->CString());
 		}
