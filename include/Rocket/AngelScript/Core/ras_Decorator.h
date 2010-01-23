@@ -9,7 +9,7 @@
 #include <angelscript.h>
 
 #include <Rocket/Core/Decorator.h>
-#include <Inheritance/ScriptObjectWrapper.h>
+#include <ScriptUtils/Inheritance/ScriptObjectWrapper.h>
 
 
 namespace Rocket { namespace AngelScript {

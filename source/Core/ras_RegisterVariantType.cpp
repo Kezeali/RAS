@@ -118,7 +118,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Variant type");
 		
 		//  Assignment
-		r = engine->RegisterObjectBehaviour("e_Variant", asBEHAVE_ASSIGNMENT, "e_Variant &f(const e_Variant &in)", asFUNCTION(variantAssign), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod("e_Variant", "e_Variant &opAssign(const e_Variant &in)", asFUNCTION(variantAssign), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Variant type");
 
@@ -227,7 +227,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Dictionary type");
 		
 		//  Assignment
-		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_ASSIGNMENT, "e_Dictionary &f(const e_Dictionary &in)", asFUNCTION(dictionaryAssign), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod("e_Dictionary", "e_Dictionary &opAssign(const e_Dictionary &in)", asFUNCTION(dictionaryAssign), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 

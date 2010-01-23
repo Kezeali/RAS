@@ -10,8 +10,8 @@
 #include <Rocket/AngelScript/Core/ras_Core.h>
 //#include <Rocket/AngelScript/Core/ras_ElementWrapper.h>
 
-#include <Inheritance/ProxyGenerator.h>
-#include <Inheritance/CompleteHeaderGenerator.h>
+#include <ScriptUtils/Inheritance/ProxyGenerator.h>
+#include <ScriptUtils/Inheritance/CompleteHeaderGenerator.h>
 #include "../Test/scriptstdstring.h"
 
 #include "../Test/Callbacks.h"

@@ -7,8 +7,8 @@
 
 #include "../include/Rocket/AngelScript/Core/ras_ElementWrapper.h"
 
-#include <Calling/Caller.h>
-#include <Inheritance/TypeTraits.h>
+#include <ScriptUtils/Calling/Caller.h>
+#include <ScriptUtils/Inheritance/TypeTraits.h>
 
 
 namespace Rocket { namespace AngelScript {

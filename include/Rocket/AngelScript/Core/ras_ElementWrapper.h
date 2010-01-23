@@ -9,7 +9,7 @@
 #include <Rocket/Core.h>
 #include <angelscript.h>
 
-#include <Inheritance/ScriptObjectWrapper.h>
+#include <ScriptUtils/Inheritance/ScriptObjectWrapper.h>
 
 #include <boost/mpl/assert.hpp>
 #include <type_traits>

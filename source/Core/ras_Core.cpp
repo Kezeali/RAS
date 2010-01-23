@@ -19,7 +19,7 @@
 #include "../include/Rocket/AngelScript/Core/ScriptElement.h"
 
 
-#include <Inheritance/RegisterConversion.h>
+#include <ScriptUtils/Inheritance/RegisterConversion.h>
 
 
 namespace Rocket { namespace AngelScript {

@@ -190,37 +190,19 @@ namespace Rocket { namespace AngelScript {
 
 			if (allow_implicit)
 			{
-				r = engine->RegisterObjectBehaviour("e_String",
-					asBEHAVE_ASSIGNMENT,
-					("e_String& f(const "+string_typename+"&in)").c_str(),
+				r = engine->RegisterObjectMethod("e_String",
+					("e_String& opAssign(const "+string_typename+"&in)").c_str(),
 					asFUNCTION(EString_assign_string),
 					asCALL_CDECL_OBJLAST);
 				if (r < 0)
 					throw Exception("Couldn't register "+string_typename+" assignment for e_String");
 
-				r = engine->RegisterObjectBehaviour("e_String",
-					asBEHAVE_ADD_ASSIGN,
-					("e_String& f(const "+string_typename+"&in)").c_str(),
+				r = engine->RegisterObjectMethod("e_String",
+					("e_String& opAddAssign(const "+string_typename+"&in)").c_str(),
 					asFUNCTION(EString_addassign_string),
 					asCALL_CDECL_OBJLAST);
 				if (r < 0)
 					throw Exception("Couldn't register e_String::+= "+string_typename+"@");
-
-				// Can't do add operator because it isn't clear what the result should be
-				//r = engine->RegisterGlobalBehaviour("e_String",
-				//	asBEHAVE_ADD,
-				//	("e_String f(const e_String &in, const "+string_typename+"&in)").c_str(),
-				//	asFUNCTION(add_eString_string),
-				//	asCALL_CDECL_OBJLAST);
-				//if (r < 0)
-				//	throw Exception("Couldn't register e_String + "+string_typename);
-				//r = engine->RegisterGlobalBehaviour(string_typename.c_str(),
-				//	asBEHAVE_ADD,
-				//	("e_String f(const "+string_typename+"&in, const e_String &in)").c_str(),
-				//	asFUNCTION(add_string_eString),
-				//	asCALL_CDECL_OBJLAST);
-				//if (r < 0)
-				//	throw Exception("Couldn't register "+string_typename+" + e_String");
 			}
 		}
 

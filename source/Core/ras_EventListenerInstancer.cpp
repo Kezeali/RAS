@@ -25,17 +25,19 @@ namespace Rocket { namespace AngelScript {
 
 	private:
 		asIScriptEngine *m_Engine;
-		EMP::Core::String m_Module;
+		EMP::Core::String m_ModuleName;
 		EMP::Core::String m_ScriptString;
 
+		asIScriptModule *m_Module;
 		asIScriptContext *m_Ctx;
 	};
 
 	InlineEventListener::InlineEventListener(asIScriptEngine *engine, const char * module, const EMP::Core::String &script_string)
 		: m_Engine(engine),
-		m_Module(module),
+		m_ModuleName(module),
 		m_ScriptString(script_string)
 	{
+		m_Module = m_Engine->GetModule(m_ModuleName.CString(), asGM_CREATE_IF_NOT_EXISTS);
 	}
 
 	InlineEventListener::~InlineEventListener()
@@ -72,12 +74,18 @@ namespace Rocket { namespace AngelScript {
 
 	void InlineEventListener::ProcessEvent(Core::Event& ev)
 	{
-		// String is compiled every time the event is fired, since the module might have been re-compiled in the interim
-		//  (ExecuteString compiles the fn. with reguard to the module)
-		int r = m_Engine->PrepareString(m_Module.CString(), "Event @ event", m_ScriptString.CString(), &m_Ctx/*, asEXECSTRING_USE_MY_CONTEXT*/);
+		std::string funcCode = "void InlineEventFn(Event @ event) {\n";
+		funcCode += m_ScriptString.CString();
+		funcCode += "\n;}";
+
+		asIScriptFunction *func;
+		int r = m_Module->CompileFunction(ev.GetType().CString(), funcCode.c_str(), -1, 0, &func);
 		EMP_ASSERTMSG(r >= 0, "Error while compiling inline-event function");
 		EMP_ASSERTMSG(r == asEXECUTION_PREPARED, "Failed to prepare inline-event function");
 		if (r < 0) return;
+
+		m_Ctx = m_Engine->CreateContext();
+		r = m_Ctx->Prepare(func->GetId()); if (r < 0) { func->Release(); m_Ctx->Release(); }
 
 		r = m_Ctx->SetArgAddress(0, &ev);
 		// Need to manually add ref, since a ref will be dropped when the Event
@@ -91,6 +99,7 @@ namespace Rocket { namespace AngelScript {
 		EMP_ASSERTMSG(r == asEXECUTION_FINISHED, "Execution of inline-event function didn't complete");
 
 		// Clear memory
+		func->Release();
 		m_Ctx->Release();
 	}
 

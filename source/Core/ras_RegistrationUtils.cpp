@@ -45,14 +45,9 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	//}
 
 
-	bool rocketStringsEqual(const Rocket::Core::String& l, const Rocket::Core::String& r)
+	bool rocketStringEqual(const Rocket::Core::String& other, Rocket::Core::String *obj)
 	{
-		return l == r;
-	}
-
-	bool rocketStringsNotEqual(const Rocket::Core::String& l, const Rocket::Core::String& r)
-	{
-		return !(l == r);
+		return *obj == other;
 	}
 
 	Rocket::Core::StringBase::size_type rocketStringFind_fromStart(Rocket::Core::String *object, const Rocket::Core::String& s)
@@ -103,25 +98,17 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register Rocket String type");
 
-		r = engine->RegisterObjectBehaviour("r_String",
-			asBEHAVE_ASSIGNMENT,
-			"r_String &f(r_String &in)",
+		r = engine->RegisterObjectMethod("r_String",
+			"r_String &opAssign(r_String &in)",
 			asMETHODPR(Rocket::Core::String, operator=, (const Rocket::Core::String&), Rocket::Core::String&),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Rocket String type");
 
-		r = engine->RegisterGlobalBehaviour(asBEHAVE_EQUAL,
-			"bool f(const r_String &in, const r_String &in)",
-			asFUNCTION(rocketStringsEqual),
-			asCALL_CDECL);
-		if (r < 0)
-			throw Exception("Couldn't register Rocket String type");
-
-		r = engine->RegisterGlobalBehaviour(asBEHAVE_NOTEQUAL,
-			"bool f(const r_String &in, const r_String &in)",
-			asFUNCTION(rocketStringsNotEqual),
-			asCALL_CDECL);
+		r = engine->RegisterObjectMethod("r_String",
+			"bool opEquals(const r_String &in)",
+			asFUNCTION(rocketStringEqual),
+			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Rocket String type");
 
@@ -146,19 +133,14 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		//engine->RegisterObjectBehaviour("string", asBEHAVE_IMPLICIT_VALUE_CAST, "r_String f()", asFUNCTION(stringToRString), asCALL_CDECL_OBJFIRST);
 	}
 
-	bool eStringsEqual(const EMP::Core::String& l, const EMP::Core::String& r)
+	bool eStringEqual(const EMP::Core::String& other, EMP::Core::String* obj)
 	{
-		return l == r;
+		return *obj == other;
 	}
 
-	bool eStringsNotEqual(const EMP::Core::String& l, const EMP::Core::String& r)
+	EMP::Core::String eStringAdd(const EMP::Core::String& other, EMP::Core::String* obj)
 	{
-		return !(l == r);
-	}
-
-	EMP::Core::String eStringsAdd(const EMP::Core::String& l, const EMP::Core::String& r)
-	{
-		return l + r;
+		return *obj + other;
 	}
 
 	EMP::Core::String eStringIndex(EMP::Core::String::size_type index, EMP::Core::String *object)
@@ -225,46 +207,37 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
 
-		r = engine->RegisterObjectBehaviour("e_String",
-			asBEHAVE_ASSIGNMENT,
-			"e_String &f(e_String &in)",
+		r = engine->RegisterObjectMethod("e_String",
+			"e_String &opAssign(e_String &in)",
 			asMETHODPR(EMP::Core::String, operator=, (const EMP::Core::String&), EMP::Core::String&),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
 
-		r = engine->RegisterObjectBehaviour("e_String",
-			asBEHAVE_ADD_ASSIGN,
-			"e_String &f(e_String &in)",
+		r = engine->RegisterObjectMethod("e_String",
+			"e_String &opAddAssign(e_String &in)",
 			asMETHODPR(EMP::Core::String, operator+=, (const EMP::Core::String&), EMP::Core::String&),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
 
-		r = engine->RegisterGlobalBehaviour(asBEHAVE_EQUAL,
-			"bool f(const e_String &in, const e_String &in)",
-			asFUNCTION(eStringsEqual),
-			asCALL_CDECL);
+		r = engine->RegisterObjectMethod("e_String",
+			"bool opEquals(const e_String &in)",
+			asFUNCTION(eStringEqual),
+			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
 
-		r = engine->RegisterGlobalBehaviour(asBEHAVE_NOTEQUAL,
-			"bool f(const e_String &in, const e_String &in)",
-			asFUNCTION(eStringsNotEqual),
-			asCALL_CDECL);
-		if (r < 0)
-			throw Exception("Couldn't register EMP String type");
-
-		r = engine->RegisterGlobalBehaviour(asBEHAVE_ADD,
-			"e_String f(const e_String &in, const e_String &in)",
-			asFUNCTION(eStringsAdd),
-			asCALL_CDECL);
+		r = engine->RegisterObjectMethod("e_String",
+			"e_String opAdd(const e_String &in)",
+			asFUNCTION(eStringAdd),
+			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register EMP String type");
 
 		r = engine->RegisterObjectBehaviour("e_String",
 			asBEHAVE_INDEX,
-			"e_String f(uint)",
+			"e_String opIndex(uint)",
 			asFUNCTION(eStringIndex),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)

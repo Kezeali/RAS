@@ -9,8 +9,8 @@
 
 #include <EMP/Core/DataSource.h>
 
-#include <Inheritance/ScriptObjectWrapper.h>
-#include <Calling/Caller.h>
+#include <ScriptUtils/Inheritance/ScriptObjectWrapper.h>
+#include <ScriptUtils/Calling/Caller.h>
 
 
 namespace Rocket { namespace AngelScript {

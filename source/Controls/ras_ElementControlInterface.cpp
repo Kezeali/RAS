@@ -7,7 +7,7 @@
 
 #include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
 
-#include <Inheritance/RegisterConversion.h>
+#include <ScriptUtils/Inheritance/RegisterConversion.h>
 
 #include <Rocket/Core/Factory.h>
 #include <Rocket/Controls/ElementDataGrid.h>

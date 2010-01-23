@@ -44,9 +44,8 @@ void registerStlVector<T>(asIScriptEngine *engine, const std::string &script_nam
 		throw Exception("Couldn't register " + script_name + " type");
 
 	// Assign
-	r = engine->RegisterObjectBehaviour(c_script_name,
-		asBEHAVE_ASSIGNMENT,
-		(script_name + " &f(const " + script_name + " &in)").c_str(),
+	r = engine->RegisterObjectMethod(c_script_name,
+		(script_name + " &opAssign(const " + script_name + " &in)").c_str(),
 		asMETHODPR(stl::vector<T>, operator=, (const stl::vector<T>&), stl::vector<T>&),
 		asCALL_THISCALL);
 	if (r < 0)
@@ -191,9 +190,8 @@ void registerStlMap<_Key, _T>(asIScriptEngine *engine, const std::string &contai
 		throw Exception("Couldn't register " + container_name + " dtor");
 
 	// Assign
-	r = engine->RegisterObjectBehaviour(c_script_name,
-		asBEHAVE_ASSIGNMENT,
-		C_STR(container_name + " &f(const " + container_name + " &in)"),
+	r = engine->RegisterObjectMethod(c_script_name,
+		C_STR(container_name + " &opAssign(const " + container_name + " &in)"),
 		asMETHODPR(regUtil::map_type, operator=, (const regUtil::map_type&), regUtil::map_type&),
 		asCALL_THISCALL);
 	if (r < 0)
