@@ -28,14 +28,19 @@ namespace Rocket { namespace AngelScript {
 		/// @param[in] source_name Name of the the script the source comes from, useful for debug information.
 		virtual void LoadScript(EMP::Core::Stream* stream, const EMP::Core::String& source_name);
 
-		//! Checks for the 'load' event, which is when the script module will be built
-		virtual void ProcessEvent(Rocket::Core::Event& event);
+		void Build();
 
 	protected:
 		asIScriptEngine *m_Engine;
 
-		typedef EMP::Core::STL::set<EMP::Core::String> ModuleNameSet;
-		ModuleNameSet m_ModuleNames;
+		struct ScriptSection
+		{
+			EMP::Core::String name;
+			EMP::Core::String code;
+		};
+		typedef EMP::Core::STL::list<ScriptSection> SectionList;
+		SectionList m_Sections;
+		EMP::Core::String m_ModuleName;
 	};
 
 	/*!
@@ -68,6 +73,7 @@ namespace Rocket { namespace AngelScript {
 		const char *m_DefaultModuleName;
 	};
 
+	/// Register the AS compatible document instancer
 	RASCOREDLL_API void RegisterScriptableDocumentInstancer(asIScriptEngine *engine);
 
 }}

@@ -6,6 +6,8 @@
 #include "../include/Rocket/AngelScript/Core/ras_EventListenerInstancer.h"
 
 #include <Rocket/Core/Log.h>
+#include <Rocket/Core/Element.h>
+#include <Rocket/Core/ElementDocument.h>
 
 #include <sstream>
 
@@ -23,6 +25,8 @@ namespace Rocket { namespace AngelScript {
 
 		void ProcessEvent(Core::Event& ev);
 
+		void OnAttach(Rocket::Core::Element *element);
+
 	private:
 		asIScriptEngine *m_Engine;
 		EMP::Core::String m_ModuleName;
@@ -30,6 +34,8 @@ namespace Rocket { namespace AngelScript {
 
 		asIScriptModule *m_Module;
 		asIScriptContext *m_Ctx;
+
+		void acquireModule();
 	};
 
 	InlineEventListener::InlineEventListener(asIScriptEngine *engine, const char * module, const EMP::Core::String &script_string)
@@ -37,11 +43,17 @@ namespace Rocket { namespace AngelScript {
 		m_ModuleName(module),
 		m_ScriptString(script_string)
 	{
-		m_Module = m_Engine->GetModule(m_ModuleName.CString(), asGM_CREATE_IF_NOT_EXISTS);
+		acquireModule();
 	}
 
 	InlineEventListener::~InlineEventListener()
 	{
+	}
+
+	void InlineEventListener::acquireModule()
+	{
+		if (m_Module == NULL && m_ModuleName != "this")
+			m_Module = m_Engine->GetModule(m_ModuleName.CString(), asGM_CREATE_IF_NOT_EXISTS);
 	}
 
 	void InlineEventListener::ExceptionCallback(asIScriptContext *ctx)
@@ -74,6 +86,11 @@ namespace Rocket { namespace AngelScript {
 
 	void InlineEventListener::ProcessEvent(Core::Event& ev)
 	{
+		acquireModule();
+		EMP_ASSERTMSG(m_Module != NULL, "Error while compiling inline-event function - required module doesn't exist");
+		if (m_Module == NULL)
+			return;
+
 		std::string funcCode = "void InlineEventFn(Event @ event) {\n";
 		funcCode += m_ScriptString.CString();
 		funcCode += "\n;}";
@@ -101,6 +118,16 @@ namespace Rocket { namespace AngelScript {
 		// Clear memory
 		func->Release();
 		m_Ctx->Release();
+	}
+
+	void InlineEventListener::OnAttach(Rocket::Core::Element *element)
+	{
+		if (m_ModuleName == "this")
+		{
+			Rocket::Core::ElementDocument *doc = element->GetOwnerDocument();
+			if (doc != NULL)
+				m_Module = m_Engine->GetModule(doc->GetSourceURL().CString());
+		}
 	}
 
 	// InlineEventListenerInstancer impl. follows
