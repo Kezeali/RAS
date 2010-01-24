@@ -41,7 +41,8 @@ namespace Rocket { namespace AngelScript {
 	InlineEventListener::InlineEventListener(asIScriptEngine *engine, const char * module, const EMP::Core::String &script_string)
 		: m_Engine(engine),
 		m_ModuleName(module),
-		m_ScriptString(script_string)
+		m_ScriptString(script_string),
+		m_Module(NULL)
 	{
 		acquireModule();
 	}
