@@ -42,7 +42,8 @@ namespace Rocket { namespace AngelScript {
 		: m_Engine(engine),
 		m_ModuleName(module),
 		m_ScriptString(script_string),
-		m_Module(NULL)
+		m_Module(NULL),
+		m_Ctx(NULL)
 	{
 		acquireModule();
 	}
