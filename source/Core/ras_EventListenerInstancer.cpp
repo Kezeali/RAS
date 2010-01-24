@@ -19,13 +19,15 @@ namespace Rocket { namespace AngelScript {
 	{
 	public:
 		InlineEventListener(asIScriptEngine *engine, const char * module, const EMP::Core::String &script_string);
-		~InlineEventListener();
+		virtual ~InlineEventListener();
 
 		void ExceptionCallback(asIScriptContext *ctx);
+		void LineCallback(asIScriptContext *ctx);
 
 		void ProcessEvent(Core::Event& ev);
 
 		void OnAttach(Rocket::Core::Element *element);
+		void OnDetach(Rocket::Core::Element *element);
 
 	private:
 		asIScriptEngine *m_Engine;
@@ -33,9 +35,12 @@ namespace Rocket { namespace AngelScript {
 		EMP::Core::String m_ScriptString;
 
 		asIScriptModule *m_Module;
-		asIScriptContext *m_Ctx;
+		asIScriptFunction *m_Func;
+
+		Rocket::Core::Element *m_ParentElement;
 
 		void acquireModule();
+		int compile(const EMP::Core::String &section_name);
 	};
 
 	InlineEventListener::InlineEventListener(asIScriptEngine *engine, const char * module, const EMP::Core::String &script_string)
@@ -43,19 +48,46 @@ namespace Rocket { namespace AngelScript {
 		m_ModuleName(module),
 		m_ScriptString(script_string),
 		m_Module(NULL),
-		m_Ctx(NULL)
+		m_Func(NULL),
+		m_ParentElement(NULL)
 	{
 		acquireModule();
 	}
 
 	InlineEventListener::~InlineEventListener()
 	{
+		//if (m_Func != NULL)
+		//	m_Func->Release();
 	}
 
 	void InlineEventListener::acquireModule()
 	{
-		if (m_Module == NULL && m_ModuleName != "this")
-			m_Module = m_Engine->GetModule(m_ModuleName.CString(), asGM_CREATE_IF_NOT_EXISTS);
+		if (m_Module == NULL)
+		{
+			if (m_ModuleName != "this")
+				m_Module = m_Engine->GetModule(m_ModuleName.CString(), asGM_CREATE_IF_NOT_EXISTS);
+			else if (m_ParentElement != NULL)
+			{
+				Rocket::Core::ElementDocument *doc = m_ParentElement->GetOwnerDocument();
+				if (doc != NULL)
+					m_Module = m_Engine->GetModule(doc->GetSourceURL().CString());
+			}
+		}
+	}
+
+	int InlineEventListener::compile(const EMP::Core::String &section_name)
+	{
+		int r = 0;
+		if (m_Func == NULL)
+		{
+			std::string funcCode = "void InlineEventFn(Event @event) { ";
+			funcCode += m_ScriptString.CString();
+			funcCode += ";}"; // Semi-colon added in case event script doesn't have a final one (convinient for single statement scripts)
+
+			r = m_Module->CompileFunction(section_name.CString(), funcCode.c_str(), 0, 0, &m_Func);
+			EMP_ASSERTMSG(r >= 0, "Error while compiling inline-event function");
+		}
+		return r;
 	}
 
 	void InlineEventListener::ExceptionCallback(asIScriptContext *ctx)
@@ -86,49 +118,61 @@ namespace Rocket { namespace AngelScript {
 		Rocket::Core::Log::Message(EMP::Core::Log::LT_ERROR, desc.str().c_str());
 	}
 
+	void InlineEventListener::LineCallback(asIScriptContext *ctx)
+	{
+		// Nothing yet (may add optional callback / signal to instancer ctor.)
+	}
+
 	void InlineEventListener::ProcessEvent(Core::Event& ev)
 	{
 		acquireModule();
 		EMP_ASSERTMSG(m_Module != NULL, "Error while compiling inline-event function - required module doesn't exist");
 		if (m_Module == NULL)
 			return;
+		// Compile the event function if it hasn't been already (method checks this)
+		if (compile(ev.GetType()) < 0) return;
 
-		std::string funcCode = "void InlineEventFn(Event @ event) {\n";
-		funcCode += m_ScriptString.CString();
-		funcCode += "\n;}";
+		int r;
+		asIScriptContext *ctx = m_Engine->CreateContext();
+		r = ctx->Prepare(m_Func->GetId());
+		EMP_ASSERTMSG(r >= 0, "Failed to prepare inline-event function");
+		if (r < 0)
+		{
+			m_Func->Release();
+			m_Func = NULL;
+			ctx->Release();
+			return;
+		}
 
-		asIScriptFunction *func;
-		int r = m_Module->CompileFunction(ev.GetType().CString(), funcCode.c_str(), -1, 0, &func);
-		EMP_ASSERTMSG(r >= 0, "Error while compiling inline-event function");
-		EMP_ASSERTMSG(r == asEXECUTION_PREPARED, "Failed to prepare inline-event function");
-		if (r < 0) return;
+		ctx->SetExceptionCallback(asMETHOD(InlineEventListener, ExceptionCallback), this, asCALL_THISCALL);
+		// I may add a line callback later (commented out for now):
+		//ctx->SetLineCallback(asMETHOD(InlineEventListener, LineCallback), this, asCALL_THISCALL);
 
-		m_Ctx = m_Engine->CreateContext();
-		r = m_Ctx->Prepare(func->GetId()); if (r < 0) { func->Release(); m_Ctx->Release(); }
-
-		r = m_Ctx->SetArgAddress(0, &ev);
 		// Need to manually add ref, since a ref will be dropped when the Event
 		//  handle passed to the script fn. goes out of scope
 		ev.AddReference();
+		r = ctx->SetArgObject(0, &ev);
 
-		m_Ctx->SetExceptionCallback(asMETHOD(InlineEventListener, ExceptionCallback), this, asCALL_THISCALL);
-
-		r = m_Ctx->Execute();
+		r = ctx->Execute();
 		EMP_ASSERTMSG(r >= 0, "Failed to execute inline-event function");
 		EMP_ASSERTMSG(r == asEXECUTION_FINISHED, "Execution of inline-event function didn't complete");
 
 		// Clear memory
-		func->Release();
-		m_Ctx->Release();
+		ctx->Release();
 	}
 
 	void InlineEventListener::OnAttach(Rocket::Core::Element *element)
 	{
 		if (m_ModuleName == "this")
+			m_ParentElement = element;
+	}
+
+	void InlineEventListener::OnDetach(Rocket::Core::Element *element)
+	{
+		if (m_Func != NULL)
 		{
-			Rocket::Core::ElementDocument *doc = element->GetOwnerDocument();
-			if (doc != NULL)
-				m_Module = m_Engine->GetModule(doc->GetSourceURL().CString());
+			m_Func->Release();
+			m_Func = NULL;
 		}
 	}
 

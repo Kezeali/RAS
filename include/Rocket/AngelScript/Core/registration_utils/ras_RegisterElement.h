@@ -65,6 +65,9 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	//! Calls ScrollIntoView() with default param.
 	RASCOREDLL_API void ElemScrollIntoView_default(Rocket::Core::Element *obj);
 
+	RASCOREDLL_API Rocket::Core::Element* Element_GetElementById(const EMP::Core::String &id, Rocket::Core::Element *obj);
+	RASCOREDLL_API Rocket::Core::ElementDocument* Element_GetOwnerDocument(Rocket::Core::Element *obj);
+
 #include "ras_RegisterElementMembers.inl"
 
 }}}

@@ -48,4 +48,18 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		obj->ScrollIntoView();
 	}
 
+	RASCOREDLL_API Rocket::Core::Element* Element_GetElementById(const EMP::Core::String &id, Rocket::Core::Element *obj)
+	{
+		Rocket::Core::Element *element = obj->GetElementById(id);
+		element->AddReference();
+		return element;
+	}
+
+	RASCOREDLL_API Rocket::Core::ElementDocument* Element_GetOwnerDocument(Rocket::Core::Element *obj)
+	{
+		Rocket::Core::ElementDocument *document = obj->GetOwnerDocument();
+		document->AddReference();
+		return document;
+	}
+
 }}}

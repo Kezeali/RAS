@@ -130,7 +130,7 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name,
 
 	if ((excluded_virtual_methods & GetOwnerDocument) != GetOwnerDocument)
 	{
-		r = engine->RegisterObjectMethod(c_name, "Document& GetOwnerDocument()", asMETHOD(T, GetOwnerDocument), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod(c_name, "Document@ GetOwnerDocument()", asFUNCTION(Element_GetOwnerDocument), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register " + name + " class");
 	}
@@ -219,7 +219,7 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name,
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
-	r = engine->RegisterObjectMethod(c_name, "Element& GetElementById(const e_String &in)", asMETHOD(RC::Element, GetElementById), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "Element@ GetElementById(const e_String &in)", asFUNCTION(Element_GetElementById), asCALL_CDECL_OBJLAST);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name, "void  GetElementsByTag(ElementList &out, const e_String &in)", asMETHOD(RC::Element, GetElementsByTag), asCALL_THISCALL);
