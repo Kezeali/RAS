@@ -42,7 +42,7 @@ namespace Rocket { namespace AngelScript {
 			"void SetScrollTop(float p1) { __inner.SetScrollTop(p1); }\n"
 			"float GetScrollWidth() { return __inner.GetScrollWidth(); }\n"
 			"float GetScrollHeight() { return __inner.GetScrollHeight(); }\n"
-			"Document@ GetOwnerDocument() { return __inner.GetOwnerDocument(); }\n"
+			"ElementDocument@ GetOwnerDocument() { return __inner.GetOwnerDocument(); }\n"
 			"Element@ GetParentNode() { return __inner.GetParentNode(); }\n"
 			"Element@ GetNextSibling() { return __inner.GetNextSibling(); }\n"
 			"Element@ GetPreviousSibling() { return __inner.GetPreviousSibling(); }\n"

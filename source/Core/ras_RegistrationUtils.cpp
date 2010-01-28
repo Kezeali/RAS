@@ -355,10 +355,10 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
 
-		r = engine->RegisterObjectMethod("Context", "Document& GetDocument(const e_String &in)", asMETHODPR(Rocket::Core::Context, GetDocument, (const EMP::Core::String &), Rocket::Core::ElementDocument*), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "ElementDocument& GetDocument(const e_String &in)", asMETHODPR(Rocket::Core::Context, GetDocument, (const EMP::Core::String &), Rocket::Core::ElementDocument*), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
-		r = engine->RegisterObjectMethod("Context", "Document& GetDocument(int)", asMETHODPR(Rocket::Core::Context, GetDocument, (int), Rocket::Core::ElementDocument*), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "ElementDocument& GetDocument(int)", asMETHODPR(Rocket::Core::Context, GetDocument, (int), Rocket::Core::ElementDocument*), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
 		r = engine->RegisterObjectMethod("Context", "int GetNumDocuments()", asMETHOD(Rocket::Core::Context, GetNumDocuments), asCALL_THISCALL);
@@ -378,19 +378,19 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		// See ras_EventListener.h
 		RegisterContextEventListenerMethods(engine);
 
-		r = engine->RegisterObjectMethod("Context", "Document@ CreateDocument()", asFUNCTION(ContextCreateDocument_default), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod("Context", "ElementDocument@ CreateDocument()", asFUNCTION(ContextCreateDocument_default), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
-		r = engine->RegisterObjectMethod("Context", "Document@ CreateDocument(const e_String &in)", asMETHOD(Rocket::Core::Context, CreateDocument), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "ElementDocument@ CreateDocument(const e_String &in)", asMETHOD(Rocket::Core::Context, CreateDocument), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
-		r = engine->RegisterObjectMethod("Context", "Document@ LoadDocument(const e_String &in)", asMETHODPR(Rocket::Core::Context, LoadDocument, (const EMP::Core::String&), Rocket::Core::ElementDocument*), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "ElementDocument@ LoadDocument(const e_String &in)", asMETHODPR(Rocket::Core::Context, LoadDocument, (const EMP::Core::String&), Rocket::Core::ElementDocument*), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
-		r = engine->RegisterObjectMethod("Context", "Document@ LoadDocumentFromString(const e_String &in)", asMETHOD(Rocket::Core::Context, LoadDocumentFromMemory), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "ElementDocument@ LoadDocumentFromString(const e_String &in)", asMETHOD(Rocket::Core::Context, LoadDocumentFromMemory), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
-		r = engine->RegisterObjectMethod("Context", "void UnloadDocument(Document@)", asMETHOD(Rocket::Core::Context, UnloadDocument), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "void UnloadDocument(ElementDocument@)", asMETHOD(Rocket::Core::Context, UnloadDocument), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
 		r = engine->RegisterObjectMethod("Context", "void UnloadDocument(const e_String &in)", asFUNCTION(ContextUnloadDocument), asCALL_CDECL_OBJLAST);
@@ -400,10 +400,10 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
 
-		r = engine->RegisterObjectMethod("Context", "void AddMouseCursor(Document@)", asMETHOD(Rocket::Core::Context, AddMouseCursor), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "void AddMouseCursor(ElementDocument@)", asMETHOD(Rocket::Core::Context, AddMouseCursor), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
-		r = engine->RegisterObjectMethod("Context", "Document@ LoadMouseCursor(const e_String &in)", asMETHOD(Rocket::Core::Context, LoadMouseCursor), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Context", "ElementDocument@ LoadMouseCursor(const e_String &in)", asMETHOD(Rocket::Core::Context, LoadMouseCursor), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Context type");
 		r = engine->RegisterObjectMethod("Context", "void UnloadMouseCursor(const e_String &in)", asMETHOD(Rocket::Core::Context, UnloadMouseCursor), asCALL_THISCALL);

@@ -35,7 +35,7 @@ namespace Rocket { namespace AngelScript {
 			asIScriptObject *moduleProperties = (asIScriptObject*)var;
 			void* prop = moduleProperties->GetPropertyPointer(0);
 #else
-			varInd = module->GetGlobalVarIndexByDecl("Document@ module_document");
+			varInd = module->GetGlobalVarIndexByDecl("ElementDocument@ module_document");
 			void* prop = module->GetAddressOfGlobalVar(varInd);
 #endif
 			if (prop != NULL)
@@ -93,24 +93,9 @@ namespace Rocket { namespace AngelScript {
 				EMP_ERRORMSG("Couldn't create document module for a scriptable document - couldn't get the source URL.");
 				return;
 			}
-			if (m_Engine->GetModule(m_ModuleName.CString()) != NULL)
-			{
-				EMP_ERRORMSG(("Couldn't create document module for " + m_ModuleName + " - a module with the required name already exists.").CString());
-				return;
-			}
+			if (m_Engine->GetModule(m_ModuleName.CString(), asGM_ONLY_IF_EXISTS) != NULL)
+				return; // Nothing to do if the document module has already been created (no need to recompile)
 		}
-		
-		//EMP::Core::String moduleName;
-		//// Check for non-default module name
-		//if (!readModuleName(stream, section.code, moduleName))
-		//	moduleName = m_ModuleName; // Use the filename
-		//else
-		//{
-		//	asIScriptModule *module = NULL;
-		//	module = m_Engine->GetModule(moduleName.CString());
-		//	if (module != NULL)
-		//		return;
-		//}
 
 		size_t source_length = stream->Length();
 		stream->Read(section.code, source_length);
@@ -119,10 +104,10 @@ namespace Rocket { namespace AngelScript {
 		Build();
 	}
 
-#ifdef RAS_DOCUMENT_USE_PROPERTIES_OBJECT
+#ifdef RAS_DOCUMENT_ADD_PROPERTIES_OBJECT
 	static const char *s_ModulePropertiesScript =
 		"class ModuleProperties {\n"
-		"Document@ document;\n"
+		"ElementDocument@ document;\n"
 		"}\n"
 		"ModuleProperties module;";
 
@@ -147,28 +132,30 @@ namespace Rocket { namespace AngelScript {
 		}
 
 		// Add the module property
-#ifdef RAS_DOCUMENT_USE_PROPERTIES_OBJECT
+#ifdef RAS_DOCUMENT_ADD_PROPERTIES_OBJECT
 		r = module->AddScriptSection("module_properties", s_ModulePropertiesScript, s_ModulePropertiesScriptLength);
-#else
-		r = module->AddScriptSection("module_properties", "Document@ module_document;", 26);
+#elif defined(RAS_DOCUMENT_ADD_PROPERTIES)
+		r = module->AddScriptSection("module_properties", "ElementDocument@ module_document;", 26);
 #endif
 		r = module->Build();
 		EMP_ASSERTMSG(r >= 0, "Failed to build document module");
 		// Set the value of the module-property document pointer
+#if defined(RAS_DOCUMENT_ADD_PROPERTIES) || defined(RAS_DOCUMENT_ADD_PROPERTIES_OBJECT) 
 		if (r >= 0)
 		{
-#ifdef RAS_DOCUMENT_USE_PROPERTIES_OBJECT
+#ifdef RAS_DOCUMENT_ADD_PROPERTIES_OBJECT
 			r = module->GetGlobalVarIndexByDecl("ModuleProperties module");
 			void* var = module->GetAddressOfGlobalVar(r);
 			asIScriptObject *moduleProperties = (asIScriptObject*)var;
 			void* prop = moduleProperties->GetPropertyPointer(0);
-#else
-			r = module->GetGlobalVarIndexByDecl("Document@ module_document");
+#elif defined(RAS_DOCUMENT_ADD_PROPERTIES)
+			r = module->GetGlobalVarIndexByDecl("ElementDocument@ module_document");
 			void* prop = module->GetAddressOfGlobalVar(r);
 #endif
 			if (prop != NULL)
 				*((ElementDocument**)prop) = this;
 		}
+#endif
 	}
 
 	// ScriptableDocumentInstancer impl. follows

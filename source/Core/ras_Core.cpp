@@ -58,7 +58,7 @@ namespace Rocket { namespace AngelScript {
 		registerType::referenceCountable<Rocket::Core::Event>(engine, "Event");
 		//  Elements
 		registerType::referenceCountable<Rocket::Core::Element>(engine, "Element");
-		registerType::referenceCountable<Rocket::Core::ElementDocument>(engine, "Document");
+		registerType::referenceCountable<Rocket::Core::ElementDocument>(engine, "ElementDocument");
 		registerType::referenceCountable<Rocket::Core::ElementText>(engine, "ElementText");
 
 		// Register Get/Set methods for Dictionary and Variant 
@@ -94,10 +94,10 @@ namespace Rocket { namespace AngelScript {
 		registerElementMembers<Rocket::Core::Element>(engine, "Element");
 
 		//   ElementDocument
-		registerElementMembers<Rocket::Core::ElementDocument>(engine, "Document");
-		registerDocumentMembers<Rocket::Core::ElementDocument>(engine, "Document");
+		registerElementMembers<Rocket::Core::ElementDocument>(engine, "ElementDocument");
+		registerDocumentMembers<Rocket::Core::ElementDocument>(engine, "ElementDocument");
 		//    Register base conversion
-		ScriptUtils::Inheritance::RegisterBaseOf<Rocket::Core::Element, Rocket::Core::ElementDocument>(engine, "Element", "Document");
+		ScriptUtils::Inheritance::RegisterBaseOf<Rocket::Core::Element, Rocket::Core::ElementDocument>(engine, "Element", "ElementDocument");
 
 		//   ElementText
 		registerElementMembers<Rocket::Core::ElementText>(engine, "ElementText");
