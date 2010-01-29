@@ -80,11 +80,11 @@ namespace Rocket { namespace AngelScript {
 		int r = 0;
 		if (m_Func == NULL)
 		{
-			std::string funcCode = "void InlineEventFn(Event @event) { ";
+			std::string funcCode = "void InlineEventFn(Event @event) {\n";
 			funcCode += m_ScriptString.CString();
-			funcCode += ";}"; // Semi-colon added in case event script doesn't have a final one (convinient for single statement scripts)
+			funcCode += ";\n}"; // Semi-colon added in case event script doesn't have a final one (convinient for single statement scripts)
 
-			r = m_Module->CompileFunction(section_name.CString(), funcCode.c_str(), 0, 0, &m_Func);
+			r = m_Module->CompileFunction(section_name.CString(), funcCode.c_str(), -1, 0, &m_Func);
 			EMP_ASSERTMSG(r >= 0, "Error while compiling inline-event function");
 		}
 		return r;
