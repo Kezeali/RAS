@@ -3,9 +3,9 @@
 * By Elliot Hayward
 */
 
-#include "../include/Rocket/AngelScript/Controls/ras_DataFormatter.h"
+#include "../../include/Rocket/AngelScript/Controls/ras_DataFormatter.h"
 
-#include "../include/Rocket/AngelScript/Core/ras_Exception.h"
+#include "../../include/Rocket/AngelScript/Core/ras_Exception.h"
 
 #include <Rocket/Controls/DataFormatter.h>
 

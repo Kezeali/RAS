@@ -3,9 +3,9 @@
 * By Elliot Hayward
 */
 
-#include "../include/Rocket/AngelScript/Core/ras_EventConnection.h"
+#include "../../include/Rocket/AngelScript/Core/ras_EventConnection.h"
 
-#include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
+#include "../../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
 
 
 namespace Rocket { namespace AngelScript {

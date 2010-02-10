@@ -3,9 +3,9 @@
 * By Elliot Hayward
 */
 
-#include "../include/Rocket/AngelScript/Core/ras_Decorator.h"
+#include "../../include/Rocket/AngelScript/Core/ras_Decorator.h"
 
-#include "../include/Rocket/AngelScript/Core/ras_Exception.h"
+#include "../../include/Rocket/AngelScript/Core/ras_Exception.h"
 
 #include <Rocket/Core/Decorator.h>
 #include <Rocket/Core/Element.h>

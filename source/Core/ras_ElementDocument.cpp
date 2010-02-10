@@ -3,7 +3,7 @@
 * By Elliot Hayward
 */
 
-#include "../include/Rocket/AngelScript/Core/ras_ElementDocument.h"
+#include "../../include/Rocket/AngelScript/Core/ras_ElementDocument.h"
 
 #include <EMP/Core/String.h>
 #include <EMP/Core/Stream.h>

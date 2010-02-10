@@ -3,9 +3,9 @@
 * By Elliot Hayward
 */
 
-#include "../include/Rocket/AngelScript/Core/ras_ElementInstancer.h"
+#include "../../include/Rocket/AngelScript/Core/ras_ElementInstancer.h"
 
-#include "../include/Rocket/AngelScript/Core/ras_ElementWrapper.h"
+#include "../../include/Rocket/AngelScript/Core/ras_ElementWrapper.h"
 
 #include <ScriptUtils/Calling/Caller.h>
 #include <ScriptUtils/Inheritance/TypeTraits.h>

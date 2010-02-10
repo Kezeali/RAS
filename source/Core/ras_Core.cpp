@@ -3,20 +3,20 @@
 * By Elliot Hayward
 */
 
-#include "../include/Rocket/AngelScript/Core/ras_Core.h"
-#include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
-#include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegisterVariantType.h"
-#include "../include/Rocket/AngelScript/Core/registration_utils/ras_EMPSTL.h"
-#include "../include/Rocket/AngelScript/Core/registration_utils/ras_Vector2.h"
-#include "../include/Rocket/AngelScript/Core/ras_DataSource.h"
-#include "../include/Rocket/AngelScript/Core/ras_ElementInstancer.h"
-#include "../include/Rocket/AngelScript/Core/ras_DecoratorInstancer.h"
-#include "../include/Rocket/AngelScript/Core/ras_EventListenerInstancer.h"
-#include "../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
-#include "../include/Rocket/AngelScript/Core/ras_EventConnection.h"
-#include "../include/Rocket/AngelScript/Core/ras_ElementDocument.h"
+#include "../../include/Rocket/AngelScript/Core/ras_Core.h"
+#include "../../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
+#include "../../include/Rocket/AngelScript/Core/registration_utils/ras_RegisterVariantType.h"
+#include "../../include/Rocket/AngelScript/Core/registration_utils/ras_EMPSTL.h"
+#include "../../include/Rocket/AngelScript/Core/registration_utils/ras_Vector2.h"
+#include "../../include/Rocket/AngelScript/Core/ras_DataSource.h"
+#include "../../include/Rocket/AngelScript/Core/ras_ElementInstancer.h"
+#include "../../include/Rocket/AngelScript/Core/ras_DecoratorInstancer.h"
+#include "../../include/Rocket/AngelScript/Core/ras_EventListenerInstancer.h"
+#include "../../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
+#include "../../include/Rocket/AngelScript/Core/ras_EventConnection.h"
+#include "../../include/Rocket/AngelScript/Core/ras_ElementDocument.h"
 
-#include "../include/Rocket/AngelScript/Core/ScriptElement.h"
+#include "../../include/Rocket/AngelScript/Core/ScriptElement.h"
 
 
 #include <ScriptUtils/Inheritance/RegisterConversion.h>

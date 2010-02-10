@@ -3,9 +3,9 @@
 * By Elliot Hayward
 */
 
-#include "../include/Rocket/AngelScript/Controls/ras_ElementControlInterface.h"
+#include "../../include/Rocket/AngelScript/Controls/ras_ElementControlInterface.h"
 
-#include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
+#include "../../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
 
 #include <ScriptUtils/Inheritance/RegisterConversion.h>
 

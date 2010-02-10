@@ -3,7 +3,7 @@
 * By Elliot Hayward
 */
 
-#include "../include/Rocket/AngelScript/Core/registration_utils/ras_RegisterElement.h"
+#include "../../include/Rocket/AngelScript/Core/registration_utils/ras_RegisterElement.h"
 #include <Rocket/Core.h>
 
 
