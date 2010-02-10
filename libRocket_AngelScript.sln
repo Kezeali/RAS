@@ -1,12 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RocketAngelScript", "libRocket_AngelScript\libRocket_AngelScript.vcproj", "{CA162C1C-D6A0-4533-B73C-D13401FADB30}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RocketAngelScript", "libRocket_AngelScript\libRocket_AngelScript.vcxproj", "{CA162C1C-D6A0-4533-B73C-D13401FADB30}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RocketAngelScriptControls", "libRocket_AngelScript_Controls\libRocket_AngelScript_Controls.vcproj", "{2E35C19B-85EA-410D-8559-3537541F290B}"
-	ProjectSection(ProjectDependencies) = postProject
-		{CA162C1C-D6A0-4533-B73C-D13401FADB30} = {CA162C1C-D6A0-4533-B73C-D13401FADB30}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RocketAngelScriptControls", "libRocket_AngelScript_Controls\libRocket_AngelScript_Controls.vcxproj", "{2E35C19B-85EA-410D-8559-3537541F290B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

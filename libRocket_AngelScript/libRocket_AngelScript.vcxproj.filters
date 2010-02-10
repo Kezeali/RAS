@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\registration_utils">
+      <UniqueIdentifier>{9a35dc1c-da29-47be-b07c-35b54d7509c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\Core\ras_Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_DataSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_Decorator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_DecoratorInstancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_DelegatingEventListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_ElementDocument.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_ElementInstancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_EventConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_EventListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_EventListenerInstancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_RegisterElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_RegisterVariantType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_RegistrationUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ras_ScriptedEventListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DataSource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Decorator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DecoratorInstancer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DelegatingEventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementDocument.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementInstancer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventConnection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventListenerInstancer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ScriptedEventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_AngelScriptPrimativeTypes.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterElement.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterVariantType.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegistrationUtils.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.inl">
+      <Filter>Header Files\registration_utils</Filter>
+    </None>
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterElementMembers.inl">
+      <Filter>Header Files\registration_utils</Filter>
+    </None>
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterType.inl">
+      <Filter>Header Files\registration_utils</Filter>
+    </None>
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.inl">
+      <Filter>Header Files\registration_utils</Filter>
+    </None>
+  </ItemGroup>
+</Project>
