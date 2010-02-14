@@ -142,7 +142,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>angelscriptd.lib;ScriptUtils_d.lib;RocketCore_d.lib;EMPCore_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>angelscriptd.lib;ScriptUtils-mtdll-d.lib;RocketCore_d.lib;EMPCore_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -163,7 +163,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>angelscript.lib;ScriptUtils.lib;RocketCore.lib;EMPCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>angelscript.lib;ScriptUtils-mtdll.lib;RocketCore.lib;EMPCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
