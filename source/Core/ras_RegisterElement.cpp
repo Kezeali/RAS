@@ -51,14 +51,16 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	RASCOREDLL_API Rocket::Core::Element* Element_GetElementById(const EMP::Core::String &id, Rocket::Core::Element *obj)
 	{
 		Rocket::Core::Element *element = obj->GetElementById(id);
-		element->AddReference();
+		if (element != nullptr)
+			element->AddReference();
 		return element;
 	}
 
 	RASCOREDLL_API Rocket::Core::ElementDocument* Element_GetOwnerDocument(Rocket::Core::Element *obj)
 	{
 		Rocket::Core::ElementDocument *document = obj->GetOwnerDocument();
-		document->AddReference();
+		if (document != nullptr)
+			document->AddReference();
 		return document;
 	}
 
