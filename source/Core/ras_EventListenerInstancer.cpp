@@ -47,29 +47,29 @@ namespace Rocket { namespace AngelScript {
 		: m_Engine(engine),
 		m_ModuleName(module),
 		m_ScriptString(script_string),
-		m_Module(NULL),
-		m_Func(NULL),
-		m_ParentElement(NULL)
+		m_Module(nullptr),
+		m_Func(nullptr),
+		m_ParentElement(nullptr)
 	{
 		acquireModule();
 	}
 
 	InlineEventListener::~InlineEventListener()
 	{
-		//if (m_Func != NULL)
-		//	m_Func->Release();
+		if (m_Func != nullptr)
+			m_Func->Release();
 	}
 
 	void InlineEventListener::acquireModule()
 	{
-		if (m_Module == NULL)
+		if (m_Module == nullptr)
 		{
 			if (m_ModuleName != "this")
 				m_Module = m_Engine->GetModule(m_ModuleName.CString(), asGM_CREATE_IF_NOT_EXISTS);
-			else if (m_ParentElement != NULL)
+			else if (m_ParentElement != nullptr)
 			{
 				Rocket::Core::ElementDocument *doc = m_ParentElement->GetOwnerDocument();
-				if (doc != NULL)
+				if (doc != nullptr)
 					m_Module = m_Engine->GetModule(doc->GetSourceURL().CString());
 			}
 		}
@@ -78,7 +78,7 @@ namespace Rocket { namespace AngelScript {
 	int InlineEventListener::compile(const EMP::Core::String &section_name)
 	{
 		int r = 0;
-		if (m_Func == NULL)
+		if (m_Func == nullptr)
 		{
 			std::string funcCode = "void InlineEventFn(Event @event) {\n";
 			funcCode += m_ScriptString.CString();
@@ -104,7 +104,7 @@ namespace Rocket { namespace AngelScript {
 		int funcId = ctx->GetExceptionFunction();
 		const asIScriptFunction *function = engine->GetFunctionDescriptorById(funcId);
 
-		if (function != NULL)
+		if (function != nullptr)
 		{
 			desc << "  in function: " << function->GetDeclaration(false) << " (" << line << "," << column << ")" << std::endl;
 			desc << "    in module: " << function->GetModuleName() << std::endl;
@@ -126,20 +126,21 @@ namespace Rocket { namespace AngelScript {
 	void InlineEventListener::ProcessEvent(Core::Event& ev)
 	{
 		acquireModule();
-		EMP_ASSERTMSG(m_Module != NULL, "Error while compiling inline-event function - required module doesn't exist");
-		if (m_Module == NULL)
+		EMP_ASSERTMSG(m_Module != nullptr, ("Error executing inline-event function: the required script module (\"" + m_ModuleName + "\") doesn't exist").CString());
+		if (m_Module == nullptr)
 			return;
-		// Compile the event function if it hasn't been already (method checks this)
-		if (compile(ev.GetType()) < 0) return;
-
 		int r;
+		// Compile the event function if it hasn't been already (the method checks this)
+		r = compile(ev.GetType());
+		EMP_ASSERTMSG(r >= 0, "Failed to compile inline-event function");
+
 		asIScriptContext *ctx = m_Engine->CreateContext();
 		r = ctx->Prepare(m_Func->GetId());
 		EMP_ASSERTMSG(r >= 0, "Failed to prepare inline-event function");
 		if (r < 0)
 		{
 			m_Func->Release();
-			m_Func = NULL;
+			m_Func = nullptr;
 			ctx->Release();
 			return;
 		}
@@ -169,10 +170,10 @@ namespace Rocket { namespace AngelScript {
 
 	void InlineEventListener::OnDetach(Rocket::Core::Element *element)
 	{
-		if (m_Func != NULL)
+		if (m_Func != nullptr)
 		{
 			m_Func->Release();
-			m_Func = NULL;
+			m_Func = nullptr;
 		}
 	}
 
