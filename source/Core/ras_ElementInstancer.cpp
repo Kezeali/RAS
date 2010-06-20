@@ -77,7 +77,7 @@ namespace Rocket { namespace AngelScript {
 		asIScriptObject *obj = NULL;
 		try
 		{
-			//elementWrapper->AddReference();
+			elementWrapper->AddReference();
 			obj = *static_cast<asIScriptObject**>( callCtor(elementWrapper) );
 		}
 		catch (ScriptUtils::Exception) {
@@ -89,7 +89,7 @@ namespace Rocket { namespace AngelScript {
 		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, ElementWrapper<_Element>::TypeId);
 
 		elementWrapper->SetScriptObject( obj );
-		obj->Release();
+		//obj->Release();
 
 		return dynamic_cast<Core::Element*>( elementWrapper );
 	}
