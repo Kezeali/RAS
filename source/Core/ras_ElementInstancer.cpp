@@ -77,7 +77,7 @@ namespace Rocket { namespace AngelScript {
 		asIScriptObject *obj = NULL;
 		try
 		{
-			elementWrapper->AddReference();
+			//elementWrapper->AddReference();
 			obj = *static_cast<asIScriptObject**>( callCtor(elementWrapper) );
 		}
 		catch (ScriptUtils::Exception) {
@@ -86,8 +86,10 @@ namespace Rocket { namespace AngelScript {
 		if (obj == NULL)
 			return NULL;
 
+		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, ElementWrapper<_Element>::TypeId);
+
 		elementWrapper->SetScriptObject( obj );
-		//obj->Release();
+		obj->Release();
 
 		return dynamic_cast<Core::Element*>( elementWrapper );
 	}
@@ -173,6 +175,8 @@ namespace Rocket { namespace AngelScript {
 
 		if (obj == NULL)
 				return NULL;
+
+		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, ElementWrapper<_Element>::TypeId);
 
 		// Set the script object for running overrided methods
 		elementWrapper->SetScriptObject(obj);
@@ -376,7 +380,11 @@ namespace Rocket { namespace AngelScript {
 
 	void RegisterElementInstancer(asIScriptEngine *engine)
 	{
+		// Register the wrapper type for garbage collection
+		ElementWrapper<Rocket::Core::Element>::Register(engine);
+		// This is the interface that ScriptElement implements
 		RegisterElementInterface(engine);
+		// The Element type-registration methods
 		RegisterBindElementInstancer(engine);
 	}
 

@@ -9,7 +9,7 @@
 #include <Rocket/Core.h>
 #include <angelscript.h>
 
-#include <ScriptUtils/Inheritance/ScriptObjectWrapper.h>
+#include <ScriptUtils/Calling/Caller.h>
 
 #include <boost/mpl/assert.hpp>
 #include <type_traits>
@@ -22,43 +22,35 @@ namespace Rocket { namespace AngelScript {
 * AS Wrapper class for Elements 
 */
 template <typename T>
-class ElementWrapper : public T, public ScriptUtils::Inheritance::ScriptObjectWrapper
+class ElementWrapper : public T
 {
 public:
-	BOOST_MPL_ASSERT(( std::tr1::is_base_of<Rocket::Core::Element, T> ));
+	static_assert( std::is_base_of<Rocket::Core::Element, T>::value, "Element wrapper can only wrap types derrived from Rocket::Core::Element." );
 
 	ElementWrapper(const char* tag, asIScriptObject* self)
 		: T( tag ),
-		ScriptUtils::Inheritance::ScriptObjectWrapper( self )
+		_obj( self ),
+		m_GCFlag( false ),
+		locked( false )
 	{
-		//T::RemoveReference();
-		
-		//for (int i = 0; i < this->T::GetReferenceCount(); i++)
-		if (T::GetReferenceCount() >= 2)
-			_obj->AddRef();
+		_obj->AddRef();
 	}
 
 	ElementWrapper(const char* tag)
 		: T( tag ),
-		ScriptUtils::Inheritance::ScriptObjectWrapper( NULL ),
-		locked(false)
+		_obj( nullptr ),
+		m_GCFlag( false ),
+		locked( false )
 	{
 	}
 
 	virtual ~ElementWrapper() {}
 
-	virtual void SetScriptObject(asIScriptObject *self)
+	virtual void SetScriptObject(asIScriptObject* self)
 	{
-		//T::RemoveReference();
-
-		set_obj(self);
-		//_obj = self;
-		
-		// i starts at 1 because one reference is already accounted for
-		//for (int i = 1; i < this->T::GetReferenceCount(); i++)
-
-		//if (T::GetReferenceCount() >= 2)
-		//	_obj->AddRef();
+		_obj = self;
+		if (self != nullptr)
+			self->AddRef();
 	}
 
 	//! Return the AS script-object associated with this element
@@ -67,51 +59,21 @@ public:
 		return static_cast<void*>(_obj);
 	}
 
-	// Propogate add ref's into AS mirror obj
+	// Add ref to app object (the script object keeps it's own ref count, garbage collection handles the rest)
 	virtual void AddReference()
 	{
 		T::AddReference();
-
-		//if (_obj != NULL && T::GetReferenceCount() == 2)
-		//	_obj->AddRef();
-
-		//if (!locked)
-		//{
-		//	locked = true;
-		//	if (_obj != NULL)
-		//		_obj->AddRef();
-		//	locked = false;
-		//}
+		m_GCFlag = false;
 	}
 
-	// Propogate remove ref's into AS mirror obj
+	// Remove ref from app object
 	virtual void RemoveReference()
 	{
-		//if (!locked)
-		//{
-		//	locked = true;
-		//	if (_obj != NULL && _obj->Release() == 0)
-		//	{
-		//		_obj = NULL;
-		//		delete this;
-		//		return;
-		//	}
-		//	locked = false;
-		//}
-
-		if (_obj != NULL && T::GetReferenceCount() == 2)
-		{
-			if (_obj->Release() == 1)
-			{
-				// Pre-empt garbage collection
-				asIScriptObject *temp = _obj;
-				_obj = NULL;
-				temp->Release();
-			}
-		}
-
 		if (!locked)
+		{
+			m_GCFlag = false;
 			T::RemoveReference();
+		}
 		else
 			EMP_ASSERTMSG(!locked, "Tried to remove Element ref. after deactivation");
 	}
@@ -119,16 +81,39 @@ public:
 	virtual void OnReferenceDeactivate()
 	{
 		locked = true;
+		_obj->Release();
 		//_obj->GetEngine()->GarbageCollect();
-		_obj = NULL;
+		_obj = nullptr;
 		delete this;
+	}
+
+	// Allows the GC to mark this object
+	void SetGCFlag()
+	{
+		m_GCFlag = true;
+	}
+
+	// Returns true if this object has been marked by the GC
+	bool GetGCFlag() const
+	{
+		return m_GCFlag;
+	}
+
+	void EnumReferences(asIScriptEngine *engine)
+	{
+		engine->GCEnumCallback((void*)_obj);
+	}
+
+	void ReleaseAllReferences(asIScriptEngine *engine)
+	{
+		_obj->Release();
 	}
 
 	virtual void OnUpdate()
 	{
 		Core::Element::OnUpdate();
 
-		SC::Caller f = this->get_caller("void OnUpdate()");
+		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnUpdate()");
 		if ( f.ok() )
 			f();
 	}
@@ -137,7 +122,7 @@ public:
 	{
 		Core::Element::OnRender();
 
-		SC::Caller f = this->get_caller("void OnRender()");
+		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnRender()");
 		if ( f.ok() )
 			f();
 	}
@@ -146,17 +131,46 @@ public:
 	{
 		Core::Element::OnLayout();
 
-		SC::Caller f = this->get_caller("void OnLayout()");
+		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnLayout()");
 		if ( f.ok() )
 			f();
 	}
 
+	static int TypeId;
+
+	static void Register(asIScriptEngine* engine)
+	{
+		const char* name = "RASElementWrapper";
+		engine->RegisterObjectType(name, 0, asOBJ_REF | asOBJ_GC);
+
+		// --- Note that the TypeId is recorded here ---
+		TypeId = engine->GetTypeIdByDecl(name);
+
+		engine->RegisterObjectBehaviour(name, asBEHAVE_ADDREF, "void f()", asMETHOD(ElementWrapper, AddReference), asCALL_THISCALL);
+		engine->RegisterObjectBehaviour(name, asBEHAVE_RELEASE, "void f()", asMETHOD(ElementWrapper, RemoveReference), asCALL_THISCALL);
+
+		// GC behaviours
+		engine->RegisterObjectBehaviour(name, asBEHAVE_SETGCFLAG,
+			"void f()", asMETHOD(ElementWrapper, SetGCFlag), asCALL_THISCALL);
+		engine->RegisterObjectBehaviour(name, asBEHAVE_GETGCFLAG,
+			"bool f()", asMETHOD(ElementWrapper, GetGCFlag), asCALL_THISCALL);
+		engine->RegisterObjectBehaviour(name, asBEHAVE_GETREFCOUNT,
+			"int f()", asMETHOD(ElementWrapper, GetReferenceCount), asCALL_THISCALL);
+		engine->RegisterObjectBehaviour(name, asBEHAVE_ENUMREFS,
+			"void f(int&in)", asMETHOD(ElementWrapper, EnumReferences), asCALL_THISCALL);
+		engine->RegisterObjectBehaviour(name, asBEHAVE_RELEASEREFS,
+			"void f(int&in)", asMETHOD(ElementWrapper, ReleaseAllReferences), asCALL_THISCALL);
+	}
+
 	bool locked;
 
-//private:
-	// AS representation (mirror) of this object
-	//asIScriptObject* m_ScrObj;
+private:
+	// Script representation of this object
+	asIScriptObject* _obj;
+	bool m_GCFlag;
 };
+
+template <typename T> int ElementWrapper<T>::TypeId = -1;
 
 void RegisterElementInterface(asIScriptEngine *engine)
 {
