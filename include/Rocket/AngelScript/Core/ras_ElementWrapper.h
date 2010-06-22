@@ -81,8 +81,7 @@ public:
 	virtual void OnReferenceDeactivate()
 	{
 		locked = true;
-		_obj->Release();
-		//_obj->GetEngine()->GarbageCollect();
+		//_obj->Release(); // Already released by garbage collection at this point
 		_obj = nullptr;
 		delete this;
 	}
