@@ -16,10 +16,10 @@
 
 namespace Rocket { namespace AngelScript {
 
-	//void AddDelegatingEventListener(const EMP::Core::String &event, const EMP::Core::String &callback_decl, Rocket::Core::Element *obj);
-	//void RemoveDelegatingEventListener(const EMP::Core::String &event, const EMP::Core::String &callback_decl, Rocket::Core::Element *obj);
-	//void AddDelegatingEventListener(const EMP::Core::String &event, const EMP::Core::String &callback_decl, Rocket::Core::Context *obj);
-	//void RemoveDelegatingEventListener(const EMP::Core::String &event, const EMP::Core::String &callback_decl, Rocket::Core::Context *obj);
+	//void AddDelegatingEventListener(const Rocket::Core::String &event, const Rocket::Core::String &callback_decl, Rocket::Core::Element *obj);
+	//void RemoveDelegatingEventListener(const Rocket::Core::String &event, const Rocket::Core::String &callback_decl, Rocket::Core::Element *obj);
+	//void AddDelegatingEventListener(const Rocket::Core::String &event, const Rocket::Core::String &callback_decl, Rocket::Core::Context *obj);
+	//void RemoveDelegatingEventListener(const Rocket::Core::String &event, const Rocket::Core::String &callback_decl, Rocket::Core::Context *obj);
 
 	//! Registers Element#AddEventListener() taking a function declaration string
 	void RegisterDelegatingEventListenerMethods_ForElement(asIScriptEngine *engine, const char *c_name);

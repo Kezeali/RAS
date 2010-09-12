@@ -19,10 +19,10 @@ namespace Rocket { namespace AngelScript {
 	//! Registers IEventListener
 	void RegisterEventListenerInterface(asIScriptEngine *engine);
 
-	//void AddScriptedEventListener(const EMP::Core::String &event, asIScriptObject *listener, Rocket::Core::Element *obj);
-	//void RemoveScriptedEventListener(const EMP::Core::String &event, asIScriptObject *listener, Rocket::Core::Element *obj);
-	//void AddScriptedEventListener(const EMP::Core::String &event, asIScriptObject *listener, Rocket::Core::Context *obj);
-	//void RemoveScriptedEventListener(const EMP::Core::String &event, asIScriptObject *listener, Rocket::Core::Context *obj);
+	//void AddScriptedEventListener(const Rocket::Core::String &event, asIScriptObject *listener, Rocket::Core::Element *obj);
+	//void RemoveScriptedEventListener(const Rocket::Core::String &event, asIScriptObject *listener, Rocket::Core::Element *obj);
+	//void AddScriptedEventListener(const Rocket::Core::String &event, asIScriptObject *listener, Rocket::Core::Context *obj);
+	//void RemoveScriptedEventListener(const Rocket::Core::String &event, asIScriptObject *listener, Rocket::Core::Context *obj);
 
 
 	//! Registers Element#AddEventListener taking IEventListener

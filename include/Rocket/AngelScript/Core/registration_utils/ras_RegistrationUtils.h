@@ -30,8 +30,6 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	void buildClassWrapper();
 
 	//! Registers Rocket#Core#String
-	void registerRString(asIScriptEngine *engine);
-	//! Registers EMP#Core#String
 	void registerEString(asIScriptEngine *engine);
 
 	//! Registers members of Rocket#Core#Context
@@ -55,7 +53,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 	//! Type registration methods
 	namespace registerType {
-		//! Register a type that derives from EMP#Core#ReferenceCountable
+		//! Register a type that derives from Rocket#Core#ReferenceCountable
 		template <typename T>
 		static void referenceCountable(asIScriptEngine *engine, const std::string &script_name);
 
@@ -101,9 +99,9 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	//}
 
 	//template <typename T>
-	//static EMP::Core::StringBase<T>::size_type FindFirstNotOf(const EMP::Core::StringBase<T> &str, const EMP::Core::StringBase<T> &chars)
+	//static Rocket::Core::StringBase<T>::size_type FindFirstNotOf(const Rocket::Core::StringBase<T> &str, const Rocket::Core::StringBase<T> &chars)
 	//{
-	//	typedef EMP::Core::StringBase<T> StringT;
+	//	typedef Rocket::Core::StringBase<T> StringT;
 
 	//	for (int i = 0; i < str.Length(); i++)
 	//	{
@@ -112,9 +110,9 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	//}
 
 	//template <typename T>
-	//static void trim(EMP::Core::StringBase<T> &str)
+	//static void trim(Rocket::Core::StringBase<T> &str)
 	//{
-	//	typedef EMP::Core::StringBase<T> StringT;
+	//	typedef Rocket::Core::StringBase<T> StringT;
 
 	//	StringT::size_type first_char = FindFirstNotOf(str, " \r\n\t");
 	//	if (first_char == StringT::npos)

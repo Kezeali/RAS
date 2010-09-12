@@ -15,10 +15,10 @@ namespace Rocket { namespace AngelScript {
 	class ScriptedDecoratorInstancer : public Core::DecoratorInstancer
 	{
 	public:
-		ScriptedDecoratorInstancer(asIScriptEngine *engine, int type_id, const EMP::Core::String& class_name);
+		ScriptedDecoratorInstancer(asIScriptEngine *engine, int type_id, const Rocket::Core::String& class_name);
 
 	public:
-		virtual Core::Decorator* InstanceDecorator(const EMP::Core::String& name, const Core::PropertyDictionary& properties);
+		virtual Core::Decorator* InstanceDecorator(const Rocket::Core::String& name, const Core::PropertyDictionary& properties);
 
 		virtual void ReleaseDecorator(Core::Decorator* decorator);
 
@@ -27,20 +27,20 @@ namespace Rocket { namespace AngelScript {
 	private:
 		asIScriptEngine *m_Engine;
 		int m_TypeId;
-		EMP::Core::String m_ClassName;
+		Rocket::Core::String m_ClassName;
 
-		EMP::Core::String m_ParamsStr;
-		EMP::Core::StringList m_Params;
+		Rocket::Core::String m_ParamsStr;
+		Rocket::Core::StringList m_Params;
 	};
 
-	ScriptedDecoratorInstancer::ScriptedDecoratorInstancer(asIScriptEngine *engine, int type_id, const EMP::Core::String& name)
+	ScriptedDecoratorInstancer::ScriptedDecoratorInstancer(asIScriptEngine *engine, int type_id, const Rocket::Core::String& name)
 		: m_Engine(engine),
 		m_TypeId(type_id),
 		m_ClassName(name)
 	{
 	}
 
-	Core::Decorator* ScriptedDecoratorInstancer::InstanceDecorator(const EMP::Core::String& name, const Core::PropertyDictionary& properties)
+	Core::Decorator* ScriptedDecoratorInstancer::InstanceDecorator(const Rocket::Core::String& name, const Core::PropertyDictionary& properties)
 	{
 		//m_TypeId = m_Engine->GetTypeIdByDecl(m_ClassName.CString());
 		// TODO: check type is valid (i.e. typeId is >= 0)
@@ -50,15 +50,15 @@ namespace Rocket { namespace AngelScript {
 		//ScriptUtils::Calling::Caller callFactory = ScriptUtils::Calling::Caller::FactoryCaller(type, "const PropertyDictionary&in");
 		//asIScriptObject *obj = *static_cast<asIScriptObject**>( callFactory(&properties) );
 
-		//EMP::Core::STL::map<EMP::Core::String, EMP::Core::String> registeredParams;
+		//Rocket::Core::STL::map<Rocket::Core::String, Rocket::Core::String> registeredParams;
 
 		Core::PropertyMap propMap = properties.GetProperties();
 
-		/*for (EMP::Core::StringList::iterator it = m_Params.begin(), end = m_Params.end(); it != end; ++it)
+		/*for (Rocket::Core::StringList::iterator it = m_Params.begin(), end = m_Params.end(); it != end; ++it)
 		{
 			const Core::Property *prop = properties.GetProperty(*it);
 			if (prop != NULL)
-				registeredParams[*it] = prop->Get<EMP::Core::String>();
+				registeredParams[*it] = prop->Get<Rocket::Core::String>();
 		}
 		callInitialize(&registeredParams)*/
 
@@ -82,7 +82,7 @@ namespace Rocket { namespace AngelScript {
 		delete this;
 	}
 
-	void RegisterScriptedDecoratorInstancer(const EMP::Core::String &rml, const EMP::Core::String &class_name)
+	void RegisterScriptedDecoratorInstancer(const Rocket::Core::String &rml, const Rocket::Core::String &class_name)
 	{
 		asIScriptContext *ctx = asGetActiveContext();
 		if (ctx != NULL)
@@ -94,7 +94,7 @@ namespace Rocket { namespace AngelScript {
 			int typeId = module->GetTypeIdByDecl(class_name.CString());
 			if (typeId <= 0)
 			{
-				Rocket::Core::Log::Message(EMP::Core::Log::LT_WARNING,
+				Rocket::Core::Log::Message(Rocket::Core::Log::LT_WARNING,
 					"Can't register decorator-instancer for %s: class %s doesn't exist", rml, class_name);
 				return;
 			}
@@ -103,14 +103,14 @@ namespace Rocket { namespace AngelScript {
 		}
 	}
 
-	void AddDecoratorProperty(const EMP::Core::String &decorator_name/*, etc...*/)
+	void AddDecoratorProperty(const Rocket::Core::String &decorator_name/*, etc...*/)
 	{
 		//Rocket::Core::Factory::GetElementInstancer
 	}
 
 	void RegisterScriptedDecorator(asIScriptEngine *engine)
 	{
-		engine->RegisterGlobalFunction("void RegisterDecorator(const e_String &in, const e_String &in)",
+		engine->RegisterGlobalFunction("void RegisterDecorator(const rString &in, const rString &in)",
 			asFUNCTION(RegisterScriptedDecoratorInstancer), asCALL_CDECL);
 	}
 

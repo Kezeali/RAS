@@ -57,15 +57,15 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	RASCOREDLL_API bool ElemRemoveChild(Rocket::Core::Element *element, Rocket::Core::Element *obj);
 
 	//! Dispatches an event
-	RASCOREDLL_API bool ElemDispatchEvent_default(const EMP::Core::String &event, const EMP::Core::Dictionary &parameters, Rocket::Core::Element *obj);
+	RASCOREDLL_API bool ElemDispatchEvent_default(const Rocket::Core::String &event, const Rocket::Core::Dictionary &parameters, Rocket::Core::Element *obj);
 
 	//! Dispatches an event with an empty dictionary for the parameters
-	RASCOREDLL_API bool ElemDispatchEvent_noparams(const EMP::Core::String &event, Rocket::Core::Element *obj);
+	RASCOREDLL_API bool ElemDispatchEvent_noparams(const Rocket::Core::String &event, Rocket::Core::Element *obj);
 
 	//! Calls ScrollIntoView() with default param.
 	RASCOREDLL_API void ElemScrollIntoView_default(Rocket::Core::Element *obj);
 
-	RASCOREDLL_API Rocket::Core::Element* Element_GetElementById(const EMP::Core::String &id, Rocket::Core::Element *obj);
+	RASCOREDLL_API Rocket::Core::Element* Element_GetElementById(const Rocket::Core::String &id, Rocket::Core::Element *obj);
 	RASCOREDLL_API Rocket::Core::ElementDocument* Element_GetOwnerDocument(Rocket::Core::Element *obj);
 
 #include "ras_RegisterElementMembers.inl"

@@ -11,11 +11,11 @@ void registerVector2<T>(asIScriptEngine *engine, const std::string &script_name,
 {
 	BOOST_MPL_ASSERT(( std::tr1::is_fundamental<T> ));
 
-	EMP_ASSERT(T_name != "");
+	ROCKET_ASSERT(T_name != "");
 
 	const char *c_script_name = script_name.c_str();
 	int r;
-	r = engine->RegisterObjectType(c_script_name, sizeof(EMP::Core::Vector2<T>), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_C);
+	r = engine->RegisterObjectType(c_script_name, sizeof(Rocket::Core::Vector2<T>), asOBJ_VALUE | asOBJ_POD | asOBJ_APP_CLASS_C);
 	if (r < 0)
 		throw Exception("Couldn't register " + script_name + " type");
 
@@ -39,13 +39,13 @@ void registerVector2<T>(asIScriptEngine *engine, const std::string &script_name,
 	/*engine->RegisterObjectBehaviour(c_script_name,
 	asBEHAVE_ASSIGNMENT,
 	"e_" + script_name + " &f(e_" + script_name + " &in)",
-	asMETHODPR(EMP::Core::" + script_name + ", operator=, (const EMP::Core::" + script_name + "&), EMP::Core::" + script_name + "&),
+	asMETHODPR(Rocket::Core::" + script_name + ", operator=, (const Rocket::Core::" + script_name + "&), Rocket::Core::" + script_name + "&),
 	asCALL_THISCALL);*/
 
-	r = engine->RegisterObjectProperty(c_script_name, C_STR(T_name + " x"), offsetof(EMP::Core::Vector2<T>, x));
+	r = engine->RegisterObjectProperty(c_script_name, C_STR(T_name + " x"), offsetof(Rocket::Core::Vector2<T>, x));
 	if (r < 0)
 		throw Exception("Couldn't register " + script_name + " type");
-	r = engine->RegisterObjectProperty(c_script_name, C_STR(T_name + " y"), offsetof(EMP::Core::Vector2<T>, y));
+	r = engine->RegisterObjectProperty(c_script_name, C_STR(T_name + " y"), offsetof(Rocket::Core::Vector2<T>, y));
 	if (r < 0)
 		throw Exception("Couldn't register " + script_name + " type");
 }

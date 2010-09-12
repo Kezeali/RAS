@@ -1,11 +1,11 @@
 template <typename T>
 void registerStlVector<T>(asIScriptEngine *engine, const std::string &script_name, const std::string &t_name)
 {
-	typedef typename stl::vector<T>::size_type size_type;
+	typedef typename std::vector<T>::size_type size_type;
 
 	const char *c_script_name = script_name.c_str();
 	int r;
-	r = engine->RegisterObjectType(c_script_name, sizeof(stl::vector<T>), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+	r = engine->RegisterObjectType(c_script_name, sizeof(std::vector<T>), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
 	if (r < 0)
 		throw Exception("Couldn't register " + script_name + " type");
 
@@ -46,7 +46,7 @@ void registerStlVector<T>(asIScriptEngine *engine, const std::string &script_nam
 	// Assign
 	r = engine->RegisterObjectMethod(c_script_name,
 		(script_name + " &opAssign(const " + script_name + " &in)").c_str(),
-		asMETHODPR(stl::vector<T>, operator=, (const stl::vector<T>&), stl::vector<T>&),
+		asMETHODPR(std::vector<T>, operator=, (const std::vector<T>&), std::vector<T>&),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + script_name + " type");
@@ -160,7 +160,7 @@ void registerStlMap<_Key, _T>(asIScriptEngine *engine, const std::string &contai
 
 	const char *c_script_name = container_name.c_str();
 	int r;
-	r = engine->RegisterObjectType(c_script_name, sizeof(EMP::Core::STL::map<_Key,_T>), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+	r = engine->RegisterObjectType(c_script_name, sizeof(std::map<_Key,_T>), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
 	if (r < 0)
 		throw Exception("Couldn't register " + container_name + " type");
 

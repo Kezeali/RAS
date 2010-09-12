@@ -16,21 +16,21 @@
 
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
-	//! Registers EMP#Core#Variant
+	//! Registers Rocket#Core#Variant
 	void registerVariant(asIScriptEngine *engine);
 	//! Registers Rocket#Core#Property
 	void registerProperty(asIScriptEngine *engine);
-	//! Registers EMP#Core#Dictionary
+	//! Registers Rocket#Core#Dictionary
 	void registerDictionary(asIScriptEngine *engine);
 
 	template <typename T>
-	T dictionaryGet(const EMP::Core::String &key, const T &default_value, EMP::Core::Dictionary *obj)
+	T dictionaryGet(const Rocket::Core::String &key, const T &default_value, Rocket::Core::Dictionary *obj)
 	{
 		return obj->Get(key, default_value);
 	}
 
 	template <typename T>
-	void variantSet(const T &value, EMP::Core::Variant *obj)
+	void variantSet(const T &value, Rocket::Core::Variant *obj)
 	{
 		obj->Set(value);
 	}
@@ -38,14 +38,14 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	//! Register Get/Set methods for Variant and types that use Variant.
 	/*! 
 	 * Registers e_Variant#Get_<script_typename>
-	 * Registers e_Dictionary#Get(e_String key, <script_typename> default_value)
+	 * Registers e_Dictionary#Get(rString key, <script_typename> default_value)
 	 * Registers Element#GetAttribute (which thinly wraps e_Dictionary#Get)
 	 * \todo Register Variant#GetInto(), Dictionary#GetInto() here
 	 */
 	template <typename T>
 	void registerVariantGetSet(asIScriptEngine *engine, const std::string &script_typename)
 	{
-		using namespace EMP::Core;
+		using namespace Rocket::Core;
 
 		int r;
 		r = engine->RegisterObjectMethod("e_Variant",
@@ -56,7 +56,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Variant::Get<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("e_Dictionary",
-			std::string(script_typename+" Get(const e_String &in, const "+script_typename+" &in) const").c_str(),
+			std::string(script_typename+" Get(const rString &in, const "+script_typename+" &in) const").c_str(),
 			asFUNCTION(dictionaryGet<T>),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
@@ -70,7 +70,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Variant::Set(const "+script_typename+" &)");
 
 		r = engine->RegisterObjectMethod("e_Dictionary",
-			C_STR("void Set(const e_String &in, const "+script_typename+" &in)"),
+			C_STR("void Set(const rString &in, const "+script_typename+" &in)"),
 			asMETHODPR(Dictionary, Set<T>, (const String&, const T&), void),
 			asCALL_THISCALL);
 		if (r < 0)
@@ -84,14 +84,14 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Property::Get<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("Element",
-			std::string(script_typename+" GetAttribute(const e_String &in, const "+script_typename+" &in) const").c_str(),
+			std::string(script_typename+" GetAttribute(const rString &in, const "+script_typename+" &in) const").c_str(),
 			asMETHODPR(Rocket::Core::Element, GetAttribute<T>, (const String&, const T&) const, T),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Element::GetAttribute<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("Element",
-			C_STR("void SetAttribute(const e_String &in, const "+script_typename+" &in) const"),
+			C_STR("void SetAttribute(const rString &in, const "+script_typename+" &in) const"),
 			asMETHODPR(Rocket::Core::Element, SetAttribute<T>, (const String&, const T&), void),
 			asCALL_THISCALL);
 		if (r < 0)

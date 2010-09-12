@@ -8,7 +8,7 @@
 
 #include <angelscript.h>
 
-#include <EMP/Core/ScriptInterface.h>
+#include <Rocket/Core/ScriptInterface.h>
 
 namespace Rocket { namespace Core {
 	class Element;
@@ -19,7 +19,7 @@ namespace Rocket { namespace Core {
 namespace Rocket { namespace AngelScript {
 
 	//! Automatically removes EventListeners when going out of scope
-	class EventConnection : public EMP::Core::ScriptInterface
+	class EventConnection : public Rocket::Core::ScriptInterface
 	{
 	public:
 		//! Constructor
@@ -33,7 +33,7 @@ namespace Rocket { namespace AngelScript {
 		* \param[in] in_capture_phase
 		* Whether the listener is bound to the capture phase
 		*/
-		EventConnection(const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase);
+		EventConnection(const Rocket::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase);
 		//! Destructor
 		virtual ~EventConnection();
 
@@ -46,7 +46,7 @@ namespace Rocket { namespace AngelScript {
 		virtual void RemoveListener();
 
 	protected:
-		EMP::Core::String m_EventType;
+		Rocket::Core::String m_EventType;
 		Rocket::Core::EventListener *m_Listener;
 		bool m_InCapturePhase;
 	};
@@ -56,7 +56,7 @@ namespace Rocket { namespace AngelScript {
 	class EventConnectionTemplate : public EventConnection
 	{
 	public:
-		EventConnectionTemplate(T *target, const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase);
+		EventConnectionTemplate(T *target, const Rocket::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase);
 
 		virtual void RemoveListener();
 
@@ -65,7 +65,7 @@ namespace Rocket { namespace AngelScript {
 	};
 
 	template <class T>
-	EventConnectionTemplate<T>::EventConnectionTemplate(T *target, const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)
+	EventConnectionTemplate<T>::EventConnectionTemplate(T *target, const Rocket::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)
 		: EventConnection(event_type, listener, in_capture_phase),
 		m_Target(target)
 	{}
@@ -80,7 +80,7 @@ namespace Rocket { namespace AngelScript {
 	//class ElementEventConnection : public EventConnection
 	//{
 	//public:
-	//	ElementEventConnection(Rocket::Core::Element *element, const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase);
+	//	ElementEventConnection(Rocket::Core::Element *element, const Rocket::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase);
 
 	//	void RemoveListener();
 
@@ -94,7 +94,7 @@ namespace Rocket { namespace AngelScript {
 	//public:
 	//	//! Constructor
 	//	//! \see EventConnection
-	//	ContextEventConnection(Rocket::Core::Context *context, const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase);
+	//	ContextEventConnection(Rocket::Core::Context *context, const Rocket::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase);
 	//	void RemoveListener();
 
 	//protected:

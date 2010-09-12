@@ -14,10 +14,10 @@
 
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	
-	//! Register an EMP#Core#Vector2 class with components type T
+	//! Register an Rocket#Core#Vector2 class with components type T
 	template <typename T>
 	static void registerVector2(asIScriptEngine *engine, const std::string &script_name);
-	//! Register an EMP#Core#Vector2 class with components type T
+	//! Register an Rocket#Core#Vector2 class with components type T
 	/*!
 	* \param[in] engine
 	* As engine to register the new Vector2<T> type with.
@@ -34,7 +34,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	template <typename T>
 	struct registerVector2_Utils
 	{
-		typedef EMP::Core::Vector2<T> vector2_type;
+		typedef Rocket::Core::Vector2<T> vector2_type;
 
 		static void construct(vector2_type *ptr)
 		{

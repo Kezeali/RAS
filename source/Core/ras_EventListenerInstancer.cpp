@@ -18,7 +18,7 @@ namespace Rocket { namespace AngelScript {
 	class InlineEventListener : public Rocket::Core::EventListener
 	{
 	public:
-		InlineEventListener(asIScriptEngine *engine, const char * module, const EMP::Core::String &script_string);
+		InlineEventListener(asIScriptEngine *engine, const char * module, const Rocket::Core::String &script_string);
 		virtual ~InlineEventListener();
 
 		void ExceptionCallback(asIScriptContext *ctx);
@@ -31,8 +31,8 @@ namespace Rocket { namespace AngelScript {
 
 	private:
 		asIScriptEngine *m_Engine;
-		EMP::Core::String m_ModuleName;
-		EMP::Core::String m_ScriptString;
+		Rocket::Core::String m_ModuleName;
+		Rocket::Core::String m_ScriptString;
 
 		asIScriptModule *m_Module;
 		asIScriptFunction *m_Func;
@@ -40,10 +40,10 @@ namespace Rocket { namespace AngelScript {
 		Rocket::Core::Element *m_ParentElement;
 
 		void acquireModule();
-		int compile(const EMP::Core::String &section_name);
+		int compile(const Rocket::Core::String &section_name);
 	};
 
-	InlineEventListener::InlineEventListener(asIScriptEngine *engine, const char * module, const EMP::Core::String &script_string)
+	InlineEventListener::InlineEventListener(asIScriptEngine *engine, const char * module, const Rocket::Core::String &script_string)
 		: m_Engine(engine),
 		m_ModuleName(module),
 		m_ScriptString(script_string),
@@ -75,7 +75,7 @@ namespace Rocket { namespace AngelScript {
 		}
 	}
 
-	int InlineEventListener::compile(const EMP::Core::String &section_name)
+	int InlineEventListener::compile(const Rocket::Core::String &section_name)
 	{
 		int r = 0;
 		if (m_Func == nullptr)
@@ -85,7 +85,7 @@ namespace Rocket { namespace AngelScript {
 			funcCode += ";\n}"; // Semi-colon added in case event script doesn't have a final one (convinient for single statement scripts)
 
 			r = m_Module->CompileFunction(section_name.CString(), funcCode.c_str(), -1, 0, &m_Func);
-			EMP_ASSERTMSG(r >= 0, "Error while compiling inline-event function");
+			ROCKET_ASSERTMSG(r >= 0, "Error while compiling inline-event function");
 		}
 		return r;
 	}
@@ -115,7 +115,7 @@ namespace Rocket { namespace AngelScript {
 			desc << "\t" << m_ScriptString.Substring(0, column).CString() << "<Error\n  " << m_ScriptString.Substring(column).CString();
 		}
 
-		Rocket::Core::Log::Message(EMP::Core::Log::LT_ERROR, desc.str().c_str());
+		Rocket::Core::Log::Message(Rocket::Core::Log::LT_ERROR, desc.str().c_str());
 	}
 
 	void InlineEventListener::LineCallback(asIScriptContext *ctx)
@@ -126,17 +126,17 @@ namespace Rocket { namespace AngelScript {
 	void InlineEventListener::ProcessEvent(Core::Event& ev)
 	{
 		acquireModule();
-		EMP_ASSERTMSG(m_Module != nullptr, ("Error executing inline-event function: the required script module (\"" + m_ModuleName + "\") doesn't exist").CString());
+		ROCKET_ASSERTMSG(m_Module != nullptr, ("Error executing inline-event function: the required script module (\"" + m_ModuleName + "\") doesn't exist").CString());
 		if (m_Module == nullptr)
 			return;
 		int r;
 		// Compile the event function if it hasn't been already (the method checks this)
 		r = compile(ev.GetType());
-		EMP_ASSERTMSG(r >= 0, "Failed to compile inline-event function");
+		ROCKET_ASSERTMSG(r >= 0, "Failed to compile inline-event function");
 
 		asIScriptContext *ctx = m_Engine->CreateContext();
 		r = ctx->Prepare(m_Func->GetId());
-		EMP_ASSERTMSG(r >= 0, "Failed to prepare inline-event function");
+		ROCKET_ASSERTMSG(r >= 0, "Failed to prepare inline-event function");
 		if (r < 0)
 		{
 			m_Func->Release();
@@ -155,8 +155,8 @@ namespace Rocket { namespace AngelScript {
 		r = ctx->SetArgObject(0, &ev);
 
 		r = ctx->Execute();
-		EMP_ASSERTMSG(r >= 0, "Failed to execute inline-event function");
-		EMP_ASSERTMSG(r == asEXECUTION_FINISHED, "Execution of inline-event function didn't complete");
+		ROCKET_ASSERTMSG(r >= 0, "Failed to execute inline-event function");
+		ROCKET_ASSERTMSG(r == asEXECUTION_FINISHED, "Execution of inline-event function didn't complete");
 
 		// Clear memory
 		ctx->Release();
@@ -193,18 +193,18 @@ namespace Rocket { namespace AngelScript {
 		m_ExceptionCallback(exception_callback, exception_callback_obj)
 	{}
 
-	Core::EventListener * InlineEventListenerInstancer::InstanceEventListener(const EMP::Core::String &value)
+	Core::EventListener * InlineEventListenerInstancer::InstanceEventListener(const Rocket::Core::String &value)
 	{
 		// Check for non-default module specifier
 		if (value[0] == '%')
 		{
-			EMP::Core::String module;
-			EMP::Core::String::size_type end = value.Find(":", 1);
-			if (end > 1 && end != EMP::Core::String::npos)
+			Rocket::Core::String module;
+			Rocket::Core::String::size_type end = value.Find(":", 1);
+			if (end > 1 && end != Rocket::Core::String::npos)
 				module = value.Substring(1, end-1);
 			else
 			{
-				EMP_ERRORMSG(("The following inline event script has an invalid module directive: " + value).CString());
+				ROCKET_ERRORMSG(("The following inline event script has an invalid module directive: " + value).CString());
 				end = 0;
 			}
 

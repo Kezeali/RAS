@@ -30,7 +30,7 @@ namespace Rocket { namespace AngelScript {
 		InlineEventListenerInstancer(asIScriptEngine *engine, const char *module);
 
 		//! IEL
-		Core::EventListener* InstanceEventListener(const EMP::Core::String& value);
+		Core::EventListener* InstanceEventListener(const Rocket::Core::String& value);
 
 		//! RLS (ACRONYMS!!)
 		virtual void Release();

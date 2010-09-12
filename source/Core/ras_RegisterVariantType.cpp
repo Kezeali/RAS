@@ -38,47 +38,47 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Property type");
 	}
 
-	void constructVariant(EMP::Core::Variant *mem)
+	void constructVariant(Rocket::Core::Variant *mem)
 	{
-		new(mem) EMP::Core::Variant();
+		new(mem) Rocket::Core::Variant();
 	}
 
-	void constructVariant_copy(const EMP::Core::Variant &copy, EMP::Core::Variant *mem)
+	void constructVariant_copy(const Rocket::Core::Variant &copy, Rocket::Core::Variant *mem)
 	{
-		new(mem) EMP::Core::Variant(copy);
+		new(mem) Rocket::Core::Variant(copy);
 	}
 
-	void destructVariant(EMP::Core::Variant *mem)
+	void destructVariant(Rocket::Core::Variant *mem)
 	{
 		mem->~Variant();
 	}
 
 	// TODO:
-	void constructVariant_variabletype(void *data, int typeId, EMP::Core::Variant *obj)
+	void constructVariant_variabletype(void *data, int typeId, Rocket::Core::Variant *obj)
 	{
 		if (typeId & asTYPEID_BOOL)
-			new(obj) EMP::Core::Variant(*static_cast<bool*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<bool*>(data));
 		else if (typeId & asTYPEID_INT8)
-			new(obj) EMP::Core::Variant(*static_cast<char*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<char*>(data));
 		else if (typeId & asTYPEID_INT16)
-			new(obj) EMP::Core::Variant(*static_cast<short*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<short*>(data));
 		else if (typeId & asTYPEID_INT32)
-			new(obj) EMP::Core::Variant(*static_cast<long*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<long*>(data));
 		//else if (typeId & asTYPEID_INT64)
-		//	new(obj) EMP::Core::Variant(*static_cast<asINT64*>(data));
+		//	new(obj) Rocket::Core::Variant(*static_cast<asINT64*>(data));
 
 		else if (typeId & asTYPEID_UINT16)
-			new(obj) EMP::Core::Variant(*static_cast<unsigned short*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<unsigned short*>(data));
 		//else if (typeId & asTYPEID_UINT32)
-		//	new(obj) EMP::Core::Variant(*static_cast<unsigned long*>(data));
+		//	new(obj) Rocket::Core::Variant(*static_cast<unsigned long*>(data));
 
 		else if (typeId & asTYPEID_FLOAT)
-			new(obj) EMP::Core::Variant(*static_cast<float*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<float*>(data));
 		else if (typeId & asTYPEID_DOUBLE)
-			new(obj) EMP::Core::Variant(*static_cast<float*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<float*>(data));
 
 		else if (typeId & asTYPEID_OBJHANDLE)
-			new(obj) EMP::Core::Variant(data);
+			new(obj) Rocket::Core::Variant(data);
 
 		else
 		{
@@ -88,7 +88,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		}
 	}
 
-	EMP::Core::Variant *variantAssign(const EMP::Core::Variant &copy, EMP::Core::Variant *obj)
+	Rocket::Core::Variant *variantAssign(const Rocket::Core::Variant &copy, Rocket::Core::Variant *obj)
 	{
 		*obj = copy;
 		return obj;
@@ -96,10 +96,10 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 	void registerVariant(asIScriptEngine *engine)
 	{
-		using namespace EMP::Core;
+		using namespace Rocket::Core;
 
 		int r;
-		r = engine->RegisterObjectType("e_Variant", sizeof(EMP::Core::Variant), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+		r = engine->RegisterObjectType("e_Variant", sizeof(Rocket::Core::Variant), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
 		if (r < 0)
 			throw Exception("Couldn't register Variant type");
 
@@ -123,25 +123,25 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Variant type");
 
 		// Methods
-		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(e_String &out)", asMETHODPR(EMP::Core::Variant, GetInto, (EMP::Core::String&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(rString &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (Rocket::Core::String&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::GetInto(String)");
-		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(int &out)", asMETHODPR(EMP::Core::Variant, GetInto, (int&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(int &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (int&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::GetInto(int)");
-		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(float &out)", asMETHODPR(EMP::Core::Variant, GetInto, (float&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(float &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (float&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::GetInto(float)");
 	}
 
-	void constructDictionary(EMP::Core::Dictionary *obj)
+	void constructDictionary(Rocket::Core::Dictionary *obj)
 	{
-		new(obj) EMP::Core::Dictionary();
+		new(obj) Rocket::Core::Dictionary();
 	}
 
-	void initDictionary_tokenstring(const EMP::Core::String &entries, EMP::Core::Dictionary *obj)
+	void initDictionary_tokenstring(const Rocket::Core::String &entries, Rocket::Core::Dictionary *obj)
 	{
-		using namespace EMP::Core;
+		using namespace Rocket::Core;
 
 		String::size_type token_pos = 0, token_length = 0;
 		while (true)
@@ -173,27 +173,27 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		}
 	}
 
-	void constructDictionary_tokenstring(const EMP::Core::String &entries, EMP::Core::Dictionary *obj)
+	void constructDictionary_tokenstring(const Rocket::Core::String &entries, Rocket::Core::Dictionary *obj)
 	{
-		new(obj) EMP::Core::Dictionary();
+		new(obj) Rocket::Core::Dictionary();
 
 		initDictionary_tokenstring(entries, obj);
 	}
 
-	void destructDictionary(EMP::Core::Dictionary *obj)
+	void destructDictionary(Rocket::Core::Dictionary *obj)
 	{
 		obj->~Dictionary();
 	}
 
-	EMP::Core::Dictionary *dictionaryAssign(const EMP::Core::Dictionary &copy, EMP::Core::Dictionary *obj)
+	Rocket::Core::Dictionary *dictionaryAssign(const Rocket::Core::Dictionary &copy, Rocket::Core::Dictionary *obj)
 	{
 		*obj = copy;
 		return obj;
 	}
 
-	EMP::Core::Variant *dictionaryIndex(const EMP::Core::String &key, EMP::Core::Dictionary *obj)
+	Rocket::Core::Variant *dictionaryIndex(const Rocket::Core::String &key, Rocket::Core::Dictionary *obj)
 	{
-		EMP::Core::Variant *value = obj->Get(key);
+		Rocket::Core::Variant *value = obj->Get(key);
 		if (value == NULL)
 		{
 			asIScriptContext* context = asGetActiveContext();
@@ -208,7 +208,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	void registerDictionary(asIScriptEngine *engine)
 	{
 		int r;
-		r = engine->RegisterObjectType("e_Dictionary", sizeof(EMP::Core::Dictionary), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+		r = engine->RegisterObjectType("e_Dictionary", sizeof(Rocket::Core::Dictionary), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
@@ -217,7 +217,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(constructDictionary), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
-		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_CONSTRUCT, "void f(const e_String &in)", asFUNCTION(constructDictionary_tokenstring), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_CONSTRUCT, "void f(const rString &in)", asFUNCTION(constructDictionary_tokenstring), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
@@ -232,18 +232,18 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Dictionary type");
 
 		//  Index
-		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_INDEX, "e_Variant& f(const e_String &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_INDEX, "e_Variant& f(const rString &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
 		// Methods
-		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(e_String &out)", asMETHODPR(EMP::Core::Dictionary, GetInto, (const EMP::Core::String&, EMP::Core::String&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(rString &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, Rocket::Core::String&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::GetInto(String)");
-		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(int &out)", asMETHODPR(EMP::Core::Dictionary, GetInto, (const EMP::Core::String&, int&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(int &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, int&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::GetInto(int)");
-		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(float &out)", asMETHODPR(EMP::Core::Dictionary, GetInto, (const EMP::Core::String&, float&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(float &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, float&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::GetInto(float)");
 	}

@@ -33,14 +33,14 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		return success;
 	}
 
-	RASCOREDLL_API bool ElemDispatchEvent_default(const EMP::Core::String &event, const EMP::Core::Dictionary &parameters, Rocket::Core::Element *obj)
+	RASCOREDLL_API bool ElemDispatchEvent_default(const Rocket::Core::String &event, const Rocket::Core::Dictionary &parameters, Rocket::Core::Element *obj)
 	{
 		return obj->DispatchEvent(event, parameters);
 	}
 
-	RASCOREDLL_API bool ElemDispatchEvent_noparams(const EMP::Core::String &event, Rocket::Core::Element *obj)
+	RASCOREDLL_API bool ElemDispatchEvent_noparams(const Rocket::Core::String &event, Rocket::Core::Element *obj)
 	{
-		return obj->DispatchEvent(event, EMP::Core::Dictionary());
+		return obj->DispatchEvent(event, Rocket::Core::Dictionary());
 	}
 
 	RASCOREDLL_API void ElemScrollIntoView_default(Rocket::Core::Element *obj)
@@ -48,7 +48,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		obj->ScrollIntoView();
 	}
 
-	RASCOREDLL_API Rocket::Core::Element* Element_GetElementById(const EMP::Core::String &id, Rocket::Core::Element *obj)
+	RASCOREDLL_API Rocket::Core::Element* Element_GetElementById(const Rocket::Core::String &id, Rocket::Core::Element *obj)
 	{
 		Rocket::Core::Element *element = obj->GetElementById(id);
 		if (element != nullptr)

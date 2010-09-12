@@ -6,8 +6,8 @@
 #ifndef H_ROCKET_AS_ELEMENTINSTANCER
 #define H_ROCKET_AS_ELEMENTINSTANCER
 
-#include <EMP/Core/String.h>
-#include <EMP/Core/XMLParser.h>
+#include <Rocket/Core/String.h>
+#include <Rocket/Core/XMLParser.h>
 #include <Rocket/Core/Element.h>
 #include <Rocket/Core/ElementInstancer.h>
 #include <Rocket/Core/Factory.h>
@@ -36,7 +36,7 @@ namespace Rocket { namespace AngelScript {
 	* Usually the script equivilant of this function is called - this is provided for cases where
 	* an instancer needs to be registered statically.
 	*/
-	void BindElementInstancer(const EMP::Core::String &rml_name, asIScriptEngine *engine, int typeId);
+	void BindElementInstancer(const Rocket::Core::String &rml_name, asIScriptEngine *engine, int typeId);
 
 }}
 

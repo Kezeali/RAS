@@ -10,7 +10,7 @@
 
 namespace Rocket { namespace AngelScript {
 
-	EventConnection::EventConnection(const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)
+	EventConnection::EventConnection(const Rocket::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)
 		: m_EventType(event_type),
 		m_Listener(listener),
 		m_InCapturePhase(in_capture_phase)
@@ -26,7 +26,7 @@ namespace Rocket { namespace AngelScript {
 	{
 	}
 
-	//ElementEventConnection::ElementEventConnection(Rocket::Core::Element *element, const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)
+	//ElementEventConnection::ElementEventConnection(Rocket::Core::Element *element, const Rocket::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)
 	//	: EventConnection(event_type, listener, in_capture_phase),
 	//	m_Element(element)
 	//{}
@@ -36,7 +36,7 @@ namespace Rocket { namespace AngelScript {
 	//	m_Element->RemoveEventListener(m_EventType, m_Listener, m_InCapturePhase);
 	//}
 
-	//ContextEventConnection::ContextEventConnection(Rocket::Core::Context *context, const EMP::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)
+	//ContextEventConnection::ContextEventConnection(Rocket::Core::Context *context, const Rocket::Core::String &event_type, Rocket::Core::EventListener *listener, bool in_capture_phase)
 	//	: EventConnection(event_type, listener, in_capture_phase),
 	//	m_Context(context)
 	//{}

@@ -5,8 +5,8 @@
 
 #include "../../include/Rocket/AngelScript/Core/ras_ElementDocument.h"
 
-#include <EMP/Core/String.h>
-#include <EMP/Core/Stream.h>
+#include <Rocket/Core/String.h>
+#include <Rocket/Core/Stream.h>
 #include <Rocket/Core/Event.h>
 #include <Rocket/Core/Factory.h>
 
@@ -17,7 +17,7 @@
 
 namespace Rocket { namespace AngelScript {
 
-	ElementScriptableDocument::ElementScriptableDocument(asIScriptEngine *engine, const EMP::Core::String &tag)
+	ElementScriptableDocument::ElementScriptableDocument(asIScriptEngine *engine, const Rocket::Core::String &tag)
 		: m_Engine(engine),
 		Rocket::Core::ElementDocument(tag)
 	{
@@ -44,7 +44,7 @@ namespace Rocket { namespace AngelScript {
 		m_Engine->DiscardModule(m_ModuleName.CString());
 	}
 
-	inline bool readModuleName(EMP::Core::Stream* stream, EMP::Core::String &code, EMP::Core::String &out)
+	inline bool readModuleName(Rocket::Core::Stream* stream, Rocket::Core::String &code, Rocket::Core::String &out)
 	{
 		if (stream->Read(code, 9) == 9 && code == "#module \"") // 9 = strlen("#module \"")
 		{
@@ -71,7 +71,7 @@ namespace Rocket { namespace AngelScript {
 			return false;
 	}
 
-	void ElementScriptableDocument::LoadScript(EMP::Core::Stream* stream, const EMP::Core::String& source_name)
+	void ElementScriptableDocument::LoadScript(Rocket::Core::Stream* stream, const Rocket::Core::String& source_name)
 	{
 		ScriptSection section;
 
@@ -90,7 +90,7 @@ namespace Rocket { namespace AngelScript {
 			m_ModuleName = GetSourceURL();
 			if (m_ModuleName.Empty())
 			{
-				EMP_ERRORMSG("Couldn't create document module for a scriptable document - couldn't get the source URL.");
+				ROCKET_ERRORMSG("Couldn't create document module for a scriptable document - couldn't get the source URL.");
 				return;
 			}
 			if (m_Engine->GetModule(m_ModuleName.CString(), asGM_ONLY_IF_EXISTS) != NULL)
@@ -119,7 +119,7 @@ namespace Rocket { namespace AngelScript {
 		asIScriptModule *module = m_Engine->GetModule(m_ModuleName.CString(), asGM_CREATE_IF_NOT_EXISTS);
 		if (module == NULL)
 		{
-			EMP_ERRORMSG(("Couldn't create document module for " + m_ModuleName).CString());
+			ROCKET_ERRORMSG(("Couldn't create document module for " + m_ModuleName).CString());
 			return;
 		}
 
@@ -128,7 +128,7 @@ namespace Rocket { namespace AngelScript {
 		for (SectionList::iterator it = m_Sections.begin(), end = m_Sections.end(); it != end; ++it)
 		{
 			r = module->AddScriptSection(it->name.CString(), it->code.CString(), it->code.Length());
-			EMP_ASSERTMSG(r >= 0, ("Adding script section '" + it->name + "' to module '" + m_ModuleName + "' failed").CString());
+			ROCKET_ASSERTMSG(r >= 0, ("Adding script section '" + it->name + "' to module '" + m_ModuleName + "' failed").CString());
 		}
 
 		// Add the module property
@@ -138,7 +138,7 @@ namespace Rocket { namespace AngelScript {
 		r = module->AddScriptSection("module_properties", "ElementDocument@ module_document;", 26);
 #endif
 		r = module->Build();
-		EMP_ASSERTMSG(r >= 0, "Failed to build document module");
+		ROCKET_ASSERTMSG(r >= 0, "Failed to build document module");
 		// Set the value of the module-property document pointer
 #if defined(RAS_DOCUMENT_ADD_PROPERTIES) || defined(RAS_DOCUMENT_ADD_PROPERTIES_OBJECT) 
 		if (r >= 0)
@@ -171,7 +171,7 @@ namespace Rocket { namespace AngelScript {
 		delete this;
 	}
 
-	Core::Element* ScriptableDocumentInstancer::InstanceElement(Core::Element* parent, const EMP::Core::String& tag, const EMP::Core::XMLAttributes& attributes)
+	Core::Element* ScriptableDocumentInstancer::InstanceElement(Core::Element* parent, const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes)
 	{
 		return new ElementScriptableDocument(m_Engine, tag);
 	}

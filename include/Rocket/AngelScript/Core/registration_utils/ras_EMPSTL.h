@@ -6,19 +6,15 @@
 #ifndef H_ROCKET_AS_REGISTRATIONUTILS_STL
 #define H_ROCKET_AS_REGISTRATIONUTILS_STL
 
-#include <EMP/Core/STL/map>
-#include <EMP/Core/STL/set>
-#include <EMP/Core/STL/vector>
+#include <map>
+#include <set>
+#include <vector>
 #include <angelscript.h>
 
 #include "../ras_Exception.h"
 
-#include <vector>
-
 
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
-
-	namespace stl = EMP::Core::STL;
 
 	//! Registers a EMP#Core#STL#vector type
 	template <typename T>
@@ -35,7 +31,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	template <typename T>
 	struct registerStlVector_Util
 	{
-		typedef EMP::Core::STL::vector<T> vector_type;
+		typedef std::vector<T> vector_type;
 		typedef typename vector_type::size_type size_type;
 
 		static void construct(vector_type *ptr)
@@ -85,7 +81,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	template <typename _Key, typename _T>
 	struct registerStlMap_Util
 	{
-		typedef EMP::Core::STL::map<_Key, _T> map_type;
+		typedef std::map<_Key, _T> map_type;
 		typedef typename map_type::size_type size_type;
 
 		static void construct(map_type *ptr)

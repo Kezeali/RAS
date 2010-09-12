@@ -32,7 +32,7 @@ namespace Rocket { namespace AngelScript {
 		/// Instances an element given the tag name and attributes
 		/// @param tag Name of the element to instance
 		/// @param attributes vector of name value pairs
-		virtual Core::Element* InstanceElement(Core::Element* parent, const EMP::Core::String& tag, const EMP::Core::XMLAttributes& attributes);
+		virtual Core::Element* InstanceElement(Core::Element* parent, const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes);
 
 		/// Releases the given element
 		/// @param element to release
@@ -63,7 +63,7 @@ namespace Rocket { namespace AngelScript {
 	}
 
 	template <class _Element>
-	Core::Element* ElementInstancer<_Element>::InstanceElement(Core::Element* EMP_UNUSED(parent), const EMP::Core::String& tag, const EMP::Core::XMLAttributes& attributes)
+	Core::Element* ElementInstancer<_Element>::InstanceElement(Core::Element* ROCKET_UNUSED(parent), const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes)
 	{
 		ElementWrapper<_Element> *elementWrapper = new ElementWrapper<_Element>(tag.CString());
 
@@ -99,7 +99,7 @@ namespace Rocket { namespace AngelScript {
 	{
 		// Delete the wrapper
 		//ElementWrapper<_Element> *elementWrapper = dynamic_cast<ElementWrapper<_Element>*>( element );
-		//EMP_ASSERT(elementWrapper);
+		//ROCKET_ASSERT(elementWrapper);
 		//delete elementWrapper;
 	}
 
@@ -116,7 +116,7 @@ namespace Rocket { namespace AngelScript {
 		/// Instances an element given the tag name and attributes
 		/// @param tag Name of the element to instance
 		/// @param attributes vector of name value pairs
-		virtual Core::Element* InstanceElement(Core::Element* parent, const EMP::Core::String& tag, const EMP::Core::XMLAttributes& attributes);
+		virtual Core::Element* InstanceElement(Core::Element* parent, const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes);
 
 		/// Releases the given element
 		/// @param element to release
@@ -147,7 +147,7 @@ namespace Rocket { namespace AngelScript {
 	}
 
 	template <class _Element>
-	Core::Element* FactoryElementInstancer<_Element>::InstanceElement(Core::Element* EMP_UNUSED(parent), const EMP::Core::String& tag, const EMP::Core::XMLAttributes& attributes)
+	Core::Element* FactoryElementInstancer<_Element>::InstanceElement(Core::Element* ROCKET_UNUSED(parent), const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes)
 	{
 		asIScriptModule *module = m_Engine->GetModule(m_Module);
 		if (module == NULL)
@@ -251,7 +251,7 @@ namespace Rocket { namespace AngelScript {
 		return NONE;
 	}
 
-	void BindElementInstancer(const EMP::Core::String &rml_name, asIScriptEngine *engine, int typeId)
+	void BindElementInstancer(const Rocket::Core::String &rml_name, asIScriptEngine *engine, int typeId)
 	{
 		// Check that the script type inherits from ScriptElement
 		//  Only inheriting from ScriptElement is implemented at this point -
@@ -265,7 +265,7 @@ namespace Rocket { namespace AngelScript {
 		}
 	}
 
-	void BindElementFactory(const EMP::Core::String &rml_name,
+	void BindElementFactory(const Rocket::Core::String &rml_name,
 		asIScriptEngine *engine, const char *module_name, const std::string &decl)
 	{
 		// Check that the script type inherits from ScriptElement
@@ -285,7 +285,7 @@ namespace Rocket { namespace AngelScript {
 	/*!
 	* \see BindElementInstancer()
 	*/
-	void BindElementInstancer_Wrapper(const EMP::Core::String &rml_name, const EMP::Core::String &decl)
+	void BindElementInstancer_Wrapper(const Rocket::Core::String &rml_name, const Rocket::Core::String &decl)
 	{
 		// This method is intended to be called by a script, so there should be an active context
 		//  otherwise, the call is ignored (i.e. no else case)
@@ -295,9 +295,9 @@ namespace Rocket { namespace AngelScript {
 			asIScriptEngine *engine = context->GetEngine();
 
 			// Find the module the current function is being executed in
-			int fnId = context->GetCurrentFunction(); EMP_ASSERT(fnId);
+			int fnId = context->GetCurrentFunction(); ROCKET_ASSERT(fnId);
 			const char * moduleName = engine->GetFunctionDescriptorById(fnId)->GetModuleName();
-			asIScriptModule *module = engine->GetModule(moduleName); EMP_ASSERT(module != NULL);
+			asIScriptModule *module = engine->GetModule(moduleName); ROCKET_ASSERT(module != NULL);
 
 			// Find the type with the given declaration in the current module
 			int typeId = module->GetTypeIdByDecl(decl.CString());
@@ -315,7 +315,7 @@ namespace Rocket { namespace AngelScript {
 	/*!
 	* \see BindElementFactory()
 	*/
-	void BindElementFactory_Wrapper(const EMP::Core::String &rml_name, const EMP::Core::String &decl)
+	void BindElementFactory_Wrapper(const Rocket::Core::String &rml_name, const Rocket::Core::String &decl)
 	{
 		// This method is intended to be called by a script, so there should be an active context
 		//  otherwise, the call is ignored (i.e. no else case)
@@ -325,11 +325,11 @@ namespace Rocket { namespace AngelScript {
 			asIScriptEngine *engine = context->GetEngine();
 
 			// Find the module the current function is being executed in
-			int fnId = context->GetCurrentFunction(); EMP_ASSERT(fnId);
+			int fnId = context->GetCurrentFunction(); ROCKET_ASSERT(fnId);
 			const char * moduleName = engine->GetFunctionDescriptorById(fnId)->GetModuleName();
 			
 			// Check that the passed function exists
-			asIScriptModule *module = engine->GetModule(moduleName); EMP_ASSERT(module != NULL);
+			asIScriptModule *module = engine->GetModule(moduleName); ROCKET_ASSERT(module != NULL);
 			// Find the type with the given declaration in the current module
 			int funcId = module->GetFunctionIdByDecl(decl.CString());
 			if (funcId < 0)
@@ -344,13 +344,13 @@ namespace Rocket { namespace AngelScript {
 
 	void RegisterBindElementInstancer(asIScriptEngine *engine)
 	{
-		int r = engine->RegisterGlobalFunction("void RegisterElementType(const e_String &in rml_name, const e_String &in decl)",
+		int r = engine->RegisterGlobalFunction("void RegisterElementType(const rString &in rml_name, const rString &in decl)",
 			asFUNCTION(BindElementInstancer_Wrapper), asCALL_CDECL);
-		EMP_ASSERT(r >= 0);
+		ROCKET_ASSERT(r >= 0);
 
-		r = engine->RegisterGlobalFunction("void RegisterElementFactory(const e_String &in rml_name, const e_String &in decl)",
+		r = engine->RegisterGlobalFunction("void RegisterElementFactory(const rString &in rml_name, const rString &in decl)",
 			asFUNCTION(BindElementFactory_Wrapper), asCALL_CDECL);
-		EMP_ASSERT(r >= 0);
+		ROCKET_ASSERT(r >= 0);
 	}
 
 	//! Ref-cast-style method for getting ScriptElement objects
@@ -375,7 +375,7 @@ namespace Rocket { namespace AngelScript {
 		r = engine->RegisterGlobalFunction("IElement@ unwrap(Element@)",
 			asFUNCTION(GetScriptObject<Rocket::Core::Element>),
 			asCALL_CDECL);
-		EMP_ASSERT(r >= 0);
+		ROCKET_ASSERT(r >= 0);
 	}
 
 	void RegisterElementInstancer(asIScriptEngine *engine)

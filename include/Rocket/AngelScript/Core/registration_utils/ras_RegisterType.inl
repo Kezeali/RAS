@@ -3,7 +3,7 @@ template <typename T>
 void referenceCountable<T>(asIScriptEngine *engine, const std::string &script_name)
 {
 	// Make sure the given type is derived from ReferenceCountable
-	BOOST_MPL_ASSERT(( std::tr1::is_base_of<EMP::Core::ReferenceCountable, T> ));
+	BOOST_MPL_ASSERT(( std::tr1::is_base_of<Rocket::Core::ReferenceCountable, T> ));
 
 	const char *c_script_name = script_name.c_str();
 	int r;

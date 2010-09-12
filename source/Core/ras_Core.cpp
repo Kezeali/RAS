@@ -24,7 +24,7 @@
 
 namespace Rocket { namespace AngelScript {
 
-	Rocket::Core::Context* CreateCtxWrapper(const EMP::Core::String &name, const EMP::Core::Vector2i &dimen)
+	Rocket::Core::Context* CreateCtxWrapper(const Rocket::Core::String &name, const Rocket::Core::Vector2i &dimen)
 	{
 		return Rocket::Core::CreateContext(name, dimen);
 	}
@@ -41,8 +41,6 @@ namespace Rocket { namespace AngelScript {
 		registerKeyModifierEnum(engine);
 
 		// Rocket::Core::String
-		registerRString(engine);
-		// EMP::Core::String
 		registerEString(engine);
 
 		registerVector2<int>(engine, "e_Vector2i");
@@ -67,9 +65,9 @@ namespace Rocket { namespace AngelScript {
 		registerVariantGetSet<bool>(engine, "bool");
 		registerVariantGetSet<int>(engine, "int");
 		registerVariantGetSet<float>(engine, "float");
-		registerVariantGetSet<EMP::Core::String>(engine, "e_String");
-		//registerVariantGetSet<EMP::Core::Vector2i>(engine, "e_Vector2i");
-		registerVariantGetSet<EMP::Core::Vector2f>(engine, "e_Vector2f");
+		registerVariantGetSet<Rocket::Core::String>(engine, "rString");
+		//registerVariantGetSet<Rocket::Core::Vector2i>(engine, "e_Vector2i");
+		registerVariantGetSet<Rocket::Core::Vector2f>(engine, "e_Vector2f");
 
 		//  IEventListener
 		RegisterEventListenerInterface(engine);
@@ -83,8 +81,8 @@ namespace Rocket { namespace AngelScript {
 
 		// Register STL containers
 		registerStlVector<Rocket::Core::Element*>(engine, "ElementList", "Element@");
-		registerStlVector<EMP::Core::String>(engine, "StringList", "e_String");
-		registerStlMap<EMP::Core::String, Rocket::Core::Property>(engine, "PropertyMap", "e_String", "r_Property");
+		registerStlVector<Rocket::Core::String>(engine, "StringList", "rString");
+		registerStlMap<Rocket::Core::String, Rocket::Core::Property>(engine, "PropertyMap", "rString", "r_Property");
 
 		// Register type members
 		registerContextMembers(engine);
@@ -122,11 +120,11 @@ namespace Rocket { namespace AngelScript {
 
 
 		int r;
-		r = engine->RegisterGlobalFunction("Context@ CreateContext(const e_String &in, const e_Vector2i &in)", asFUNCTION(CreateCtxWrapper), asCALL_CDECL);
+		r = engine->RegisterGlobalFunction("Context@ CreateContext(const rString &in, const e_Vector2i &in)", asFUNCTION(CreateCtxWrapper), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Failed to bind CreateContext(string, vector)");
 
-		r = engine->RegisterGlobalFunction("Context& GetContext(const e_String &in)", asFUNCTIONPR(Rocket::Core::GetContext, (const EMP::Core::String&), Rocket::Core::Context*), asCALL_CDECL);
+		r = engine->RegisterGlobalFunction("Context& GetContext(const rString &in)", asFUNCTIONPR(Rocket::Core::GetContext, (const Rocket::Core::String&), Rocket::Core::Context*), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Failed to bind GetContext(string)");
 		r = engine->RegisterGlobalFunction("Context& GetContext(int)", asFUNCTIONPR(Rocket::Core::GetContext, (int), Rocket::Core::Context*), asCALL_CDECL);
@@ -137,7 +135,7 @@ namespace Rocket { namespace AngelScript {
 		if (r < 0)
 			throw Exception("Failed to bind GetNumContexts()");
 
-		r = engine->RegisterGlobalFunction("e_String GetVersion()", asFUNCTION(Rocket::Core::GetVersion), asCALL_CDECL);
+		r = engine->RegisterGlobalFunction("rString GetVersion()", asFUNCTION(Rocket::Core::GetVersion), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Failed to bind GetVersion()");
 	}
@@ -157,18 +155,18 @@ namespace Rocket { namespace AngelScript {
 		//engine->GetModule(module_name)->AddScriptSection("EventListenerInstancerHolder", &script);
 
 		int r = AddElementsScriptSection(engine, module_name);
-		EMP_ASSERTMSG(r >= 0, "Failed to add ScriptElement code to the given module");
+		ROCKET_ASSERTMSG(r >= 0, "Failed to add ScriptElement code to the given module");
 	}
 
-	std_converter::string_type std_converter::operator ()(const EMP::Core::String &from) const
+	std_converter::string_type std_converter::operator ()(const Rocket::Core::String &from) const
 	{
 		std::string to(from.CString());
 		return to;
 	}
 
-	EMP::Core::String std_converter::operator ()(const std_converter::string_type &from) const
+	Rocket::Core::String std_converter::operator ()(const std_converter::string_type &from) const
 	{
-		EMP::Core::String to(from.c_str());
+		Rocket::Core::String to(from.c_str());
 		return to;
 	}
 

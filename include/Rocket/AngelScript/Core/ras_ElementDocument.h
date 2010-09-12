@@ -20,13 +20,13 @@ namespace Rocket { namespace AngelScript {
 	class ElementScriptableDocument : public Rocket::Core::ElementDocument
 	{
 	public:
-		ElementScriptableDocument(asIScriptEngine *engine, const EMP::Core::String &tag);
+		ElementScriptableDocument(asIScriptEngine *engine, const Rocket::Core::String &tag);
 		virtual ~ElementScriptableDocument();
 
 		//! Load an AS script into the document.
 		/// @param[in] stream Stream of code to process.
 		/// @param[in] source_name Name of the the script the source comes from, useful for debug information.
-		virtual void LoadScript(EMP::Core::Stream* stream, const EMP::Core::String& source_name);
+		virtual void LoadScript(Rocket::Core::Stream* stream, const Rocket::Core::String& source_name);
 
 		void Build();
 
@@ -35,12 +35,12 @@ namespace Rocket { namespace AngelScript {
 
 		struct ScriptSection
 		{
-			EMP::Core::String name;
-			EMP::Core::String code;
+			Rocket::Core::String name;
+			Rocket::Core::String code;
 		};
-		typedef EMP::Core::STL::list<ScriptSection> SectionList;
+		typedef std::list<ScriptSection> SectionList;
 		SectionList m_Sections;
-		EMP::Core::String m_ModuleName;
+		Rocket::Core::String m_ModuleName;
 	};
 
 	/*!
@@ -62,7 +62,7 @@ namespace Rocket { namespace AngelScript {
 		/// Instances an element given the tag name and attributes
 		/// @param tag Name of the element to instance
 		/// @param attributes vector of name value pairs
-		virtual Core::Element* InstanceElement(Core::Element* parent, const EMP::Core::String& tag, const EMP::Core::XMLAttributes& attributes);
+		virtual Core::Element* InstanceElement(Core::Element* parent, const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes);
 
 		/// Releases the given element
 		/// @param element to release

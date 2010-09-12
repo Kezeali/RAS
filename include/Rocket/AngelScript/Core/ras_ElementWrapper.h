@@ -75,7 +75,7 @@ public:
 			T::RemoveReference();
 		}
 		else
-			EMP_ASSERTMSG(!locked, "Tried to remove Element ref. after deactivation");
+			ROCKET_ASSERTMSG(!locked, "Tried to remove Element ref. after deactivation");
 	}
 
 	virtual void OnReferenceDeactivate()
@@ -175,12 +175,12 @@ void RegisterElementInterface(asIScriptEngine *engine)
 {
 	int r;
 	r = engine->RegisterInterface("IElement");
-	EMP_ASSERT(r >= 0);
+	ROCKET_ASSERT(r >= 0);
 
 	//r = engine->RegisterInterfaceMethod("IElement", "void OnUpdate()");
-	//EMP_ASSERT(r >= 0);
+	//ROCKET_ASSERT(r >= 0);
 	//r = engine->RegisterInterfaceMethod("IElement", "void OnRender()");
-	//EMP_ASSERT(r >= 0);
+	//ROCKET_ASSERT(r >= 0);
 }
 
 }}

@@ -1,10 +1,10 @@
 #ifndef H_ROCKET_AS_CONFIG
 #define H_ROCKET_AS_CONFIG
 
-#include <EMP/Core/Platform.h>
+#include <Rocket/Core/Platform.h>
 
 
-#if defined EMP_PLATFORM_WIN32 && defined _USRDLL
+#if defined ROCKET_PLATFORM_WIN32 && defined _USRDLL
 
 #ifdef RASCOREDLL_EXPORTS
 #define RASCOREDLL_API __declspec(dllexport)
