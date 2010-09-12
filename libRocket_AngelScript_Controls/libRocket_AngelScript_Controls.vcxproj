@@ -155,12 +155,14 @@
   <ItemGroup>
     <ClCompile Include="..\source\Controls\ras_Controls.cpp" />
     <ClCompile Include="..\source\Controls\ras_DataFormatter.cpp" />
+    <ClCompile Include="..\source\Controls\ras_DataSource.cpp" />
     <ClCompile Include="..\source\Controls\ras_ElementControlInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_Config.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_Controls.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataFormatter.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataSource.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_ElementControlInterface.h" />
   </ItemGroup>
   <ItemGroup>

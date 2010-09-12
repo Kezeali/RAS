@@ -7,6 +7,7 @@
 
 #include "../../include/Rocket/AngelScript/Controls/ras_ElementControlInterface.h"
 #include "../../include/Rocket/AngelScript/Controls/ras_DataFormatter.h"
+#include "../../include/Rocket/AngelScript/Controls/ras_DataSource.h"
 
 
 namespace Rocket { namespace AngelScript {
@@ -14,6 +15,8 @@ namespace Rocket { namespace AngelScript {
 
 		RASCONTROLSDLL_API void RegisterControls(asIScriptEngine *engine)
 		{
+			RegisterDataSource(engine);
+
 			ElementInterface::InitialiseAngelScriptInterface(engine);
 
 			RegisterDataFormatter(engine);

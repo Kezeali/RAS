@@ -170,7 +170,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Core\ras_Core.cpp" />
-    <ClCompile Include="..\source\Core\ras_DataSource.cpp" />
     <ClCompile Include="..\source\Core\ras_Decorator.cpp" />
     <ClCompile Include="..\source\Core\ras_DecoratorInstancer.cpp" />
     <ClCompile Include="..\source\Core\ras_DelegatingEventListener.cpp" />
@@ -187,7 +186,6 @@
   <ItemGroup>
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Config.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Core.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DataSource.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Decorator.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DecoratorInstancer.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DelegatingEventListener.h" />

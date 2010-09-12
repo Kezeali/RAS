@@ -20,6 +20,9 @@
     <ClCompile Include="..\source\Controls\ras_ElementControlInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\Controls\ras_DataSource.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_Config.h">
@@ -32,6 +35,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_ElementControlInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

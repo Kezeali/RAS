@@ -17,9 +17,6 @@
     <ClCompile Include="..\source\Core\ras_Core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\Core\ras_DataSource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\Core\ras_Decorator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -62,9 +59,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DataSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Decorator.h">

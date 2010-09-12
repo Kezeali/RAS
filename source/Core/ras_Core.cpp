@@ -8,7 +8,6 @@
 #include "../../include/Rocket/AngelScript/Core/registration_utils/ras_RegisterVariantType.h"
 #include "../../include/Rocket/AngelScript/Core/registration_utils/ras_EMPSTL.h"
 #include "../../include/Rocket/AngelScript/Core/registration_utils/ras_Vector2.h"
-#include "../../include/Rocket/AngelScript/Core/ras_DataSource.h"
 #include "../../include/Rocket/AngelScript/Core/ras_ElementInstancer.h"
 #include "../../include/Rocket/AngelScript/Core/ras_DecoratorInstancer.h"
 #include "../../include/Rocket/AngelScript/Core/ras_EventListenerInstancer.h"
@@ -110,9 +109,6 @@ namespace Rocket { namespace AngelScript {
 
 		// Event
 		registerEventMembers(engine);
-
-		// DataSource
-		RegisterDataSource(engine);
 
 		// Decorator
 		RegisterScriptedDecorator(engine);
