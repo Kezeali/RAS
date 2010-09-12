@@ -70,7 +70,7 @@ namespace Rocket { namespace AngelScript {
 			"bool RemoveChild(Element@ p1) { return __inner.RemoveChild(p1); }\n"
 			"bool HasChildNodes() { return __inner.HasChildNodes(); }\n"
 			"Element@ GetElementById(const rString&in p1) { return __inner.GetElementById(p1); }\n"
-			"void GetElementsByTag(ElementList&out p1, const rString&in p2) { __inner.GetElementsByTag(p1, p2); }\n"
+			"void GetElementsByTagName(ElementList&out p1, const rString&in p2) { __inner.GetElementsByTagName(p1, p2); }\n"
 			"}\n"
 		;
 		bool copy = engine->GetEngineProperty(asEP_COPY_SCRIPT_SECTIONS) == 1;
