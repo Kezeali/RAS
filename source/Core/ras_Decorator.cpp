@@ -36,7 +36,7 @@ namespace Rocket { namespace AngelScript {
 			asIScriptObject* data = *static_cast<asIScriptObject**>( f(element) );
 
 			data->AddRef();
-			return data;
+			return reinterpret_cast<Rocket::Core::DecoratorDataHandle>(data);
 		}
 		return NULL;
 	}
@@ -46,7 +46,7 @@ namespace Rocket { namespace AngelScript {
 		ScriptUtils::Calling::Caller f = this->get_caller("void ReleaseElementData(IDecoratorData@)");
 		if (f.ok())
 		{
-			asIScriptObject* data = static_cast<asIScriptObject*>( element_data );
+			asIScriptObject* data = reinterpret_cast<asIScriptObject*>( element_data );
 			data->AddRef();
 			f(data);
 			data->Release();
@@ -58,7 +58,7 @@ namespace Rocket { namespace AngelScript {
 		ScriptUtils::Calling::Caller f = this->get_caller("void RenderElement(Element@,IDecoratorData@)");
 		if (f.ok())
 		{
-			asIScriptObject *obj = static_cast<asIScriptObject*>(element_data);
+			asIScriptObject *obj = reinterpret_cast<asIScriptObject*>(element_data);
 			obj->AddRef();
 
 			element->AddReference();
