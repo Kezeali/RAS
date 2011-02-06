@@ -88,7 +88,7 @@ namespace Rocket { namespace AngelScript {
 		if (ctx != NULL)
 		{
 			asIScriptEngine *engine = ctx->GetEngine();
-			int funcId = ctx->GetCurrentFunction();
+			int funcId = ctx->GetFunction()->GetId();
 			const char *moduleName = engine->GetFunctionDescriptorById(funcId)->GetModuleName();
 			asIScriptModule *module = engine->GetModule(moduleName); // Why can't I just go ctx->GetModule()?!
 			int typeId = module->GetTypeIdByDecl(class_name.CString());

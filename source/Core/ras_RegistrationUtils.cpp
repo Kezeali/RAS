@@ -146,8 +146,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register Rocket String type");
 
-		r = engine->RegisterObjectBehaviour("rString",
-			asBEHAVE_INDEX,
+		r = engine->RegisterObjectMethod("rString",
 			"rString opIndex(uint)",
 			asFUNCTION(eStringIndex),
 			asCALL_CDECL_OBJLAST);

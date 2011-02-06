@@ -232,7 +232,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Dictionary type");
 
 		//  Index
-		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_INDEX, "e_Variant& f(const rString &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod("e_Dictionary", "e_Variant& opIndex(const rString &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 

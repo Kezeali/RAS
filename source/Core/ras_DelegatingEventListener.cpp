@@ -77,7 +77,7 @@ namespace Rocket { namespace AngelScript {
 		if (ctx != NULL)
 		{
 			asIScriptEngine *engine = ctx->GetEngine();
-			const char *moduleName = engine->GetFunctionDescriptorById( ctx->GetCurrentFunction() )->GetModuleName();
+			const char *moduleName = ctx->GetFunction()->GetModuleName();
 			
 			asIScriptModule *module = engine->GetModule(moduleName);
 

@@ -52,17 +52,15 @@ void registerStlVector<T>(asIScriptEngine *engine, const std::string &script_nam
 		throw Exception("Couldn't register " + script_name + " type");
 
 	// Index
-	r = engine->RegisterObjectBehaviour(c_script_name,
-		asBEHAVE_INDEX,
-		(t_name+"& f(int)").c_str(),
+	r = engine->RegisterObjectMethod(c_script_name,
+		(t_name+"& opIndex(uint)").c_str(),
 		asFUNCTION(registerStlVector_Util<T>::index),
 		asCALL_CDECL_OBJLAST);
 	if (r < 0)
 		throw Exception("Couldn't register " + script_name + " type");
 	// Const index
-	r = engine->RegisterObjectBehaviour(c_script_name,
-		asBEHAVE_INDEX,
-		("const "+t_name+"& f(int) const").c_str(),
+	r = engine->RegisterObjectMethod(c_script_name,
+		("const "+t_name+"& opIndex(uint) const").c_str(),
 		asFUNCTION(registerStlVector_Util<T>::index),
 		asCALL_CDECL_OBJLAST);
 	if (r < 0)
@@ -198,17 +196,15 @@ void registerStlMap<_Key, _T>(asIScriptEngine *engine, const std::string &contai
 		throw Exception("Couldn't register " + container_name + " type");
 
 	// Index
-	r = engine->RegisterObjectBehaviour(c_script_name,
-		asBEHAVE_INDEX,
-		(t_name+"& f("+key_name+")").c_str(),
+	r = engine->RegisterObjectMethod(c_script_name,
+		(t_name+"& opIndex("+key_name+")").c_str(),
 		asFUNCTION(regUtil::index),
 		asCALL_CDECL_OBJLAST);
 	if (r < 0)
 		throw Exception("Couldn't register " + container_name + " type");
 	// Const index
-	r = engine->RegisterObjectBehaviour(c_script_name,
-		asBEHAVE_INDEX,
-		("const "+t_name+"& f("+key_name+") const").c_str(),
+	r = engine->RegisterObjectMethod(c_script_name,
+		("const "+t_name+"& opIndex("+key_name+") const").c_str(),
 		asFUNCTION(regUtil::index),
 		asCALL_CDECL_OBJLAST);
 	if (r < 0)
