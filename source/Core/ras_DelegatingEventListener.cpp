@@ -49,7 +49,7 @@ namespace Rocket { namespace AngelScript {
 
 	void DelegatingEventListener::ProcessEvent(Rocket::Core::Event &event)
 	{
-		if (m_EventCallbackCaller.ok())
+		if (m_EventCallbackCaller)
 		{
 			event.AddReference();
 			m_EventCallbackCaller(&event);

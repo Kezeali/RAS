@@ -198,7 +198,7 @@ namespace Rocket { namespace AngelScript {
 			//asIScriptObject *obj = static_cast<asIScriptObject*>( elementWrapper->GetScriptObject() );
 
 			//SC::Caller call_SetAppObject(obj, "void _SetAppObject(Element@)");
-			//if ( call_SetAppObject.ok() )
+			//if ( call_SetAppObject )
 			//	call_SetAppObject(NULL);
 
 			delete elementWrapper;

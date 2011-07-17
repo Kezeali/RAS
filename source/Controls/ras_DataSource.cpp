@@ -44,7 +44,7 @@ namespace Rocket { namespace AngelScript {
 	void ScriptedDataSource::GetRow(Rocket::Core::StringList &row, const Rocket::Core::String &table, int row_index, const Rocket::Core::StringList &columns)
 	{
 		ScriptUtils::Calling::Caller f = this->get_caller("void GetRow(StringList&out, const rString&in, int, const StringList&in)");
-		if (f.ok())
+		if (f)
 		{
 			f(&row, &table, row_index, &columns);
 		}
@@ -53,7 +53,7 @@ namespace Rocket { namespace AngelScript {
 	int ScriptedDataSource::GetNumRows(const Rocket::Core::String &table)
 	{
 		ScriptUtils::Calling::Caller f = this->get_caller("int GetNumRows(const rString&in)");
-		if (f.ok())
+		if (f)
 		{
 			return *static_cast<int*>( f(&table) );
 		}

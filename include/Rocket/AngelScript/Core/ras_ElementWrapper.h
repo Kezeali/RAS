@@ -113,7 +113,7 @@ public:
 		Core::Element::OnUpdate();
 
 		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnUpdate()");
-		if ( f.ok() )
+		if ( f )
 			f();
 	}
 
@@ -122,7 +122,7 @@ public:
 		Core::Element::OnRender();
 
 		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnRender()");
-		if ( f.ok() )
+		if ( f )
 			f();
 	}
 
@@ -131,7 +131,7 @@ public:
 		Core::Element::OnLayout();
 
 		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnLayout()");
-		if ( f.ok() )
+		if ( f )
 			f();
 	}
 

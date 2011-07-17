@@ -29,7 +29,7 @@ namespace Rocket { namespace AngelScript {
 		virtual void ProcessEvent(Rocket::Core::Event& event)
 		{
 			ScriptUtils::Calling::Caller f = this->get_caller("void ProcessEvent(Event@)");
-			if (f.ok())
+			if (f)
 			{
 				event.AddReference();
 				f(&event);
@@ -39,7 +39,7 @@ namespace Rocket { namespace AngelScript {
 		virtual void OnAttach(Rocket::Core::Element *element)
 		{
 			//ScriptUtils::Calling::Caller f = this->get_caller("void OnAttach(Element@)");
-			//if (f.ok())
+			//if (f)
 			//{
 			//	//element->AddReference();
 			//	f(element);
@@ -49,7 +49,7 @@ namespace Rocket { namespace AngelScript {
 		virtual void OnDetach(Rocket::Core::Element *element)
 		{
 			//ScriptUtils::Calling::Caller f = this->get_caller("void OnDetach(Element@)");
-			//if (f.ok())
+			//if (f)
 			//{
 			//	//element->AddReference();
 			//	f(element);

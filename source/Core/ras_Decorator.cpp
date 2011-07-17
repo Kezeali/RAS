@@ -30,7 +30,7 @@ namespace Rocket { namespace AngelScript {
 	Core::DecoratorDataHandle ScriptedDecorator::GenerateElementData(Core::Element* element)
 	{
 		ScriptUtils::Calling::Caller f = this->get_caller("IDecoratorData@ GenerateElementData(Element@)");
-		if (f.ok())
+		if (f)
 		{
 			element->AddReference();
 			asIScriptObject* data = *static_cast<asIScriptObject**>( f(element) );
@@ -44,7 +44,7 @@ namespace Rocket { namespace AngelScript {
 	void ScriptedDecorator::ReleaseElementData(Core::DecoratorDataHandle element_data)
 	{
 		ScriptUtils::Calling::Caller f = this->get_caller("void ReleaseElementData(IDecoratorData@)");
-		if (f.ok())
+		if (f)
 		{
 			asIScriptObject* data = reinterpret_cast<asIScriptObject*>( element_data );
 			data->AddRef();
@@ -56,7 +56,7 @@ namespace Rocket { namespace AngelScript {
 	void ScriptedDecorator::RenderElement(Core::Element* element, Core::DecoratorDataHandle element_data)
 	{
 		ScriptUtils::Calling::Caller f = this->get_caller("void RenderElement(Element@,IDecoratorData@)");
-		if (f.ok())
+		if (f)
 		{
 			asIScriptObject *obj = reinterpret_cast<asIScriptObject*>(element_data);
 			obj->AddRef();

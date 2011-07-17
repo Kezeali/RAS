@@ -37,7 +37,7 @@ namespace Rocket { namespace AngelScript {
 	void ScriptedDataFormatter::FormatData(Rocket::Core::String& formatted_data, const Rocket::Core::StringList& raw_data)
 	{
 		ScriptUtils::Calling::Caller f = this->get_caller("rString FormatData(const StringList&in)");
-		if (f.ok())
+		if (f)
 		{
 			//Rocket::Core::String comma_seperated_data;
 			//Rocket::Core::StringUtilities::JoinString(comma_seperated_data, raw_data);
