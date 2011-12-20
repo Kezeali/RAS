@@ -296,7 +296,7 @@ namespace Rocket { namespace AngelScript {
 
 			// Find the module the current function is being executed in
 			int fnId = context->GetFunction()->GetId(); ROCKET_ASSERT(fnId);
-			const char * moduleName = engine->GetFunctionDescriptorById(fnId)->GetModuleName();
+			const char * moduleName = engine->GetFunctionById(fnId)->GetModuleName();
 			asIScriptModule *module = engine->GetModule(moduleName); ROCKET_ASSERT(module != NULL);
 
 			// Find the type with the given declaration in the current module
@@ -326,7 +326,7 @@ namespace Rocket { namespace AngelScript {
 
 			// Find the module the current function is being executed in
 			int fnId = context->GetFunction()->GetId(); ROCKET_ASSERT(fnId);
-			const char * moduleName = engine->GetFunctionDescriptorById(fnId)->GetModuleName();
+			const char * moduleName = engine->GetFunctionById(fnId)->GetModuleName();
 			
 			// Check that the passed function exists
 			asIScriptModule *module = engine->GetModule(moduleName); ROCKET_ASSERT(module != NULL);

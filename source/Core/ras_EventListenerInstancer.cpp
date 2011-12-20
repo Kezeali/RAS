@@ -102,7 +102,7 @@ namespace Rocket { namespace AngelScript {
 		int line = ctx->GetExceptionLineNumber(&column);
 
 		int funcId = ctx->GetExceptionFunction();
-		const asIScriptFunction *function = engine->GetFunctionDescriptorById(funcId);
+		const asIScriptFunction *function = engine->GetFunctionById(funcId);
 
 		if (function != nullptr)
 		{
