@@ -38,7 +38,7 @@ namespace Rocket { namespace AngelScript {
 			data->AddRef();
 			return reinterpret_cast<Rocket::Core::DecoratorDataHandle>(data);
 		}
-		return NULL;
+		return (Core::DecoratorDataHandle)NULL;
 	}
 
 	void ScriptedDecorator::ReleaseElementData(Core::DecoratorDataHandle element_data)

@@ -5,7 +5,7 @@
 
 #include "../../include/Rocket/AngelScript/Core/registration_utils/ras_RegisterVariantType.h"
 
-#include <boost/tokenizer.hpp>
+#include <cstdint>
 
 
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
@@ -59,23 +59,23 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (typeId & asTYPEID_BOOL)
 			new(obj) Rocket::Core::Variant(*static_cast<bool*>(data));
 		else if (typeId & asTYPEID_INT8)
-			new(obj) Rocket::Core::Variant(*static_cast<char*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<std::int8_t*>(data));
 		else if (typeId & asTYPEID_INT16)
-			new(obj) Rocket::Core::Variant(*static_cast<short*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<std::int16_t*>(data));
 		else if (typeId & asTYPEID_INT32)
-			new(obj) Rocket::Core::Variant(*static_cast<long*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<std::int32_t*>(data));
 		//else if (typeId & asTYPEID_INT64)
 		//	new(obj) Rocket::Core::Variant(*static_cast<asINT64*>(data));
 
 		else if (typeId & asTYPEID_UINT16)
-			new(obj) Rocket::Core::Variant(*static_cast<unsigned short*>(data));
+			new(obj) Rocket::Core::Variant(*static_cast<std::int16_t*>(data));
 		//else if (typeId & asTYPEID_UINT32)
 		//	new(obj) Rocket::Core::Variant(*static_cast<unsigned long*>(data));
 
 		else if (typeId & asTYPEID_FLOAT)
 			new(obj) Rocket::Core::Variant(*static_cast<float*>(data));
 		else if (typeId & asTYPEID_DOUBLE)
-			new(obj) Rocket::Core::Variant(*static_cast<float*>(data));
+			new(obj) Rocket::Core::Variant(static_cast<float>(*static_cast<double*>(data)));
 
 		else if (typeId & asTYPEID_OBJHANDLE)
 			new(obj) Rocket::Core::Variant(data);

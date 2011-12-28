@@ -56,8 +56,8 @@ namespace Rocket { namespace AngelScript {
 		}
 	}
 
-	//typedef std::tr1::shared_ptr<DelegatingEventListener> DelegatingEventListenerPtr;
-	typedef std::tr1::unordered_map<std::string, DelegatingEventListener*> ListenerCallbackMap;
+	//typedef std::shared_ptr<DelegatingEventListener> DelegatingEventListenerPtr;
+	typedef std::unordered_map<std::string, DelegatingEventListener*> ListenerCallbackMap;
 	static ListenerCallbackMap listenerCallbacks;
 
 	void DelegatingEventListener::OnDetach(Rocket::Core::Element *element)

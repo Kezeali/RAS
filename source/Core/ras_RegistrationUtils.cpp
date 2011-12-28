@@ -5,6 +5,8 @@
 
 #include "../../include/Rocket/AngelScript/Core/registration_utils/ras_RegistrationUtils.h"
 
+#include "../../include/Rocket/AngelScript/Core/registration_utils/ras_AngelScriptPrimativeTypes.h"
+
 //#include "ras_RefCountedWrapper.h"
 
 
@@ -527,7 +529,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	{
 		int r;
 		r = engine->RegisterObjectMethod("Event",
-			C_STR(R_typename + " GetParameter(const rString &in, const " + R_typename + " &in)"),
+			(R_typename + " GetParameter(const rString &in, const " + R_typename + " &in)").c_str(),
 			asMETHODPR(Rocket::Core::Event, GetParameter<R>, (const Rocket::Core::String &, const R &), R),
 			asCALL_THISCALL);
 		if (r < 0)

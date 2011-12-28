@@ -95,7 +95,7 @@ namespace Rocket { namespace AngelScript {
 			if (typeId <= 0)
 			{
 				Rocket::Core::Log::Message(Rocket::Core::Log::LT_WARNING,
-					"Can't register decorator-instancer for %s: class %s doesn't exist", rml, class_name);
+					"Can't register decorator-instancer for %s: class %s doesn't exist", rml.CString(), class_name.CString());
 				return;
 			}
 

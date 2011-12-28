@@ -78,7 +78,7 @@ namespace Rocket { namespace AngelScript {
 			throw Exception("Couldn't register IEventListener");
 	}
 
-	typedef std::tr1::unordered_map<asIScriptObject*, EventListenerWrapper*> ListenerRegistry;
+	typedef std::unordered_map<asIScriptObject*, EventListenerWrapper*> ListenerRegistry;
 	static ListenerRegistry listenerRegistry;
 
 	template <class T>
