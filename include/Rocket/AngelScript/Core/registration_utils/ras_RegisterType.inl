@@ -1,9 +1,9 @@
 // ReferenceCountable derived types
 template <typename T>
-void referenceCountable<T>(asIScriptEngine *engine, const std::string &script_name)
+inline void referenceCountable(asIScriptEngine *engine, const std::string &script_name)
 {
 	// Make sure the given type is derived from ReferenceCountable
-	BOOST_MPL_ASSERT(( std::tr1::is_base_of<Rocket::Core::ReferenceCountable, T> ));
+	static_assert(std::is_base_of<Rocket::Core::ReferenceCountable, T>::value, "This is for registering ReferenceCountable derived types");
 
 	const char *c_script_name = script_name.c_str();
 	int r;
@@ -20,12 +20,8 @@ void referenceCountable<T>(asIScriptEngine *engine, const std::string &script_na
 		throw Exception("Couldn't register " + script_name + " type");
 }
 
-template <typename T>
-void interface<T>(asIScriptEngine *engine, const std::string &script_name)
+inline void interface(asIScriptEngine *engine, const std::string &script_name)
 {
-	// Make sure the given type is abstract
-	BOOST_MPL_ASSERT(( std::tr1::is_abstract<T> ));
-
 	const char *c_script_name = script_name.c_str();
 	int r;
 	r = engine->RegisterInterface(c_script_name);

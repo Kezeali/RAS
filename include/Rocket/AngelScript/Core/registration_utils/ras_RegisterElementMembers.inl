@@ -1,8 +1,8 @@
 template <typename T>
-void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name, int excluded_virtual_methods)
+void registerElementMembers(asIScriptEngine *engine, const std::string &name, int excluded_virtual_methods)
 {
-	// Make sure the given type is derrived from Rocket::Core::Element
-	BOOST_MPL_ASSERT(( std::tr1::is_base_of<Rocket::Core::Element, T> ));
+	// Make sure the given type is derived from Rocket::Core::Element
+	static_assert(std::is_base_of<Rocket::Core::Element, T>::value, "This is for registering element types");
 
 	namespace RC = Rocket::Core;
 
@@ -228,10 +228,10 @@ void registerElementMembers<T>(asIScriptEngine *engine, const std::string &name,
 }
 
 template <class T>
-void registerDocumentMembers<T>(asIScriptEngine *engine, const std::string &name)
+void registerDocumentMembers(asIScriptEngine *engine, const std::string &name)
 {
-	// Make sure the given type is derrived from ElementDocument
-	BOOST_MPL_ASSERT(( std::tr1::is_base_of<Rocket::Core::ElementDocument, T> ));
+	// Make sure the given type is derived from ElementDocument
+	static_assert(std::is_base_of<Rocket::Core::ElementDocument, T>::value, "This is for registering ElementDocument derived tyoes");
 
 	const char *c_name = name.c_str();
 	int r;

@@ -13,6 +13,8 @@
 #include <Rocket/Core.h>
 #include <angelscript.h>
 
+#include "../ras_Exception.h"
+#include "../ras_EventListener.h"
 
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
 

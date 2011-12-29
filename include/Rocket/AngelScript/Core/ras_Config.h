@@ -4,7 +4,9 @@
 #include <Rocket/Core/Platform.h>
 
 
-#if defined ROCKET_PLATFORM_WIN32 && defined _USRDLL
+#if !defined RAS_STATIC_LIB
+
+#if defined ROCKET_PLATFORM_WIN32 && defined_USRDLL
 
 #ifdef RASCOREDLL_EXPORTS
 #define RASCOREDLL_API __declspec(dllexport)
@@ -12,7 +14,11 @@
 #define RASCOREDLL_API __declspec(dllimport)
 #endif
 
-#else
+#else // Not win32 dll
+#define RASCOREDLL_API// __attribute__((visibility("default")))
+#endif
+
+#else // RAS_STATIC_LIB
 
 #define RASCOREDLL_API
 

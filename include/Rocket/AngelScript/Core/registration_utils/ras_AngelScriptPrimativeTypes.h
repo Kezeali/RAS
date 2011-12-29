@@ -17,61 +17,61 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	 * the name of the equivilant primative type in AngelScript.
 	 */
 	template <typename T>
-	static const char * as_primative_name()
+	const char * as_primative_name()
 	{
 		return "";
 	}
 
 	template <>
-	static const char * as_primative_name<bool>()
+	inline const char * as_primative_name<bool>()
 	{
 		return "bool";
 	}
 
 	template <>
-	static const char * as_primative_name<int>()
+	inline const char * as_primative_name<int>()
 	{
 		return "int";
 	}
 
 	template <>
-	static const char * as_primative_name<unsigned int>()
+	inline const char * as_primative_name<unsigned int>()
 	{
 		return "uint";
 	}
 
 	template <>
-	static const char * as_primative_name<short>()
+	inline const char * as_primative_name<short>()
 	{
 		return "int16";
 	}
 
 	template <>
-	static const char * as_primative_name<unsigned short>()
+	inline const char * as_primative_name<unsigned short>()
 	{
 		return "uint16";
 	}
 
 	template <>
-	static const char * as_primative_name<asINT64>()
+	inline const char * as_primative_name<asINT64>()
 	{
 		return "int64";
 	}
 
 	template <>
-	static const char * as_primative_name<unsigned long long>()
+	inline const char * as_primative_name<unsigned long long>()
 	{
 		return "uint64";
 	}
 
 	template <>
-	static const char * as_primative_name<float>()
+	inline const char * as_primative_name<float>()
 	{
 		return "float";
 	}
 
 	template <>
-	static const char * as_primative_name<double>()
+	inline const char * as_primative_name<double>()
 	{
 		return "double";
 	}

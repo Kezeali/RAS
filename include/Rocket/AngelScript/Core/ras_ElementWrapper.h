@@ -11,7 +11,6 @@
 
 #include <ScriptUtils/Calling/Caller.h>
 
-#include <boost/mpl/assert.hpp>
 #include <type_traits>
 
 
@@ -25,7 +24,7 @@ template <typename T>
 class ElementWrapper : public T
 {
 public:
-	static_assert( std::is_base_of<Rocket::Core::Element, T>::value, "Element wrapper can only wrap types derrived from Rocket::Core::Element." );
+	static_assert(std::is_base_of<Rocket::Core::Element, T>::value, "Element wrapper can only wrap types derived from Rocket::Core::Element.");
 
 	ElementWrapper(const char* tag, asIScriptObject* self)
 		: T( tag ),

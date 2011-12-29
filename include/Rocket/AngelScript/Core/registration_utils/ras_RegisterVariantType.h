@@ -13,7 +13,6 @@
 
 #include "../ras_Exception.h"
 
-
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 	//! Registers Rocket#Core#Variant
@@ -49,54 +48,55 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 		int r;
 		r = engine->RegisterObjectMethod("e_Variant",
-			C_STR(script_typename+" Get_"+script_typename+"() const"),
-			asMETHOD(Variant, Get<T>),
+			(script_typename+" Get_"+script_typename+"() const").c_str(),
+			asMETHODPR(Variant, Get, (void) const, T),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::Get<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("e_Dictionary",
-			std::string(script_typename+" Get(const rString &in, const "+script_typename+" &in) const").c_str(),
+			(script_typename+" Get(const rString &in, const "+script_typename+" &in) const").c_str(),
 			asFUNCTION(dictionaryGet<T>),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::Get<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("e_Variant",
-			C_STR("void Set(const "+script_typename+" &in)"),
+			("void Set(const "+script_typename+" &in)").c_str(),
 			asFUNCTION(variantSet<T>),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::Set(const "+script_typename+" &)");
 
 		r = engine->RegisterObjectMethod("e_Dictionary",
-			C_STR("void Set(const rString &in, const "+script_typename+" &in)"),
+			("void Set(const rString &in, const "+script_typename+" &in)").c_str(),
 			asMETHODPR(Dictionary, Set<T>, (const String&, const T&), void),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::Set<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("r_Property",
-			C_STR(script_typename+" Get_"+script_typename+"() const"),
-			asMETHOD(Rocket::Core::Property, Get<T>),
+			(script_typename+" Get_"+script_typename+"() const").c_str(),
+			asMETHODPR(Rocket::Core::Property, Get, (void) const, T),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Property::Get<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("Element",
-			std::string(script_typename+" GetAttribute(const rString &in, const "+script_typename+" &in) const").c_str(),
+			(script_typename+" GetAttribute(const rString &in, const "+script_typename+" &in) const").c_str(),
 			asMETHODPR(Rocket::Core::Element, GetAttribute<T>, (const String&, const T&) const, T),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Element::GetAttribute<"+script_typename+">");
 
 		r = engine->RegisterObjectMethod("Element",
-			C_STR("void SetAttribute(const rString &in, const "+script_typename+" &in) const"),
+			("void SetAttribute(const rString &in, const "+script_typename+" &in) const").c_str(),
 			asMETHODPR(Rocket::Core::Element, SetAttribute<T>, (const String&, const T&), void),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Element::SetAttribute<"+script_typename+">");
 	}
+
 
 }}}
 

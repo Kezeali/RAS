@@ -20,6 +20,8 @@ namespace Rocket { namespace AngelScript {
 	public:
 		const std::string &GetMessage() const { return m_Message; }
 
+		const char* what() const { return m_Message.c_str(); }
+
 		std::string m_Message;
 	};
 

@@ -11,6 +11,8 @@
 
 #include "../ras_Exception.h"
 
+#include "ras_AngelScriptPrimativeTypes.h"
+
 
 namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	

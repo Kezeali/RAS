@@ -8,17 +8,12 @@
 
 #include <angelscript.h>
 
-#include <boost/mpl/assert.hpp>
 #include <type_traits>
 
 #include "../ras_Exception.h"
-#include "ras_AngelScriptPrimativeTypes.h"
 #include "../ras_EventListener.h"
 #include "ras_RegisterElement.h"
 
-
-#define C_STR(str) \
-	std::string(str).c_str()
 
 namespace Rocket { namespace AngelScript {
 	//! internal methods which register various methods / types
@@ -55,11 +50,10 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	namespace registerType {
 		//! Register a type that derives from Rocket#Core#ReferenceCountable
 		template <typename T>
-		static void referenceCountable(asIScriptEngine *engine, const std::string &script_name);
+		inline void referenceCountable(asIScriptEngine *engine, const std::string &script_name);
 
-		//! Registers an interface (abstract) type
-		template <typename T>
-		static void interface(asIScriptEngine *engine, const std::string &script_name);
+		//! Registers an interface typename
+		inline void interface(asIScriptEngine *engine, const std::string &script_name);
 
 #include "ras_RegisterType.inl"
 	};
