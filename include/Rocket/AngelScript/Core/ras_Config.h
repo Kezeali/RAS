@@ -6,7 +6,7 @@
 
 #if !defined RAS_STATIC_LIB
 
-#if defined ROCKET_PLATFORM_WIN32 && defined_USRDLL
+#if defined ROCKET_PLATFORM_WIN32 && defined _USRDLL
 
 #ifdef RASCOREDLL_EXPORTS
 #define RASCOREDLL_API __declspec(dllexport)
