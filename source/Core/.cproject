@@ -31,9 +31,9 @@
 								<option id="gnu.cpp.compiler.so.debug.option.optimization.level.1133214794" name="Optimization Level" superClass="gnu.cpp.compiler.so.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.so.debug.option.debugging.level.37582264" name="Debug Level" superClass="gnu.cpp.compiler.so.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.409090750" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils&quot;"/>
 									<listOptionValue builtIn="false" value="/home/kezeali/tbb/include"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils/include&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.1574122610" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -std=c++0x" valueType="string"/>
 								<option id="gnu.cpp.compiler.option.warnings.allwarn.1827254693" name="All warnings (-Wall)" superClass="gnu.cpp.compiler.option.warnings.allwarn" value="false" valueType="boolean"/>
@@ -44,7 +44,7 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.so.debug.option.optimization.level.1442567075" name="Optimization Level" superClass="gnu.c.compiler.so.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.so.debug.option.debugging.level.1705118402" name="Debug Level" superClass="gnu.c.compiler.so.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1367901465" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils&quot;"/>
 									<listOptionValue builtIn="false" value="/home/kezeali/tbb/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1912552275" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -55,7 +55,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.debug.1597207251" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.debug">
 								<option defaultValue="true" id="gnu.cpp.link.so.debug.option.shared.758610974" name="Shared (-shared)" superClass="gnu.cpp.link.so.debug.option.shared" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.paths.2033285444" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils/Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils/Debug&quot;"/>
 									<listOptionValue builtIn="false" value="/home/kezeali/tbb/build/linux_intel64_gcc_cc4.6.1_libc2.13_kernel3.0.0_release"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.137672013" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
@@ -70,7 +70,7 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.so.debug.623440020" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.debug">
 								<option id="gnu.both.asm.option.include.paths.436313830" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils&quot;"/>
 									<listOptionValue builtIn="false" value="/home/kezeali/tbb/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.38183278" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
@@ -118,9 +118,9 @@
 								<option id="gnu.cpp.compiler.so.release.option.optimization.level.1965834925" name="Optimization Level" superClass="gnu.cpp.compiler.so.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.so.release.option.debugging.level.1942327304" name="Debug Level" superClass="gnu.cpp.compiler.so.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1647429608" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils&quot;"/>
 									<listOptionValue builtIn="false" value="/home/kezeali/tbb/include"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils/include&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.763973437" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -128,7 +128,7 @@
 								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.so.release.option.optimization.level.600231465" name="Optimization Level" superClass="gnu.c.compiler.so.release.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.so.release.option.debugging.level.520270694" name="Debug Level" superClass="gnu.c.compiler.so.release.option.debugging.level" value="gnu.c.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.476087090" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils&quot;"/>
 									<listOptionValue builtIn="false" value="/home/kezeali/tbb/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.560717971" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
@@ -139,7 +139,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.so.release.2020492248" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.so.release">
 								<option defaultValue="true" id="gnu.cpp.link.so.release.option.shared.558764978" name="Shared (-shared)" superClass="gnu.cpp.link.so.release.option.shared" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.paths.1811974652" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils/Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils/Debug&quot;"/>
 									<listOptionValue builtIn="false" value="/home/kezeali/tbb/build/linux_intel64_gcc_cc4.6.1_libc2.13_kernel3.0.0_release"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.651151302" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
@@ -154,7 +154,7 @@
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.so.release.935236150" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.so.release">
 								<option id="gnu.both.asm.option.include.paths.1279223307" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ScriptUtils}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${FUSION_WORKSPACE}/ScriptUtils&quot;"/>
 									<listOptionValue builtIn="false" value="/home/kezeali/tbb/include"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1298027846" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
