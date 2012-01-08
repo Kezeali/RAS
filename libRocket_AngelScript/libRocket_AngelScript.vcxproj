@@ -203,6 +203,7 @@
     <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterVariantType.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegistrationUtils.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ScriptElement.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.inl" />

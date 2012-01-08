@@ -112,6 +112,9 @@
     <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.h">
       <Filter>Header Files\registration_utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ScriptElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.inl">
