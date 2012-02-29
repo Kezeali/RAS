@@ -161,7 +161,10 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 
 	if ((excluded_virtual_methods & GetInnerRML) != GetInnerRML)
 	{
-		r = engine->RegisterObjectMethod(c_name, "void GetInnerRML(rString &out)", asMETHOD(T, GetInnerRML), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod(c_name, "void GetInnerRML(rString &out) const", asMETHODPR(T, GetInnerRML, (Rocket::Core::String&) const, void), asCALL_THISCALL);
+		if (r < 0)
+			throw Exception("Couldn't register " + name + " class");
+		r = engine->RegisterObjectMethod(c_name, "rString GetInnerRML() const", asMETHODPR(T, GetInnerRML, (void) const, Rocket::Core::String), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register " + name + " class");
 	}
@@ -235,7 +238,7 @@ void registerDocumentMembers(asIScriptEngine *engine, const std::string &name)
 
 	const char *c_name = name.c_str();
 	int r;
-	r = engine->RegisterObjectMethod(c_name, "void SetTitle(rString &in)", asMETHOD(T, SetTitle), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "void SetTitle(const rString &in)", asMETHOD(T, SetTitle), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name, "const rString &GetTitle() const", asMETHOD(T, GetTitle), asCALL_THISCALL);

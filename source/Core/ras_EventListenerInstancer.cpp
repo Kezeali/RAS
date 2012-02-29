@@ -193,7 +193,7 @@ namespace Rocket { namespace AngelScript {
 		m_ExceptionCallback(exception_callback, exception_callback_obj)
 	{}
 
-	Core::EventListener * InlineEventListenerInstancer::InstanceEventListener(const Rocket::Core::String &value)
+	Core::EventListener * InlineEventListenerInstancer::InstanceEventListener(const Rocket::Core::String &value, Rocket::Core::Element* element)
 	{
 		// Check for non-default module specifier
 		if (value[0] == '%')
