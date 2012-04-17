@@ -86,7 +86,7 @@ namespace Rocket { namespace AngelScript {
 		if (obj == NULL)
 			return NULL;
 
-		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, ElementWrapper<_Element>::TypeId);
+		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, m_Engine->GetObjectTypeById(ElementWrapper<_Element>::TypeId));
 
 		elementWrapper->SetScriptObject( obj );
 		//obj->Release();
@@ -176,7 +176,7 @@ namespace Rocket { namespace AngelScript {
 		if (obj == NULL)
 				return NULL;
 
-		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, ElementWrapper<_Element>::TypeId);
+		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, m_Engine->GetObjectTypeById(ElementWrapper<_Element>::TypeId));
 
 		// Set the script object for running overrided methods
 		elementWrapper->SetScriptObject(obj);
