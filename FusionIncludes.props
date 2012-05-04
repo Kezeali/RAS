@@ -7,10 +7,10 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\FusionDependencies\include;$(SolutionDir)..\FusionDependencies\libRocket\include;$(SolutionDir)..\ScriptUtils\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\FusionDependencies\include;$(SolutionDir)..\FusionDependencies\angelscriptDev\sdk\angelscript\include;$(SolutionDir)..\FusionDependencies\libRocket\include;$(SolutionDir)..\ScriptUtils\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\FusionDependencies\lib;$(SolutionDir)..\FusionDependencies\libRocket\bin;$(SolutionDir)..\ScriptUtils\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\FusionDependencies\lib;$(SolutionDir)..\FusionDependencies\angelscriptDev\sdk\angelscript\lib;$(SolutionDir)..\FusionDependencies\libRocket\bin;$(SolutionDir)..\ScriptUtils\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Manifest>
       <OutputManifestFile>
