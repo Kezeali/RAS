@@ -35,7 +35,7 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
-		"const rString &GetProperty(const rString &in)",
+		"rString GetProperty(const rString &in)",
 		asMETHODPR(RC::Element, GetProperty<Rocket::Core::String>, (const Rocket::Core::String &), Rocket::Core::String),
 		asCALL_THISCALL);
 	if (r < 0)
@@ -51,6 +51,18 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 	r = engine->RegisterObjectMethod(c_name,
 		"bool HasAttribute(const rString &in)",
 		asMETHODPR(RC::Element, HasAttribute, (const Rocket::Core::String &), bool),
+		asCALL_THISCALL);
+	if (r < 0)
+		throw Exception("Couldn't register " + name + " class");
+	r = engine->RegisterObjectMethod(c_name,
+		"rString GetAttribute(const rString &in, const rString &in)",
+		asMETHODPR(RC::Element, GetAttribute<Rocket::Core::String>, (const Rocket::Core::String &, const Rocket::Core::String &) const, Rocket::Core::String),
+		asCALL_THISCALL);
+	if (r < 0)
+		throw Exception("Couldn't register " + name + " class");
+	r = engine->RegisterObjectMethod(c_name,
+		"int GetAttribute(const rString &in, const int &in)",
+		asMETHODPR(RC::Element, GetAttribute<int>, (const Rocket::Core::String &, const int &) const, int),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
