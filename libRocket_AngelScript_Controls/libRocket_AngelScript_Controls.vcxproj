@@ -165,12 +165,6 @@
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataSource.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_ElementControlInterface.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\libRocket_AngelScript\libRocket_AngelScript.vcxproj">
-      <Project>{ca162c1c-d6a0-4533-b73c-d13401fadb30}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
