@@ -557,6 +557,14 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		return target;
 	}
 
+	Rocket::Core::Element* EventGetParameterAsElement(const Rocket::Core::String& parameter_name, Rocket::Core::Event *obj)
+	{
+		Rocket::Core::Element *target = *static_cast<Rocket::Core::Element**>(obj->GetParameter<void*>(parameter_name, (void*)0));
+		if (target != NULL)
+			target->AddReference();
+		return target;
+	}
+
 	void registerEventMembers(asIScriptEngine *engine)
 	{
 		int r;
@@ -590,6 +598,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register Event::GetType");
 
+		// Register GetParameter<Type> methods
 		registerEventGetParameter<bool>(engine, as_primative_name<bool>());
 		registerEventGetParameter<int>(engine, as_primative_name<int>());
 		registerEventGetParameter<float>(engine, as_primative_name<float>());
@@ -599,6 +608,13 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		registerEventGetParameter<Rocket::Core::Vector2i>(engine, "e_Vector2i");
 		registerEventGetParameter<Rocket::Core::Vector2f>(engine, "e_Vector2f");
 		registerEventGetParameter<Rocket::Core::String>(engine, "rString");
+		// Register GetParameter<Element>
+		r = engine->RegisterObjectMethod("Event",
+			"Element@ GetParameterAsElement(const rString &in)",
+			asFUNCTION(EventGetParameterAsElement),
+			asCALL_CDECL_OBJLAST);
+		if (r < 0)
+			throw Exception("Couldn't register Event::GetParameter<Element@>");
 
 		r = engine->RegisterObjectMethod("Event", "e_Dictionary &GetParameters()", asMETHOD(Rocket::Core::Event, GetParameters), asCALL_THISCALL);
 		if (r < 0)
