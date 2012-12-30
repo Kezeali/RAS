@@ -15,11 +15,16 @@ namespace Rocket { namespace AngelScript {
 
 		RASCONTROLSDLL_API void RegisterControls(asIScriptEngine *engine)
 		{
+			// TODO: make this Rocket::Controls, perhaps?
+			engine->SetDefaultNamespace("Rocket");
+
 			RegisterDataSource(engine);
 
 			ElementInterface::InitialiseAngelScriptInterface(engine);
 
 			RegisterDataFormatter(engine);
+
+			engine->SetDefaultNamespace("");
 		}
 
 	}

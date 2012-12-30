@@ -118,7 +118,9 @@ namespace Rocket { namespace AngelScript {
 		static void Register_ValueType(asIScriptEngine *engine, const std::string &string_typename, bool allow_implicit = true)
 		{
 			int r;
-			// Explicit conversion constructor from <built-in> to Rocket::Core::String (registered as String)
+			// Explicit conversion constructor from built-in to Rocket::Core::String (registered as String)
+			engine->SetDefaultNamespace("Rocket");
+
 			r = engine->RegisterObjectBehaviour("String",
 				asBEHAVE_CONSTRUCT,
 				("void f("+string_typename+")").c_str(),
@@ -127,7 +129,9 @@ namespace Rocket { namespace AngelScript {
 			if (r < 0)
 				throw Exception("Couldn't register explicit "+string_typename+" conversion constructor for String");
 
-			// Explicit conversion constructor from String to <built-in>
+			engine->SetDefaultNamespace("");
+
+			// Explicit conversion constructor from String to built-in
 			/*r = engine->RegisterObjectBehaviour(string_typename.c_str(),
 			asBEHAVE_CONSTRUCT,
 			"void f(String)",
@@ -138,26 +142,30 @@ namespace Rocket { namespace AngelScript {
 
 			if (allow_implicit)
 			{
-				// Implicit cast from <built-in> to String
+				// Implicit cast from built-in to String
 				r = engine->RegisterObjectBehaviour(string_typename.c_str(),
-					asBEHAVE_IMPLICIT_VALUE_CAST, "String f()",
+					asBEHAVE_IMPLICIT_VALUE_CAST, "Rocket::String f()",
 					asFUNCTION(stringToEString), asCALL_CDECL_OBJFIRST);
 				if (r < 0)
 					throw Exception("Couldn't register implicit string cast operator for " + string_typename);
 
-				// Implicit cast from String to <built-in>
+				engine->SetDefaultNamespace("Rocket");
+
+				// Implicit cast from String to built-in
 				r = engine->RegisterObjectBehaviour("String", asBEHAVE_IMPLICIT_VALUE_CAST,
 					(string_typename + " f()").c_str(),
 					asFUNCTION(eStringToString), asCALL_CDECL_OBJFIRST);
 				if (r < 0)
-					throw Exception("Couldn't register implicit string cast operator for String");
+					throw Exception("Couldn't register implicit string cast operator for Rocket::String");
+
+				engine->SetDefaultNamespace("");
 			}
 		}
 
 		static void Register_RefType(asIScriptEngine *engine, const std::string &string_typename, bool allow_implicit = true)
 		{
 			int r;
-			// Explicit conversion constructor from <built-in> to String
+			// Explicit conversion constructor from built-in to String
 			r = engine->RegisterObjectBehaviour("String",
 				asBEHAVE_CONSTRUCT,
 				("void f("+string_typename+"&in)").c_str(),
