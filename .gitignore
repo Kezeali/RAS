@@ -1,0 +1,9 @@
+ipch
+library
+/*.sdf
+/*.suo
+*.user
+Debug
+Debug DLL
+Release
+Release DLL
