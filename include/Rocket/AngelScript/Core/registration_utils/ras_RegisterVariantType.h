@@ -36,9 +36,9 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 
 	//! Register Get/Set methods for Variant and types that use Variant.
 	/*! 
-	 * Registers e_Variant#Get_<script_typename>
-	 * Registers e_Dictionary#Get(String key, <script_typename> default_value)
-	 * Registers Element#GetAttribute (which thinly wraps e_Dictionary#Get)
+	 * Registers Variant#Get_<script_typename>
+	 * Registers Dictionary#Get(String key, <script_typename> default_value)
+	 * Registers Element#GetAttribute (which thinly wraps Dictionary#Get)
 	 * \todo Register Variant#GetInto(), Dictionary#GetInto() here
 	 */
 	template <typename T>
@@ -47,35 +47,35 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		using namespace Rocket::Core;
 
 		int r;
-		r = engine->RegisterObjectMethod("e_Variant",
+		r = engine->RegisterObjectMethod("Variant",
 			(script_typename+" Get_"+script_typename+"() const").c_str(),
 			asMETHODPR(Variant, Get, (void) const, T),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::Get<"+script_typename+">");
 
-		r = engine->RegisterObjectMethod("e_Dictionary",
+		r = engine->RegisterObjectMethod("Dictionary",
 			(script_typename+" Get(const String &in, const "+script_typename+" &in) const").c_str(),
 			asFUNCTION(dictionaryGet<T>),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::Get<"+script_typename+">");
 
-		r = engine->RegisterObjectMethod("e_Variant",
+		r = engine->RegisterObjectMethod("Variant",
 			("void Set(const "+script_typename+" &in)").c_str(),
 			asFUNCTION(variantSet<T>),
 			asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::Set(const "+script_typename+" &)");
 
-		r = engine->RegisterObjectMethod("e_Dictionary",
+		r = engine->RegisterObjectMethod("Dictionary",
 			("void Set(const String &in, const "+script_typename+" &in)").c_str(),
 			asMETHODPR(Dictionary, Set<T>, (const String&, const T&), void),
 			asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::Set<"+script_typename+">");
 
-		r = engine->RegisterObjectMethod("r_Property",
+		r = engine->RegisterObjectMethod("Property",
 			(script_typename+" Get_"+script_typename+"() const").c_str(),
 			asMETHODPR(Rocket::Core::Property, Get, (void) const, T),
 			asCALL_THISCALL);

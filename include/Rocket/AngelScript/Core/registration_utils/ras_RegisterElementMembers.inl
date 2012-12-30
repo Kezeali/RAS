@@ -198,10 +198,10 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 	// see ras_EventListener.h
 	RegisterElementEventListenerMethods(engine, c_name);
 
-	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const String &in, const e_Dictionary &in, bool)", asMETHOD(RC::Element, DispatchEvent), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const String &in, const Dictionary &in, bool)", asMETHOD(RC::Element, DispatchEvent), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const String &in, const e_Dictionary &in)", asFUNCTION(ElemDispatchEvent_default), asCALL_CDECL_OBJLAST);
+	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const String &in, const Dictionary &in)", asFUNCTION(ElemDispatchEvent_default), asCALL_CDECL_OBJLAST);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const String &in)", asFUNCTION(ElemDispatchEvent_noparams), asCALL_CDECL_OBJLAST);

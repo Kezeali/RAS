@@ -616,7 +616,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		if (r < 0)
 			throw Exception("Couldn't register Event::GetParameter<Element@>");
 
-		r = engine->RegisterObjectMethod("Event", "e_Dictionary &GetParameters()", asMETHOD(Rocket::Core::Event, GetParameters), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Event", "Dictionary &GetParameters()", asMETHOD(Rocket::Core::Event, GetParameters), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Event::GetParameters");
 
@@ -659,7 +659,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register PropertyDictionary type");
 
 		r = engine->RegisterObjectMethod("PropertyDictionary",
-			"const r_Property &GetProperty(const String &in) const",
+			"const Property &GetProperty(const String &in) const",
 			asMETHOD(Rocket::Core::PropertyDictionary, GetProperty),
 			asCALL_THISCALL);
 		if (r < 0)

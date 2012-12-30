@@ -36,12 +36,6 @@ void registerVector2(asIScriptEngine *engine, const std::string &script_name, co
 	if (r < 0)
 		throw Exception("Couldn't register " + script_name + " type");
 
-	/*engine->RegisterObjectBehaviour(c_script_name,
-	asBEHAVE_ASSIGNMENT,
-	"e_" + script_name + " &f(e_" + script_name + " &in)",
-	asMETHODPR(Rocket::Core::" + script_name + ", operator=, (const Rocket::Core::" + script_name + "&), Rocket::Core::" + script_name + "&),
-	asCALL_THISCALL);*/
-
 	r = engine->RegisterObjectProperty(c_script_name, (T_name + " x").c_str(), offsetof(Rocket::Core::Vector2<T>, x));
 	if (r < 0)
 		throw Exception("Couldn't register " + script_name + " type");

@@ -23,17 +23,17 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	void registerProperty(asIScriptEngine *engine)
 	{
 		int r;
-		r = engine->RegisterObjectType("r_Property", sizeof(Rocket::Core::Property), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+		r = engine->RegisterObjectType("Property", sizeof(Rocket::Core::Property), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
 		if (r < 0)
 			throw Exception("Couldn't register Property type");
 
 		//  CTOR
-		r = engine->RegisterObjectBehaviour("r_Property", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(PropertyCtor), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("Property", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(PropertyCtor), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Property type");
 
 		//  Destructor
-		r = engine->RegisterObjectBehaviour("r_Property", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(PropertyDtor), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("Property", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(PropertyDtor), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Property type");
 	}
@@ -99,37 +99,37 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		using namespace Rocket::Core;
 
 		int r;
-		r = engine->RegisterObjectType("e_Variant", sizeof(Rocket::Core::Variant), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+		r = engine->RegisterObjectType("Variant", sizeof(Rocket::Core::Variant), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
 		if (r < 0)
 			throw Exception("Couldn't register Variant type");
 
 		// Behaviours
 		//  CTOR
-		r = engine->RegisterObjectBehaviour("e_Variant", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(constructVariant), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("Variant", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(constructVariant), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Variant type");
-		r = engine->RegisterObjectBehaviour("e_Variant", asBEHAVE_CONSTRUCT, "void f(const e_Variant &in)", asFUNCTION(constructVariant_copy), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("Variant", asBEHAVE_CONSTRUCT, "void f(const Variant &in)", asFUNCTION(constructVariant_copy), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Variant type");
 
 		//  Destructor
-		r = engine->RegisterObjectBehaviour("e_Variant", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(destructVariant), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("Variant", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(destructVariant), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Variant type");
 		
 		//  Assignment
-		r = engine->RegisterObjectMethod("e_Variant", "e_Variant &opAssign(const e_Variant &in)", asFUNCTION(variantAssign), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod("Variant", "Variant &opAssign(const Variant &in)", asFUNCTION(variantAssign), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Variant type");
 
 		// Methods
-		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(String &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (Rocket::Core::String&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Variant", "bool GetInto(String &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (Rocket::Core::String&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::GetInto(String)");
-		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(int &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (int&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Variant", "bool GetInto(int &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (int&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::GetInto(int)");
-		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(float &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (float&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Variant", "bool GetInto(float &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (float&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::GetInto(float)");
 	}
@@ -208,42 +208,42 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	void registerDictionary(asIScriptEngine *engine)
 	{
 		int r;
-		r = engine->RegisterObjectType("e_Dictionary", sizeof(Rocket::Core::Dictionary), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
+		r = engine->RegisterObjectType("Dictionary", sizeof(Rocket::Core::Dictionary), asOBJ_VALUE | asOBJ_APP_CLASS_CDA);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
 		// Behaviours
 		//  CTOR
-		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(constructDictionary), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("Dictionary", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(constructDictionary), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
-		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_CONSTRUCT, "void f(const String &in)", asFUNCTION(constructDictionary_tokenstring), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("Dictionary", asBEHAVE_CONSTRUCT, "void f(const String &in)", asFUNCTION(constructDictionary_tokenstring), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
 		//  Destructor
-		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(destructDictionary), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("Dictionary", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(destructDictionary), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 		
 		//  Assignment
-		r = engine->RegisterObjectMethod("e_Dictionary", "e_Dictionary &opAssign(const e_Dictionary &in)", asFUNCTION(dictionaryAssign), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod("Dictionary", "Dictionary &opAssign(const Dictionary &in)", asFUNCTION(dictionaryAssign), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
 		//  Index
-		r = engine->RegisterObjectMethod("e_Dictionary", "e_Variant& opIndex(const String &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod("Dictionary", "Variant& opIndex(const String &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
 		// Methods
-		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(String &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, Rocket::Core::String&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Dictionary", "bool GetInto(String &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, Rocket::Core::String&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::GetInto(String)");
-		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(int &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, int&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Dictionary", "bool GetInto(int &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, int&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::GetInto(int)");
-		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(float &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, float&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("Dictionary", "bool GetInto(float &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, float&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::GetInto(float)");
 	}
