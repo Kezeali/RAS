@@ -43,7 +43,7 @@ namespace Rocket { namespace AngelScript {
 
 	void ScriptedDataSource::GetRow(Rocket::Core::StringList &row, const Rocket::Core::String &table, int row_index, const Rocket::Core::StringList &columns)
 	{
-		ScriptUtils::Calling::Caller f = this->get_caller("void GetRow(StringList&out, const rString&in, int, const StringList&in)");
+		ScriptUtils::Calling::Caller f = this->get_caller("void GetRow(StringList&out, const String&in, int, const StringList&in)");
 		if (f)
 		{
 			f(&row, &table, row_index, &columns);
@@ -52,7 +52,7 @@ namespace Rocket { namespace AngelScript {
 
 	int ScriptedDataSource::GetNumRows(const Rocket::Core::String &table)
 	{
-		ScriptUtils::Calling::Caller f = this->get_caller("int GetNumRows(const rString&in)");
+		ScriptUtils::Calling::Caller f = this->get_caller("int GetNumRows(const String&in)");
 		if (f)
 		{
 			return *static_cast<int*>( f(&table) );
@@ -71,10 +71,10 @@ namespace Rocket { namespace AngelScript {
 		int r = engine->RegisterInterface("IDataSource");
 		if (r < 0)
 			throw Exception("Couldn't register IDataSource");
-		r = engine->RegisterInterfaceMethod("IDataSource", "void GetRow(StringList&out, const rString&in, int, const StringList&in)");
+		r = engine->RegisterInterfaceMethod("IDataSource", "void GetRow(StringList&out, const String&in, int, const StringList&in)");
 		if (r < 0)
 			throw Exception("Couldn't register IDataSource");
-		r = engine->RegisterInterfaceMethod("IDataSource", "int GetNumRows(const rString&in)");
+		r = engine->RegisterInterfaceMethod("IDataSource", "int GetNumRows(const String&in)");
 		if (r < 0)
 			throw Exception("Couldn't register IDataSource");
 	}
@@ -96,12 +96,12 @@ namespace Rocket { namespace AngelScript {
 	void RegisterDataSourceCreator(asIScriptEngine *engine)
 	{
 		int r;
-		r = engine->RegisterGlobalFunction("void AddDataSource(const rString &in, IDataSource@)",
+		r = engine->RegisterGlobalFunction("void AddDataSource(const String &in, IDataSource@)",
 			asFUNCTION(CreateDataSource), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Couldn't register AddDataSource(name, datasource)");
 
-		r = engine->RegisterGlobalFunction("void RemoveDataSource(const rString &in)",
+		r = engine->RegisterGlobalFunction("void RemoveDataSource(const String &in)",
 			asFUNCTION(DestroyDataSource), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Couldn't register RemoveDataSource(name)");

@@ -66,7 +66,7 @@ namespace Rocket { namespace AngelScript {
 		if (obj == NULL)
 			return NULL;
 
-		ScriptUtils::Calling::Caller callInitialize(obj, "void Initialize(const PropertyMap&in)");
+		ScriptUtils::Calling::Caller callInitialize = ScriptUtils::Calling::Caller::Create(obj, "void Initialize(const PropertyMap&in)");
 		callInitialize(&propMap);
 
 		return new ScriptedDecorator(obj);
@@ -88,9 +88,9 @@ namespace Rocket { namespace AngelScript {
 		if (ctx != NULL)
 		{
 			asIScriptEngine *engine = ctx->GetEngine();
-			int funcId = ctx->GetFunction()->GetId();
-			const char *moduleName = engine->GetFunctionById(funcId)->GetModuleName();
-			asIScriptModule *module = engine->GetModule(moduleName); // Why can't I just go ctx->GetModule()?!
+			asIScriptFunction* func = ctx->GetFunction();
+			const char *moduleName = func->GetModuleName();
+			asIScriptModule *module = engine->GetModule(moduleName); // Wish I could just go ctx->GetModule()!
 			int typeId = module->GetTypeIdByDecl(class_name.CString());
 			if (typeId <= 0)
 			{
@@ -110,7 +110,7 @@ namespace Rocket { namespace AngelScript {
 
 	void RegisterScriptedDecorator(asIScriptEngine *engine)
 	{
-		engine->RegisterGlobalFunction("void RegisterDecorator(const rString &in, const rString &in)",
+		engine->RegisterGlobalFunction("void RegisterDecorator(const String &in, const String &in)",
 			asFUNCTION(RegisterScriptedDecoratorInstancer), asCALL_CDECL);
 	}
 

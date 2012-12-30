@@ -123,7 +123,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Variant type");
 
 		// Methods
-		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(rString &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (Rocket::Core::String&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(String &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (Rocket::Core::String&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Variant::GetInto(String)");
 		r = engine->RegisterObjectMethod("e_Variant", "bool GetInto(int &out)", asMETHODPR(Rocket::Core::Variant, GetInto, (int&) const, bool), asCALL_THISCALL);
@@ -217,7 +217,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(constructDictionary), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
-		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_CONSTRUCT, "void f(const rString &in)", asFUNCTION(constructDictionary_tokenstring), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectBehaviour("e_Dictionary", asBEHAVE_CONSTRUCT, "void f(const String &in)", asFUNCTION(constructDictionary_tokenstring), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
@@ -232,12 +232,12 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 			throw Exception("Couldn't register Dictionary type");
 
 		//  Index
-		r = engine->RegisterObjectMethod("e_Dictionary", "e_Variant& opIndex(const rString &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
+		r = engine->RegisterObjectMethod("e_Dictionary", "e_Variant& opIndex(const String &in)", asFUNCTION(dictionaryIndex), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary type");
 
 		// Methods
-		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(rString &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, Rocket::Core::String&) const, bool), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(String &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, Rocket::Core::String&) const, bool), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register Dictionary::GetInto(String)");
 		r = engine->RegisterObjectMethod("e_Dictionary", "bool GetInto(int &out)", asMETHODPR(Rocket::Core::Dictionary, GetInto, (const Rocket::Core::String&, int&) const, bool), asCALL_THISCALL);

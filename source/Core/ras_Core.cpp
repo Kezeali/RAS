@@ -32,18 +32,20 @@ namespace Rocket { namespace AngelScript {
 	{
 		using namespace _registration_utils;
 
+		const char* scriptNamespace = "Rocket";
+
+		engine->SetDefaultNamespace(scriptNamespace);
+
 		// Flags which can be passed to Document::Show()
 		registerFocusFlagsEnum(engine);
 
-		// Key flags
 		registerKeyIdentifierEnum(engine);
 		registerKeyModifierEnum(engine);
 
-		// Rocket::Core::String
-		registerEString(engine);
+		registeString(engine);
 
-		registerVector2<int>(engine, "e_Vector2i");
-		registerVector2<float>(engine, "e_Vector2f");
+		registerVector2<int>(engine, "Vector2i");
+		registerVector2<float>(engine, "Vector2f");
 
 		registerVariant(engine);
 		registerProperty(engine);
@@ -64,9 +66,9 @@ namespace Rocket { namespace AngelScript {
 		registerVariantGetSet<bool>(engine, "bool");
 		registerVariantGetSet<int>(engine, "int");
 		registerVariantGetSet<float>(engine, "float");
-		registerVariantGetSet<Rocket::Core::String>(engine, "rString");
-		//registerVariantGetSet<Rocket::Core::Vector2i>(engine, "e_Vector2i");
-		registerVariantGetSet<Rocket::Core::Vector2f>(engine, "e_Vector2f");
+		registerVariantGetSet<Rocket::Core::String>(engine, "String");
+		//registerVariantGetSet<Rocket::Core::Vector2i>(engine, "Vector2i");
+		registerVariantGetSet<Rocket::Core::Vector2f>(engine, "Vector2f");
 
 		//  IEventListener
 		RegisterEventListenerInterface(engine);
@@ -80,8 +82,8 @@ namespace Rocket { namespace AngelScript {
 
 		// Register STL containers
 		registerStlVector<Rocket::Core::Element*>(engine, "ElementList", "Element@");
-		registerStlVector<Rocket::Core::String>(engine, "StringList", "rString");
-		registerStlMap<Rocket::Core::String, Rocket::Core::Property>(engine, "PropertyMap", "rString", "r_Property");
+		registerStlVector<Rocket::Core::String>(engine, "StringList", "String");
+		registerStlMap<Rocket::Core::String, Rocket::Core::Property>(engine, "PropertyMap", "String", "Property");
 
 		// Register type members
 		registerContextMembers(engine);
@@ -114,13 +116,12 @@ namespace Rocket { namespace AngelScript {
 		RegisterScriptedDecorator(engine);
 		RegisterDecoratorInterfaces(engine);
 
-
 		int r;
-		r = engine->RegisterGlobalFunction("Context@ CreateContext(const rString &in, const e_Vector2i &in)", asFUNCTION(CreateCtxWrapper), asCALL_CDECL);
+		r = engine->RegisterGlobalFunction("Context@ CreateContext(const String &in, const Vector2i &in)", asFUNCTION(CreateCtxWrapper), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Failed to bind CreateContext(string, vector)");
 
-		r = engine->RegisterGlobalFunction("Context& GetContext(const rString &in)", asFUNCTIONPR(Rocket::Core::GetContext, (const Rocket::Core::String&), Rocket::Core::Context*), asCALL_CDECL);
+		r = engine->RegisterGlobalFunction("Context& GetContext(const String &in)", asFUNCTIONPR(Rocket::Core::GetContext, (const Rocket::Core::String&), Rocket::Core::Context*), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Failed to bind GetContext(string)");
 		r = engine->RegisterGlobalFunction("Context& GetContext(int)", asFUNCTIONPR(Rocket::Core::GetContext, (int), Rocket::Core::Context*), asCALL_CDECL);
@@ -131,25 +132,23 @@ namespace Rocket { namespace AngelScript {
 		if (r < 0)
 			throw Exception("Failed to bind GetNumContexts()");
 
-		r = engine->RegisterGlobalFunction("rString GetVersion()", asFUNCTION(Rocket::Core::GetVersion), asCALL_CDECL);
+		r = engine->RegisterGlobalFunction("String GetVersion()", asFUNCTION(Rocket::Core::GetVersion), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Failed to bind GetVersion()");
+
+		// TODO: Assuming I modify the RAS implementation to utilise the Rocket::Plugin interface, setting these instancers
+		//  should happen in the initialise method
+		Rocket::Core::Factory::RegisterEventListenerInstancer(new Rocket::AngelScript::InlineEventListenerInstancer(engine, "this"))
+			->RemoveReference();
+
+		Rocket::Core::Factory::RegisterElementInstancer("body", new Rocket::AngelScript::ScriptableDocumentInstancer(engine))
+			->RemoveReference();
+
+		engine->SetDefaultNamespace("");
 	}
 
 	RASCOREDLL_API void InitialiseModule(asIScriptEngine *engine, const char *module_name)
 	{
-		Rocket::Core::Factory::RegisterEventListenerInstancer( new Rocket::AngelScript::InlineEventListenerInstancer(engine, module_name) )
-			->RemoveReference();
-
-		// TODO: Assuming I modify the RAS implementation to utilise the Rocket::Plugin interface, setting the body instancer
-		//  should happen in the initialise method
-		Rocket::Core::Factory::RegisterElementInstancer("body", new Rocket::AngelScript::ScriptableDocumentInstancer(engine))
-			->RemoveReference();
-
-		// Holds the InlineEventListenerInstancer so it will be removed when the module is
-		//const char script[] = "__EventListenerInstancer@ __internal_EventListenerInstancerHolder;\0";
-		//engine->GetModule(module_name)->AddScriptSection("EventListenerInstancerHolder", &script);
-
 		int r = AddElementsScriptSection(engine, module_name);
 		ROCKET_ASSERTMSG(r >= 0, "Failed to add ScriptElement code to the given module");
 	}
@@ -166,7 +165,7 @@ namespace Rocket { namespace AngelScript {
 		return to;
 	}
 
-	RASCOREDLL_API void RegisterStringConversion(asIScriptEngine *engine, const std::string &builtin_string_typename, bool allow_implicit)
+	RASCOREDLL_API void RegisteStringConversion(asIScriptEngine *engine, const std::string &builtin_string_typename, bool allow_implicit)
 	{
 		StringConversion<std_converter>::Register(engine, builtin_string_typename, allow_implicit);
 	}

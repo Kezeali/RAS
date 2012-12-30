@@ -36,13 +36,13 @@ namespace Rocket { namespace AngelScript {
 	};
 
 	DelegatingEventListener::DelegatingEventListener(asIScriptModule *module, const std::string &callback_decl)
-		: m_EventCallbackCaller(module, callback_decl.c_str()),
+		: m_EventCallbackCaller(ScriptUtils::Calling::Caller::Create(module, callback_decl.c_str())),
 		m_Decl(callback_decl)
 	{
 	}
 
 	DelegatingEventListener::DelegatingEventListener(asIScriptObject *object, const std::string &callback_decl)
-		: m_EventCallbackCaller(object, callback_decl.c_str()),
+		: m_EventCallbackCaller(ScriptUtils::Calling::Caller::Create(object, callback_decl.c_str())),
 		m_Decl(callback_decl)
 	{
 	}
@@ -126,16 +126,16 @@ namespace Rocket { namespace AngelScript {
 	void RegisterDelegatingEventListenerMethods(asIScriptEngine *engine, const char *c_name)
 	{
 		int r;
-		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const rString &in, const rString &in, bool)",
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const String &in, const String &in, bool)",
 			asFUNCTIONPR(AddDelegatingEventListener, (const Rocket::Core::String&, const Rocket::Core::String&, bool, T*), EventConnection*), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Element::AddEventListener(event, callback-fn)");
-		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const rString &in, const rString &in)",
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const String &in, const String &in)",
 			asFUNCTIONPR(AddDelegatingEventListener, (const Rocket::Core::String&, const Rocket::Core::String&, T*), EventConnection*), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Element::AddEventListener(event, callback-fn)");
 
-		//r = engine->RegisterObjectMethod(c_name, "void RemoveEventListener(const rString &in, const rString &in)",
+		//r = engine->RegisterObjectMethod(c_name, "void RemoveEventListener(const String &in, const String &in)",
 		//	asFUNCTIONPR(RemoveDelegatingEventListener, (const Rocket::Core::String&, const Rocket::Core::String&, T*), void), asCALL_CDECL_OBJLAST);
 		//if (r < 0)
 		//	throw Exception("Couldn't register Element::RemoveEventListener(event, callback-fn)");

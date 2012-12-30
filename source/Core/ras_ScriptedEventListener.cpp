@@ -127,16 +127,16 @@ namespace Rocket { namespace AngelScript {
 	void RegisterScriptedEventListenerMethods(asIScriptEngine *engine, const char *c_name)
 	{
 		int r;
-		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const rString &in, IEventListener@, bool)",
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const String &in, IEventListener@, bool)",
 			asFUNCTIONPR(AddScriptedEventListener, (const Rocket::Core::String&, asIScriptObject*, bool, T*), EventConnection*), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Element::AddEventListener(event,IEventListener)");
-		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const rString &in, IEventListener@)",
+		r = engine->RegisterObjectMethod(c_name, "EventConnection@ AddEventListener(const String &in, IEventListener@)",
 			asFUNCTIONPR(AddScriptedEventListener, (const Rocket::Core::String&, asIScriptObject*, T*), EventConnection*), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Element::AddEventListener(event,IEventListener)");
 
-		/*r = engine->RegisterObjectMethod(c_name, "void RemoveEventListener(const rString &in, IEventListener@)",
+		/*r = engine->RegisterObjectMethod(c_name, "void RemoveEventListener(const String &in, IEventListener@)",
 			asFUNCTIONPR(RemoveScriptedEventListener, (const Rocket::Core::String&, asIScriptObject*, T*), void), asCALL_CDECL_OBJLAST);
 		if (r < 0)
 			throw Exception("Couldn't register Element::RemoveEventListener(event,IEventListener) class");*/

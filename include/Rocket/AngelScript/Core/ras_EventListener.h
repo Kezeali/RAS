@@ -22,9 +22,9 @@ namespace Rocket { namespace AngelScript {
 	//! Registers Add/RemoveEventListener methods for the given type
 	/*!
 	* Adds 
-	* <code>Element::AddEventListener(const rString &in event, IEventListener@ listener)</code>
+	* <code>Element::AddEventListener(const String &in event, IEventListener@ listener)</code>
 	* and 
-	* <code>Element::AddEventListener(const rString &in event, const rString &in callback_decl)</code>
+	* <code>Element::AddEventListener(const String &in event, const String &in callback_decl)</code>
 	* so 'Element' must be registered as an ObjectType before this is called.
 	*
 	* \param[in] engine

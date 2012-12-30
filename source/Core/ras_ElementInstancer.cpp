@@ -46,26 +46,26 @@ namespace Rocket { namespace AngelScript {
 		int m_TypeId;
 	};
 
-	template<class _Element>
-	ElementInstancer<_Element>::ElementInstancer(asIScriptEngine *engine, int typeId)
+	template<class ElementT>
+	ElementInstancer<ElementT>::ElementInstancer(asIScriptEngine *engine, int typeId)
 		: m_Engine(engine), m_TypeId(typeId)
 	{
 	}
 
-	template<class _Element>
-	ElementInstancer<_Element>::~ElementInstancer()
+	template<class ElementT>
+	ElementInstancer<ElementT>::~ElementInstancer()
 	{}
 
-	template<class _Element>
-	void ElementInstancer<_Element>::Release()
+	template<class ElementT>
+	void ElementInstancer<ElementT>::Release()
 	{
 		delete this;
 	}
 
-	template <class _Element>
-	Core::Element* ElementInstancer<_Element>::InstanceElement(Core::Element* ROCKET_UNUSED(parent), const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes)
+	template <class ElementT>
+	Core::Element* ElementInstancer<ElementT>::InstanceElement(Core::Element* ROCKET_UNUSED(parent), const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes)
 	{
-		ElementWrapper<_Element> *elementWrapper = new ElementWrapper<_Element>(tag.CString());
+		ElementWrapper<ElementT> *elementWrapper = new ElementWrapper<ElementT>(tag.CString());
 
 		asIObjectType *type = m_Engine->GetObjectTypeById(m_TypeId);
 		//std::string type_name(type->GetName());
@@ -86,7 +86,7 @@ namespace Rocket { namespace AngelScript {
 		if (obj == NULL)
 			return NULL;
 
-		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, m_Engine->GetObjectTypeById(ElementWrapper<_Element>::TypeId));
+		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, m_Engine->GetObjectTypeById(ElementWrapper<ElementT>::TypeId));
 
 		elementWrapper->SetScriptObject( obj );
 		//obj->Release();
@@ -94,16 +94,16 @@ namespace Rocket { namespace AngelScript {
 		return dynamic_cast<Core::Element*>( elementWrapper );
 	}
 
-	template <class _Element>
-	void ElementInstancer<_Element>::ReleaseElement(Rocket::Core::Element* element)
+	template <class ElementT>
+	void ElementInstancer<ElementT>::ReleaseElement(Rocket::Core::Element* element)
 	{
 		// Delete the wrapper
-		//ElementWrapper<_Element> *elementWrapper = dynamic_cast<ElementWrapper<_Element>*>( element );
+		//ElementWrapper<ElementT> *elementWrapper = dynamic_cast<ElementWrapper<ElementT>*>( element );
 		//ROCKET_ASSERT(elementWrapper);
 		//delete elementWrapper;
 	}
 
-	template <class _Element>
+	template <class ElementT>
 	class FactoryElementInstancer : public Rocket::Core::ElementInstancer
 	{
 	public:
@@ -130,36 +130,36 @@ namespace Rocket { namespace AngelScript {
 		std::string m_Decl;
 	};
 
-	template<class _Element>
-	FactoryElementInstancer<_Element>::FactoryElementInstancer(asIScriptEngine *engine, const char * module, const std::string &decl)
+	template<class ElementT>
+	FactoryElementInstancer<ElementT>::FactoryElementInstancer(asIScriptEngine *engine, const char * module, const std::string &decl)
 		: m_Engine(engine), m_Module(module), m_Decl(decl)
 	{
 	}
 
-	template<class _Element>
-	FactoryElementInstancer<_Element>::~FactoryElementInstancer()
+	template<class ElementT>
+	FactoryElementInstancer<ElementT>::~FactoryElementInstancer()
 	{}
 
-	template<class _Element>
-	void FactoryElementInstancer<_Element>::Release()
+	template<class ElementT>
+	void FactoryElementInstancer<ElementT>::Release()
 	{
 		delete this;
 	}
 
-	template <class _Element>
-	Core::Element* FactoryElementInstancer<_Element>::InstanceElement(Core::Element* ROCKET_UNUSED(parent), const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes)
+	template <class ElementT>
+	Core::Element* FactoryElementInstancer<ElementT>::InstanceElement(Core::Element* ROCKET_UNUSED(parent), const Rocket::Core::String& tag, const Rocket::Core::XMLAttributes& attributes)
 	{
 		asIScriptModule *module = m_Engine->GetModule(m_Module);
 		if (module == NULL)
 			return NULL;
 
-		//Core::Element *element = new _Element(tag.CString());
+		//Core::Element *element = new ElementT(tag.CString());
 		// Create a script calling wrapper (calls script overrides when available)
 		//  Note that this is before the script object - since that must be
 		//  passed a valid entity on construction
-		ElementWrapper<_Element> *elementWrapper = new ElementWrapper<_Element>(tag.CString());
+		ElementWrapper<ElementT> *elementWrapper = new ElementWrapper<ElementT>(tag.CString());
 
-		ScriptUtils::Calling::Caller callFactory(module, m_Decl.c_str());
+		ScriptUtils::Calling::Caller callFactory = ScriptUtils::Calling::Caller::Create(module, m_Decl.c_str());
 		callFactory.SetThrowOnException(true);
 		asIScriptObject *obj = NULL;
 		try
@@ -176,7 +176,7 @@ namespace Rocket { namespace AngelScript {
 		if (obj == NULL)
 				return NULL;
 
-		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, m_Engine->GetObjectTypeById(ElementWrapper<_Element>::TypeId));
+		m_Engine->NotifyGarbageCollectorOfNewObject(elementWrapper, obj->GetObjectType());
 
 		// Set the script object for running overrided methods
 		elementWrapper->SetScriptObject(obj);
@@ -188,11 +188,11 @@ namespace Rocket { namespace AngelScript {
 		return static_cast<Core::Element*>(elementWrapper);
 	}
 
-	template <class _Element>
-	void FactoryElementInstancer<_Element>::ReleaseElement(Rocket::Core::Element* element)
+	template <class ElementT>
+	void FactoryElementInstancer<ElementT>::ReleaseElement(Rocket::Core::Element* element)
 	{
 		// Delete the wrapper
-		ElementWrapper<_Element> *elementWrapper = dynamic_cast<ElementWrapper<_Element>*>( element );
+		ElementWrapper<ElementT> *elementWrapper = dynamic_cast<ElementWrapper<ElementT>*>( element );
 		if (elementWrapper != NULL && elementWrapper->GetScriptObject() != NULL)
 		{
 			//asIScriptObject *obj = static_cast<asIScriptObject*>( elementWrapper->GetScriptObject() );
@@ -331,8 +331,8 @@ namespace Rocket { namespace AngelScript {
 			// Check that the passed function exists
 			asIScriptModule *module = engine->GetModule(moduleName); ROCKET_ASSERT(module != NULL);
 			// Find the type with the given declaration in the current module
-			int funcId = module->GetFunctionIdByDecl(decl.CString());
-			if (funcId < 0)
+			asIScriptFunction* func = module->GetFunctionByDecl(decl.CString());
+			if (!func)
 			{
 				context->SetException("Function doesn't exist");
 				return;
@@ -344,20 +344,20 @@ namespace Rocket { namespace AngelScript {
 
 	void RegisterBindElementInstancer(asIScriptEngine *engine)
 	{
-		int r = engine->RegisterGlobalFunction("void RegisterElementType(const rString &in rml_name, const rString &in decl)",
+		int r = engine->RegisterGlobalFunction("void RegisterElementType(const String &in rml_name, const String &in decl)",
 			asFUNCTION(BindElementInstancer_Wrapper), asCALL_CDECL);
 		ROCKET_ASSERT(r >= 0);
 
-		r = engine->RegisterGlobalFunction("void RegisterElementFactory(const rString &in rml_name, const rString &in decl)",
+		r = engine->RegisterGlobalFunction("void RegisterElementFactory(const String &in rml_name, const String &in decl)",
 			asFUNCTION(BindElementFactory_Wrapper), asCALL_CDECL);
 		ROCKET_ASSERT(r >= 0);
 	}
 
 	//! Ref-cast-style method for getting ScriptElement objects
-	template <class _Element>
-	asIScriptObject * GetScriptObject(_Element *element)
+	template <class ElementT>
+	asIScriptObject * GetScriptObject(ElementT *element)
 	{
-		ElementWrapper<_Element> *wrapper = dynamic_cast<ElementWrapper<_Element>*>( element );
+		ElementWrapper<ElementT> *wrapper = dynamic_cast<ElementWrapper<ElementT>*>( element );
 		if (wrapper != NULL && wrapper->GetScriptObject() != NULL)
 		{
 			asIScriptObject *script_obj = static_cast<asIScriptObject*>( wrapper->GetScriptObject() );

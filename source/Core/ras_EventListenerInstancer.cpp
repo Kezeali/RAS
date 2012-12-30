@@ -134,7 +134,7 @@ namespace Rocket { namespace AngelScript {
 		ROCKET_ASSERTMSG(r >= 0, "Failed to compile inline-event function");
 
 		asIScriptContext *ctx = m_Engine->CreateContext();
-		r = ctx->Prepare(m_Func->GetId());
+		r = ctx->Prepare(m_Func);
 		ROCKET_ASSERTMSG(r >= 0, "Failed to prepare inline-event function");
 		if (r < 0)
 		{
@@ -207,10 +207,10 @@ namespace Rocket { namespace AngelScript {
 				end = 0;
 			}
 
-			return new InlineEventListener(m_Engine, module.CString(), value.CString() + end+1);
+			return new InlineEventListener(m_Engine, module.CString(), value.Substring(end+1));
 		}
 		else
-			return new InlineEventListener(m_Engine, m_DefaultModule, value.CString());
+			return new InlineEventListener(m_Engine, m_DefaultModule, value);
 	}
 
 	void InlineEventListenerInstancer::Release()

@@ -61,7 +61,7 @@ namespace Rocket { namespace AngelScript {
 	 *
 	 * \see StringConversion
 	 */
-	RASCOREDLL_API void RegisterStringConversion(asIScriptEngine *engine, const std::string &builtin_string_typename, bool allow_implicit = true);
+	RASCOREDLL_API void RegisteStringConversion(asIScriptEngine *engine, const std::string &builtin_string_typename, bool allow_implicit = true);
 
 	//! Converts between std#string and Rocket#Core#String
 	struct RASCOREDLL_API std_converter
@@ -77,13 +77,13 @@ namespace Rocket { namespace AngelScript {
 	/*!
 	* \tparam _Converter
 	* The conversion function - used to convert from string_typename (see Register()) to 
-	* rString and vice-versa.
+	* String and vice-versa.
 	*/
 	template <class _Converter = std_converter>
 	class StringConversion
 	{
 	public:
-		//! Registers conversion (type-casting) to and from rString to the given string-type
+		//! Registers conversion (type-casting) to and from String to the given string-type
 		/*!
 		* \param[in] engine
 		* AngelScript engine to register the cast behaviours with.
@@ -118,19 +118,19 @@ namespace Rocket { namespace AngelScript {
 		static void Register_ValueType(asIScriptEngine *engine, const std::string &string_typename, bool allow_implicit = true)
 		{
 			int r;
-			// Explicit conversion constructor from <built-in> to Rocket::Core::String (registered as rString)
-			r = engine->RegisterObjectBehaviour("rString",
+			// Explicit conversion constructor from <built-in> to Rocket::Core::String (registered as String)
+			r = engine->RegisterObjectBehaviour("String",
 				asBEHAVE_CONSTRUCT,
 				("void f("+string_typename+")").c_str(),
 				asFUNCTION(EString_construct_from_string),
 				asCALL_CDECL_OBJLAST);
 			if (r < 0)
-				throw Exception("Couldn't register explicit "+string_typename+" conversion constructor for rString");
+				throw Exception("Couldn't register explicit "+string_typename+" conversion constructor for String");
 
-			// Explicit conversion constructor from rString to <built-in>
+			// Explicit conversion constructor from String to <built-in>
 			/*r = engine->RegisterObjectBehaviour(string_typename.c_str(),
 			asBEHAVE_CONSTRUCT,
-			"void f(rString)",
+			"void f(String)",
 			asFUNCTION(string_construct_from_EString),
 			asCALL_CDECL_OBJLAST);
 			if (r < 0)
@@ -138,49 +138,49 @@ namespace Rocket { namespace AngelScript {
 
 			if (allow_implicit)
 			{
-				// Implicit cast from <built-in> to rString
+				// Implicit cast from <built-in> to String
 				r = engine->RegisterObjectBehaviour(string_typename.c_str(),
-					asBEHAVE_IMPLICIT_VALUE_CAST, "rString f()",
+					asBEHAVE_IMPLICIT_VALUE_CAST, "String f()",
 					asFUNCTION(stringToEString), asCALL_CDECL_OBJFIRST);
 				if (r < 0)
 					throw Exception("Couldn't register implicit string cast operator for " + string_typename);
 
-				// Implicit cast from rString to <built-in>
-				r = engine->RegisterObjectBehaviour("rString", asBEHAVE_IMPLICIT_VALUE_CAST,
+				// Implicit cast from String to <built-in>
+				r = engine->RegisterObjectBehaviour("String", asBEHAVE_IMPLICIT_VALUE_CAST,
 					(string_typename + " f()").c_str(),
 					asFUNCTION(eStringToString), asCALL_CDECL_OBJFIRST);
 				if (r < 0)
-					throw Exception("Couldn't register implicit string cast operator for rString");
+					throw Exception("Couldn't register implicit string cast operator for String");
 			}
 		}
 
 		static void Register_RefType(asIScriptEngine *engine, const std::string &string_typename, bool allow_implicit = true)
 		{
 			int r;
-			// Explicit conversion constructor from <built-in> to rString
-			r = engine->RegisterObjectBehaviour("rString",
+			// Explicit conversion constructor from <built-in> to String
+			r = engine->RegisterObjectBehaviour("String",
 				asBEHAVE_CONSTRUCT,
 				("void f("+string_typename+"&in)").c_str(),
 				asFUNCTION(EString_construct_from_string),
 				asCALL_CDECL_OBJLAST);
 			if (r < 0)
-				throw Exception("Couldn't register explicit "+string_typename+" conversion constructor for rString");
+				throw Exception("Couldn't register explicit "+string_typename+" conversion constructor for String");
 
 			if (allow_implicit)
 			{
-				r = engine->RegisterObjectMethod("rString",
-					("rString& opAssign(const "+string_typename+"&in)").c_str(),
+				r = engine->RegisterObjectMethod("String",
+					("String& opAssign(const "+string_typename+"&in)").c_str(),
 					asFUNCTION(EString_assign_string),
 					asCALL_CDECL_OBJLAST);
 				if (r < 0)
-					throw Exception("Couldn't register "+string_typename+" assignment for rString");
+					throw Exception("Couldn't register "+string_typename+" assignment for String");
 
-				r = engine->RegisterObjectMethod("rString",
-					("rString& opAddAssign(const "+string_typename+"&in)").c_str(),
+				r = engine->RegisterObjectMethod("String",
+					("String& opAddAssign(const "+string_typename+"&in)").c_str(),
 					asFUNCTION(EString_addassign_string),
 					asCALL_CDECL_OBJLAST);
 				if (r < 0)
-					throw Exception("Couldn't register rString::+= "+string_typename+"@");
+					throw Exception("Couldn't register String::+= "+string_typename+"@");
 			}
 		}
 
@@ -264,8 +264,8 @@ namespace Rocket { namespace AngelScript {
 
 	//Rocket::Core::String stringToRString(std::string* script_string)
 	//{
-	//	Rocket::Core::String rString(script_string->c_str());
-	//	return rString;
+	//	Rocket::Core::String String(script_string->c_str());
+	//	return String;
 	//}
 
 	//template <_Converter>

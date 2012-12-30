@@ -23,25 +23,25 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 
 	// Properties
 	r = engine->RegisterObjectMethod(c_name,
-		"bool SetProperty(const rString &in, const rString &in)",
+		"bool SetProperty(const String &in, const String &in)",
 		asMETHODPR(RC::Element, SetProperty, (const Rocket::Core::String &, const Rocket::Core::String &), bool),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
-		"void RemoveProperty(const rString &in)",
+		"void RemoveProperty(const String &in)",
 		asMETHODPR(RC::Element, RemoveProperty, (const Rocket::Core::String&), void),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
-		"rString GetProperty(const rString &in)",
+		"String GetProperty(const String &in)",
 		asMETHODPR(RC::Element, GetProperty<Rocket::Core::String>, (const Rocket::Core::String &), Rocket::Core::String),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
-		"float ResolveProperty(const rString &in, float base_value)",
+		"float ResolveProperty(const String &in, float base_value)",
 		asMETHODPR(RC::Element, ResolveProperty, (const Rocket::Core::String&, float), float),
 		asCALL_THISCALL);
 	if (r < 0)
@@ -49,39 +49,39 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 
 	// Attributes
 	r = engine->RegisterObjectMethod(c_name,
-		"bool HasAttribute(const rString &in)",
+		"bool HasAttribute(const String &in)",
 		asMETHODPR(RC::Element, HasAttribute, (const Rocket::Core::String &), bool),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
-		"rString GetAttribute(const rString &in, const rString &in)",
+		"String GetAttribute(const String &in, const String &in)",
 		asMETHODPR(RC::Element, GetAttribute<Rocket::Core::String>, (const Rocket::Core::String &, const Rocket::Core::String &) const, Rocket::Core::String),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
-		"int GetAttribute(const rString &in, const int &in)",
+		"int GetAttribute(const String &in, const int &in)",
 		asMETHODPR(RC::Element, GetAttribute<int>, (const Rocket::Core::String &, const int &) const, int),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 	r = engine->RegisterObjectMethod(c_name,
-		"void RemoveAttribute(const rString &in)",
+		"void RemoveAttribute(const String &in)",
 		asMETHODPR(RC::Element, RemoveAttribute, (const Rocket::Core::String&), void),
 		asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
 	// DOM Properties
-	r = engine->RegisterObjectMethod(c_name, "const rString &GetTagName() const", asMETHOD(RC::Element, GetTagName), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "const String &GetTagName() const", asMETHOD(RC::Element, GetTagName), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
-	r = engine->RegisterObjectMethod(c_name, "const rString &GetId() const", asMETHOD(RC::Element, GetId), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "const String &GetId() const", asMETHOD(RC::Element, GetId), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "void SetId(const rString &in)", asMETHOD(RC::Element, SetId), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "void SetId(const String &in)", asMETHOD(RC::Element, SetId), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
@@ -173,14 +173,14 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 
 	if ((excluded_virtual_methods & GetInnerRML) != GetInnerRML)
 	{
-		r = engine->RegisterObjectMethod(c_name, "void GetInnerRML(rString &out) const", asMETHODPR(T, GetInnerRML, (Rocket::Core::String&) const, void), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod(c_name, "void GetInnerRML(String &out) const", asMETHODPR(T, GetInnerRML, (Rocket::Core::String&) const, void), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register " + name + " class");
-		r = engine->RegisterObjectMethod(c_name, "rString GetInnerRML() const", asMETHODPR(T, GetInnerRML, (void) const, Rocket::Core::String), asCALL_THISCALL);
+		r = engine->RegisterObjectMethod(c_name, "String GetInnerRML() const", asMETHODPR(T, GetInnerRML, (void) const, Rocket::Core::String), asCALL_THISCALL);
 		if (r < 0)
 			throw Exception("Couldn't register " + name + " class");
 	}
-	r = engine->RegisterObjectMethod(c_name, "void SetInnerRML(const rString &in)", asMETHOD(RC::Element, SetInnerRML), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "void SetInnerRML(const String &in)", asMETHOD(RC::Element, SetInnerRML), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
@@ -198,13 +198,13 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 	// see ras_EventListener.h
 	RegisterElementEventListenerMethods(engine, c_name);
 
-	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const rString &in, const e_Dictionary &in, bool)", asMETHOD(RC::Element, DispatchEvent), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const String &in, const e_Dictionary &in, bool)", asMETHOD(RC::Element, DispatchEvent), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const rString &in, const e_Dictionary &in)", asFUNCTION(ElemDispatchEvent_default), asCALL_CDECL_OBJLAST);
+	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const String &in, const e_Dictionary &in)", asFUNCTION(ElemDispatchEvent_default), asCALL_CDECL_OBJLAST);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const rString &in)", asFUNCTION(ElemDispatchEvent_noparams), asCALL_CDECL_OBJLAST);
+	r = engine->RegisterObjectMethod(c_name, "bool DispatchEvent(const String &in)", asFUNCTION(ElemDispatchEvent_noparams), asCALL_CDECL_OBJLAST);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
@@ -234,10 +234,10 @@ void registerElementMembers(asIScriptEngine *engine, const std::string &name, in
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
-	r = engine->RegisterObjectMethod(c_name, "Element@ GetElementById(const rString &in)", asFUNCTION(Element_GetElementById), asCALL_CDECL_OBJLAST);
+	r = engine->RegisterObjectMethod(c_name, "Element@ GetElementById(const String &in)", asFUNCTION(Element_GetElementById), asCALL_CDECL_OBJLAST);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "void  GetElementsByTagName(ElementList &out, const rString &in)", asMETHOD(RC::Element, GetElementsByTagName), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "void  GetElementsByTagName(ElementList &out, const String &in)", asMETHOD(RC::Element, GetElementsByTagName), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 }
@@ -250,10 +250,10 @@ void registerDocumentMembers(asIScriptEngine *engine, const std::string &name)
 
 	const char *c_name = name.c_str();
 	int r;
-	r = engine->RegisterObjectMethod(c_name, "void SetTitle(const rString &in)", asMETHOD(T, SetTitle), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "void SetTitle(const String &in)", asMETHOD(T, SetTitle), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "const rString &GetTitle() const", asMETHOD(T, GetTitle), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "const String &GetTitle() const", asMETHOD(T, GetTitle), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
@@ -277,10 +277,10 @@ void registerDocumentMembers(asIScriptEngine *engine, const std::string &name)
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 
-	r = engine->RegisterObjectMethod(c_name, "Element@ CreateElement(const rString &in)", asMETHOD(T, CreateElement), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "Element@ CreateElement(const String &in)", asMETHOD(T, CreateElement), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
-	r = engine->RegisterObjectMethod(c_name, "ElementText@ CreateTextNode(const rString &in)", asMETHOD(T, CreateTextNode), asCALL_THISCALL);
+	r = engine->RegisterObjectMethod(c_name, "ElementText@ CreateTextNode(const String &in)", asMETHOD(T, CreateTextNode), asCALL_THISCALL);
 	if (r < 0)
 		throw Exception("Couldn't register " + name + " class");
 }

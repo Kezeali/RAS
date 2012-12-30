@@ -25,7 +25,7 @@ namespace Rocket { namespace AngelScript { namespace _registration_utils {
 	void buildClassWrapper();
 
 	//! Registers Rocket#Core#String
-	void registerEString(asIScriptEngine *engine);
+	void registeString(asIScriptEngine *engine);
 
 	//! Registers members of Rocket#Core#Context
 	void registerContextMembers(asIScriptEngine *engine);

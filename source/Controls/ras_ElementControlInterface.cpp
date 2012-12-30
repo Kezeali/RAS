@@ -33,14 +33,14 @@ namespace Rocket { namespace AngelScript {
 		void RegisterFormControlMembers(asIScriptEngine *engine, const char * c_name)
 		{
 			int r;
-			r = engine->RegisterObjectMethod(c_name, "rString GetName() const",
+			r = engine->RegisterObjectMethod(c_name, "String GetName() const",
 				asMETHOD(_ControlType, GetName), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod(c_name, "void SetName(const rString &in)",
+			r = engine->RegisterObjectMethod(c_name, "void SetName(const String &in)",
 				asMETHOD(_ControlType, SetName), asCALL_THISCALL);
 
-			r = engine->RegisterObjectMethod(c_name, "rString GetValue() const",
+			r = engine->RegisterObjectMethod(c_name, "String GetValue() const",
 				asMETHOD(_ControlType, GetValue), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod(c_name, "void SetValue(const rString &in)",
+			r = engine->RegisterObjectMethod(c_name, "void SetValue(const String &in)",
 				asMETHOD(_ControlType, SetValue), asCALL_THISCALL);
 
 			r = engine->RegisterObjectMethod(c_name, "bool IsDisabled()",
@@ -58,10 +58,10 @@ namespace Rocket { namespace AngelScript {
 		{
 			int r;
 			// The original Add() method
-			r = engine->RegisterObjectMethod(c_name, "int Add(const rString &in, const rString &in, int, bool)",
+			r = engine->RegisterObjectMethod(c_name, "int Add(const String &in, const String &in, int, bool)",
 				asMETHODPR(Rocket::Controls::ElementFormControlSelect, Add, (const Rocket::Core::String&, const Rocket::Core::String&, int, bool), int), asCALL_THISCALL);
 			// add with default params. dropped
-			r = engine->RegisterObjectMethod(c_name, "int Add(const rString &in, const rString &in)",
+			r = engine->RegisterObjectMethod(c_name, "int Add(const String &in, const String &in)",
 				asFUNCTIONPR(ElementInterface::Add, (Rocket::Controls::ElementFormControlSelect*, const Rocket::Core::String&, const Rocket::Core::String&), int), asCALL_CDECL_OBJFIRST);
 			r = engine->RegisterObjectMethod(c_name, "void Remove(int)",
 				asMETHOD(Rocket::Controls::ElementFormControlSelect, Remove), asCALL_THISCALL);
@@ -139,9 +139,9 @@ namespace Rocket { namespace AngelScript {
 			//  Base (Element) members
 			registerElementMembers<Rocket::Core::Element>(engine, "ElementDataGrid", _registration_utils::GetInnerRML);
 			//  ElementDataGrid methods
-			r = engine->RegisterObjectMethod("ElementDataGrid", "bool AddColumn(const rString &in, const rString &in, float, const rString &in)",
+			r = engine->RegisterObjectMethod("ElementDataGrid", "bool AddColumn(const String &in, const String &in, float, const String &in)",
 				asMETHODPR(Rocket::Controls::ElementDataGrid, AddColumn, (const Rocket::Core::String&, const Rocket::Core::String&, float, const Rocket::Core::String&), bool), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("ElementDataGrid", "void SetDataSource(const rString &in)",
+			r = engine->RegisterObjectMethod("ElementDataGrid", "void SetDataSource(const String &in)",
 				asMETHOD(Rocket::Controls::ElementDataGrid, SetDataSource), asCALL_THISCALL);
 			r = engine->RegisterObjectMethod("ElementDataGrid", "int GetNumRows() const",
 				asMETHOD(Rocket::Controls::ElementDataGrid, GetRow), asCALL_THISCALL);
@@ -184,7 +184,7 @@ namespace Rocket { namespace AngelScript {
 			//  Base (Element) members
 			registerElementMembers<Rocket::Controls::ElementForm>(engine, "ElementForm");
 			//  ElementForm methods
-			r = engine->RegisterObjectMethod("ElementForm", "void Submit(const rString &in, const rString &in)",
+			r = engine->RegisterObjectMethod("ElementForm", "void Submit(const String &in, const String &in)",
 				asMETHOD(Rocket::Controls::ElementForm, Submit), asCALL_THISCALL);
 			r = engine->RegisterObjectMethod("ElementForm", "void Submit()",
 				asFUNCTION(ElementInterface::Submit), asCALL_CDECL_OBJFIRST);
@@ -256,13 +256,13 @@ namespace Rocket { namespace AngelScript {
 				asFUNCTION(ShowCursor_default), asCALL_CDECL_OBJFIRST);
 			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "void ScrollToCursor()",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, ScrollToCursor), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "const e_Vector2f &GetCursorPosition() const",
+			r = engine->RegisterObjectMethod("ElementFormControlTextArea", "const Vector2f &GetCursorPosition() const",
 				asMETHOD(Rocket::Controls::ElementFormControlTextArea, GetCursorPosition), asCALL_THISCALL);
 
 			// SelectOption (value type)
 			r = engine->RegisterObjectMethod("SelectOption", "Element@ GetElement()",
 				asMETHOD(Rocket::Controls::SelectOption, GetElement), asCALL_THISCALL);
-			r = engine->RegisterObjectMethod("SelectOption", "const rString &GetValue() const",
+			r = engine->RegisterObjectMethod("SelectOption", "const String &GetValue() const",
 				asMETHOD(Rocket::Controls::SelectOption, GetValue), asCALL_THISCALL);
 
 			// ElementFormControlSelect
@@ -281,7 +281,7 @@ namespace Rocket { namespace AngelScript {
 			//  Base (ElementFormControlSelect) members
 			RegisterFormControlSelectMembers(engine, "ElementFormControlDataSelect");
 			//  ElementFormControlDataSelect members
-			engine->RegisterObjectMethod("ElementFormControlDataSelect", "void SetDataSouce(const rString &in)",
+			engine->RegisterObjectMethod("ElementFormControlDataSelect", "void SetDataSouce(const String &in)",
 				asMETHOD(Rocket::Controls::ElementFormControlDataSelect, SetDataSource), asCALL_THISCALL);
 
 			// ElementTabSet
@@ -290,9 +290,9 @@ namespace Rocket { namespace AngelScript {
 			//  ElementTabSet members
 			engine->RegisterObjectMethod("ElementTabSet", "int GetNumTabs()",
 				asMETHOD(Rocket::Controls::ElementTabSet, GetNumTabs), asCALL_THISCALL);
-			engine->RegisterObjectMethod("ElementTabSet", "void SetTab(int, const rString &in)",
+			engine->RegisterObjectMethod("ElementTabSet", "void SetTab(int, const String &in)",
 				asMETHODPR(Rocket::Controls::ElementTabSet, SetTab, (int, const Rocket::Core::String&), void), asCALL_THISCALL);
-			engine->RegisterObjectMethod("ElementTabSet", "void SetPanel(int, const rString &in)",
+			engine->RegisterObjectMethod("ElementTabSet", "void SetPanel(int, const String &in)",
 				asMETHODPR(Rocket::Controls::ElementTabSet, SetPanel, (int, const Rocket::Core::String&), void), asCALL_THISCALL);
 			engine->RegisterObjectMethod("ElementTabSet", "int GetActiveTab()",
 				asMETHOD(Rocket::Controls::ElementTabSet, GetActiveTab), asCALL_THISCALL);

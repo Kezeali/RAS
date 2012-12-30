@@ -27,27 +27,33 @@ public:
 	static_assert(std::is_base_of<Rocket::Core::Element, T>::value, "Element wrapper can only wrap types derived from Rocket::Core::Element.");
 
 	ElementWrapper(const char* tag, asIScriptObject* self)
-		: T( tag ),
-		_obj( self ),
-		m_GCFlag( false ),
-		locked( false )
+		: T(tag),
+		obj(self),
+		gcFlag(false),
+		ctx(nullptr),
+		released(false)
 	{
-		_obj->AddRef();
+		obj->AddRef();
 	}
 
 	ElementWrapper(const char* tag)
-		: T( tag ),
-		_obj( nullptr ),
-		m_GCFlag( false ),
-		locked( false )
+		: T(tag),
+		obj(nullptr),
+		gcFlag(false),
+		ctx(nullptr),
+		released(false)
 	{
 	}
 
-	virtual ~ElementWrapper() {}
+	virtual ~ElementWrapper()
+	{
+		if (ctx)
+			ctx->Release();
+	}
 
 	virtual void SetScriptObject(asIScriptObject* self)
 	{
-		_obj = self;
+		obj = self;
 		if (self != nullptr)
 			self->AddRef();
 	}
@@ -55,83 +61,88 @@ public:
 	//! Return the AS script-object associated with this element
 	virtual void* GetScriptObject() const
 	{
-		return static_cast<void*>(_obj);
+		return static_cast<void*>(obj);
 	}
 
 	// Add ref to app object (the script object keeps it's own ref count, garbage collection handles the rest)
 	virtual void AddReference()
 	{
 		T::AddReference();
-		m_GCFlag = false;
+		gcFlag = false;
 	}
 
 	// Remove ref from app object
 	virtual void RemoveReference()
 	{
-		if (!locked)
+		ROCKET_ASSERTMSG(!released, "Tried to remove Element ref. after deactivation");
+		if (!released)
 		{
-			m_GCFlag = false;
+			gcFlag = false;
 			T::RemoveReference();
 		}
-		else
-			ROCKET_ASSERTMSG(!locked, "Tried to remove Element ref. after deactivation");
 	}
 
 	virtual void OnReferenceDeactivate()
 	{
-		locked = true;
-		//_obj->Release(); // Already released by garbage collection at this point
-		_obj = nullptr;
+		released = true;
+		//obj->Release(); // Already released by garbage collection at this point
+		obj = nullptr;
 		delete this;
 	}
 
 	// Allows the GC to mark this object
 	void SetGCFlag()
 	{
-		m_GCFlag = true;
+		gcFlag = true;
 	}
 
 	// Returns true if this object has been marked by the GC
 	bool GetGCFlag() const
 	{
-		return m_GCFlag;
+		return gcFlag;
 	}
 
 	void EnumReferences(asIScriptEngine *engine)
 	{
-		engine->GCEnumCallback((void*)_obj);
+		engine->GCEnumCallback((void*)obj);
 	}
 
 	void ReleaseAllReferences(asIScriptEngine *engine)
 	{
-		_obj->Release();
+		obj->Release();
 	}
 
 	virtual void OnUpdate()
 	{
 		Core::Element::OnUpdate();
 
-		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnUpdate()");
-		if ( f )
+		SC::Caller f = SC::Caller::Create(GetCtx(), obj, "void OnUpdate()");
+		if (f)
 			f();
+		f.set_object(nullptr);
+		GetCtx()->Unprepare();
 	}
 
 	virtual void OnRender()
 	{
 		Core::Element::OnRender();
 
-		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnRender()");
-		if ( f )
+		SC::Caller f = SC::Caller::Create(GetCtx(), obj, "void OnRender()");
+		if (f)
 			f();
+		f.set_object(nullptr);
+		GetCtx()->Unprepare();
 	}
 
 	virtual void OnLayout()
 	{
 		Core::Element::OnLayout();
 
-		SC::Caller f = ScriptUtils::Calling::Caller(_obj, "void OnLayout()");
-		if ( f )
+		SC::Caller f = SC::Caller::Create(GetCtx(), obj, "void OnLayout()");
+		if (f)
 			f();
+		f.set_object(nullptr);
+		GetCtx()->Unprepare();
 	}
 
 	static int TypeId;
@@ -160,12 +171,23 @@ public:
 			"void f(int&in)", asMETHOD(ElementWrapper, ReleaseAllReferences), asCALL_THISCALL);
 	}
 
-	bool locked;
-
 private:
 	// Script representation of this object
-	asIScriptObject* _obj;
-	bool m_GCFlag;
+	asIScriptObject* obj;
+	bool gcFlag;
+	asIScriptContext* ctx;
+
+	bool released;
+
+	asIScriptContext* GetCtx()
+	{
+		if (ctx == nullptr && obj != nullptr)
+		{
+			ctx = obj->GetEngine()->CreateContext();
+		}
+
+		return ctx;
+	}
 };
 
 template <typename T> int ElementWrapper<T>::TypeId = -1;
@@ -175,11 +197,6 @@ void RegisterElementInterface(asIScriptEngine *engine)
 	int r;
 	r = engine->RegisterInterface("IElement");
 	ROCKET_ASSERT(r >= 0);
-
-	//r = engine->RegisterInterfaceMethod("IElement", "void OnUpdate()");
-	//ROCKET_ASSERT(r >= 0);
-	//r = engine->RegisterInterfaceMethod("IElement", "void OnRender()");
-	//ROCKET_ASSERT(r >= 0);
 }
 
 }}

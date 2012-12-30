@@ -36,7 +36,7 @@ namespace Rocket { namespace AngelScript {
 
 	void ScriptedDataFormatter::FormatData(Rocket::Core::String& formatted_data, const Rocket::Core::StringList& raw_data)
 	{
-		ScriptUtils::Calling::Caller f = this->get_caller("rString FormatData(const StringList&in)");
+		ScriptUtils::Calling::Caller f = this->get_caller("String FormatData(const StringList&in)");
 		if (f)
 		{
 			//Rocket::Core::String comma_seperated_data;
@@ -57,7 +57,7 @@ namespace Rocket { namespace AngelScript {
 		int r = engine->RegisterInterface("IDataFormatter");
 		if (r < 0)
 			throw Exception("Couldn't register IDataFormatter");
-		r = engine->RegisterInterfaceMethod("IDataFormatter", "rString FormatData(const StringList&in)");
+		r = engine->RegisterInterfaceMethod("IDataFormatter", "String FormatData(const StringList&in)");
 		if (r < 0)
 			throw Exception("Couldn't register IDataFormatter");
 	}
@@ -79,12 +79,12 @@ namespace Rocket { namespace AngelScript {
 	void RegisterDataFormatterCreator(asIScriptEngine *engine)
 	{
 		int r;
-		r = engine->RegisterGlobalFunction("void AddDataFormatter(const rString &in, IDataFormatter@)",
+		r = engine->RegisterGlobalFunction("void AddDataFormatter(const String &in, IDataFormatter@)",
 			asFUNCTION(CreateDataFormatter), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Couldn't register AddDataFormatter(name, datasource)");
 
-		r = engine->RegisterGlobalFunction("void RemoveDataFormatter(const rString &in)",
+		r = engine->RegisterGlobalFunction("void RemoveDataFormatter(const String &in)",
 			asFUNCTION(DestroyDataFormatter), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Couldn't register RemoveDataFormatter(name)");
