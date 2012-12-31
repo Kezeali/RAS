@@ -23,9 +23,9 @@ namespace Rocket { namespace AngelScript
 		RegisterScriptableDocumentInstancer(engine);
 	}
 
-	void CorePlugin::OnDocumentLoad(Rocket::Core::ElementDocument* document)
+	void CorePlugin::OnDocumentOpen(Rocket::Core::Context*, const Rocket::Core::String& document_path)
 	{
-		InitialiseModule(engine, document->GetSourceURL().CString());
+		//InitialiseModule(engine, document_path.CString()); // This is done in ElementScriptableDocument now
 	}
 
 	CorePlugin* CorePlugin::instance = nullptr;

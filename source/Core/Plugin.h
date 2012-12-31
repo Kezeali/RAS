@@ -37,7 +37,7 @@ namespace Rocket { namespace AngelScript
 
 		virtual int GetEventClasses()
 		{
-			return EVT_ALL;
+			return EVT_BASIC | EVT_DOCUMENT;
 		}
 
 		virtual void OnInitialise();
@@ -47,7 +47,7 @@ namespace Rocket { namespace AngelScript
 			delete this;
 		}
 
-		virtual void OnDocumentLoad(Rocket::Core::ElementDocument* document);
+		virtual void OnDocumentOpen(Rocket::Core::Context* context, const Rocket::Core::String& document_path);
 
 	private:
 		asIScriptEngine* engine;

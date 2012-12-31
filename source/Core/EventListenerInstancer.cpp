@@ -80,7 +80,7 @@ namespace Rocket { namespace AngelScript {
 		int r = 0;
 		if (m_Func == nullptr)
 		{
-			std::string funcCode = "void InlineEventFn(Event @event) {\n";
+			std::string funcCode = "void InlineEventFn(Rocket::Event @event) {\n";
 			funcCode += m_ScriptString.CString();
 			funcCode += ";\n}"; // Semi-colon added in case event script doesn't have a final one (convinient for single statement scripts)
 

@@ -7,7 +7,6 @@ namespace Rocket { namespace AngelScript {
 	int AddElementsScriptSection(asIScriptEngine *engine, const char *module_name)
 	{
 		const char* script =
-			"\n"
 			"class ScriptElement : Rocket::IElement\n"
 			"{\n"
 			"Rocket::Element@ __inner;\n"
@@ -70,8 +69,7 @@ namespace Rocket { namespace AngelScript {
 			"bool HasChildNodes() { return __inner.HasChildNodes(); }\n"
 			"Rocket::Element@ GetElementById(const Rocket::String&in p1) { return __inner.GetElementById(p1); }\n"
 			"void GetElementsByTagName(Rocket::ElementList&out p1, const Rocket::String&in p2) { __inner.GetElementsByTagName(p1, p2); }\n"
-			"}\n"
-			"\n";
+			"}\n";
 
 		asPWORD copy = engine->GetEngineProperty(asEP_COPY_SCRIPT_SECTIONS);
 		engine->SetEngineProperty(asEP_COPY_SCRIPT_SECTIONS, 0);

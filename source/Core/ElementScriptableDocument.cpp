@@ -5,6 +5,8 @@
 
 #include "../../include/Rocket/AngelScript/Core/ElementScriptableDocument.h"
 
+#include "../../include/Rocket/AngelScript/Core/Core.h"
+
 #include <Rocket/Core/String.h>
 #include <Rocket/Core/Stream.h>
 #include <Rocket/Core/Event.h>
@@ -42,33 +44,6 @@ namespace Rocket { namespace AngelScript {
 				*((ElementDocument**)prop) = NULL;
 		}
 		m_Engine->DiscardModule(m_ModuleName.CString());
-	}
-
-	inline bool readModuleName(Rocket::Core::Stream* stream, Rocket::Core::String &code, Rocket::Core::String &out)
-	{
-		if (stream->Read(code, 9) == 9 && code == "#module \"") // 9 = strlen("#module \"")
-		{
-			code.Clear(); // remove the #module directive from the code
-
-			bool ok = true;
-			// Keep reading till the end of the module name is found
-			do
-			{
-				if (stream->Read(out, 1) == 0)
-				{
-					ok = false; // the end of the stream was found before the end of the module name
-					break;
-				}
-			} while (out[out.Length()-1] != '\"');
-
-			if (ok)
-				out.Resize(out.Length()-1); // Remove the trailing quotation mark
-			else
-				return false;
-			return true;
-		}
-		else
-			return false;
 	}
 
 	void ElementScriptableDocument::LoadScript(Rocket::Core::Stream* stream, const Rocket::Core::String& source_name)
@@ -116,12 +91,14 @@ namespace Rocket { namespace AngelScript {
 
 	void ElementScriptableDocument::Build()
 	{
-		asIScriptModule *module = m_Engine->GetModule(m_ModuleName.CString(), asGM_CREATE_IF_NOT_EXISTS);
-		if (module == NULL)
+		asIScriptModule *module = m_Engine->GetModule(m_ModuleName.CString(), asGM_ALWAYS_CREATE);
+		if (module == nullptr)
 		{
 			ROCKET_ERRORMSG(("Couldn't create document module for " + m_ModuleName).CString());
 			return;
 		}
+
+		InitialiseModule(m_Engine, m_ModuleName.CString());
 
 		int r;
 		// Add all the script sections 
