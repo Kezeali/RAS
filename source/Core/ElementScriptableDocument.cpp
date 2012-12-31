@@ -14,6 +14,8 @@
 
 #include <sstream>
 
+#include <ScriptUtils/Calling/Caller.h>
+
 //#define RAS_DOCUMENT__USE_PROPERTIES_OBJECT
 
 
@@ -37,7 +39,7 @@ namespace Rocket { namespace AngelScript {
 			asIScriptObject *moduleProperties = (asIScriptObject*)var;
 			void* prop = moduleProperties->GetPropertyPointer(0);
 #else
-			varInd = module->GetGlobalVarIndexByDecl("ElementDocument@ module_document");
+			varInd = module->GetGlobalVarIndexByDecl("Rocket::ElementDocument@ module_document");
 			void* prop = module->GetAddressOfGlobalVar(varInd);
 #endif
 			if (prop != NULL)
@@ -82,7 +84,7 @@ namespace Rocket { namespace AngelScript {
 #ifdef RAS_DOCUMENT_ADD_PROPERTIES_OBJECT
 	static const char *s_ModulePropertiesScript =
 		"class ModuleProperties {\n"
-		"ElementDocument@ document;\n"
+		"Rocket::ElementDocument@ document;\n"
 		"}\n"
 		"ModuleProperties module;";
 
@@ -112,7 +114,7 @@ namespace Rocket { namespace AngelScript {
 #ifdef RAS_DOCUMENT_ADD_PROPERTIES_OBJECT
 		r = module->AddScriptSection("module_properties", s_ModulePropertiesScript, s_ModulePropertiesScriptLength);
 #elif defined(RAS_DOCUMENT_ADD_PROPERTIES)
-		r = module->AddScriptSection("module_properties", "ElementDocument@ module_document;", 26);
+		r = module->AddScriptSection("module_properties", "Rocket::ElementDocument@ module_document;", 26);
 #endif
 		r = module->Build();
 		ROCKET_ASSERTMSG(r >= 0, "Failed to build document module");
@@ -126,7 +128,7 @@ namespace Rocket { namespace AngelScript {
 			asIScriptObject *moduleProperties = (asIScriptObject*)var;
 			void* prop = moduleProperties->GetPropertyPointer(0);
 #elif defined(RAS_DOCUMENT_ADD_PROPERTIES)
-			r = module->GetGlobalVarIndexByDecl("ElementDocument@ module_document");
+			r = module->GetGlobalVarIndexByDecl("Rocket::ElementDocument@ module_document");
 			void* prop = module->GetAddressOfGlobalVar(r);
 #endif
 			if (prop != NULL)

@@ -30,6 +30,8 @@ namespace Rocket { namespace AngelScript {
 
 		void Build();
 
+		Rocket::Core::String GetModuleName() const { return m_ModuleName; }
+
 	protected:
 		asIScriptEngine *m_Engine;
 

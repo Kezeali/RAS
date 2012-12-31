@@ -70,8 +70,8 @@ namespace Rocket { namespace AngelScript {
 		asIObjectType *type = m_Engine->GetObjectTypeById(m_TypeId);
 		//std::string type_name(type->GetName());
 
-		//int factoryId = type->GetFactoryIdByDecl((type_name+"@ "+type_name+"(Element@)");
-		ScriptUtils::Calling::Caller callCtor = ScriptUtils::Calling::Caller::FactoryCaller(type, "Element@");
+		//int factoryId = type->GetFactoryIdByDecl((type_name+"@ "+type_name+"(Rocket::Element@)");
+		ScriptUtils::Calling::Caller callCtor = ScriptUtils::Calling::Caller::FactoryCaller(type, "Rocket::Element@");
 		callCtor.SetThrowOnException(true);
 
 		asIScriptObject *obj = NULL;

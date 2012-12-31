@@ -12,9 +12,15 @@
 
 #include <angelscript.h>
 
+namespace Rocket { namespace Core
+{
+	class ElementDocument;
+} }
+
 namespace Rocket { namespace AngelScript
 {
 
+	//! Plugin for injecting angelscript stuff
 	class CorePlugin : public Rocket::Core::Plugin
 	{
 	public:
@@ -48,6 +54,8 @@ namespace Rocket { namespace AngelScript
 		}
 
 		virtual void OnDocumentOpen(Rocket::Core::Context* context, const Rocket::Core::String& document_path);
+
+		virtual void OnDocumentLoad(Rocket::Core::ElementDocument* document);
 
 	private:
 		asIScriptEngine* engine;
