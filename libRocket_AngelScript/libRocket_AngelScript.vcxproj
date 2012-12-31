@@ -169,6 +169,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\Core\Plugin.cpp" />
     <ClCompile Include="..\source\Core\ras_Core.cpp" />
     <ClCompile Include="..\source\Core\ras_Decorator.cpp" />
     <ClCompile Include="..\source\Core\ras_DecoratorInstancer.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegistrationUtils.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ScriptElement.h" />
+    <ClInclude Include="..\source\Core\Plugin.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.inl" />

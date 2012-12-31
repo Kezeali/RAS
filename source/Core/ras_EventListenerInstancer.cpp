@@ -177,17 +177,15 @@ namespace Rocket { namespace AngelScript {
 	}
 
 	// InlineEventListenerInstancer impl. follows
-	InlineEventListenerInstancer::InlineEventListenerInstancer(asIScriptEngine *engine, const char *module)
-		: m_Engine(engine),
-		m_DefaultModule(module)
+	InlineEventListenerInstancer::InlineEventListenerInstancer(asIScriptEngine *engine)
+		: m_Engine(engine)
 	{
 	}
 
-	InlineEventListenerInstancer::InlineEventListenerInstancer(asIScriptEngine *engine, const char *module,
+	InlineEventListenerInstancer::InlineEventListenerInstancer(asIScriptEngine *engine,
 		asSFuncPtr line_callback, void *line_callback_obj,
 		asSFuncPtr exception_callback, void *exception_callback_obj)
 		: m_Engine(engine),
-		m_DefaultModule(module),
 		m_LineCallback(line_callback, line_callback_obj),
 		m_ExceptionCallback(exception_callback, exception_callback_obj)
 	{}
@@ -210,7 +208,7 @@ namespace Rocket { namespace AngelScript {
 			return new InlineEventListener(m_Engine, module.CString(), value.Substring(end+1));
 		}
 		else
-			return new InlineEventListener(m_Engine, m_DefaultModule, value);
+			return new InlineEventListener(m_Engine, "this", value);
 	}
 
 	void InlineEventListenerInstancer::Release()

@@ -14,14 +14,22 @@
 #include "../../include/Rocket/AngelScript/Core/ras_ScriptedEventListener.h"
 #include "../../include/Rocket/AngelScript/Core/ras_EventConnection.h"
 #include "../../include/Rocket/AngelScript/Core/ras_ElementDocument.h"
+#include "Plugin.h"
 
 #include "../../include/Rocket/AngelScript/Core/ScriptElement.h"
 
-
 #include <ScriptUtils/Inheritance/RegisterConversion.h>
 
+namespace Rocket { namespace AngelScript
+{
 
-namespace Rocket { namespace AngelScript {
+	RASCOREDLL_API void Initialise(asIScriptEngine* engine)
+	{
+		RegisterCore(engine);
+
+		CorePlugin* plugin = new CorePlugin(engine);
+		Rocket::Core::RegisterPlugin(plugin);
+	}
 
 	Rocket::Core::Context* CreateCtxWrapper(const Rocket::Core::String &name, const Rocket::Core::Vector2i &dimen)
 	{
@@ -135,14 +143,6 @@ namespace Rocket { namespace AngelScript {
 		r = engine->RegisterGlobalFunction("String GetVersion()", asFUNCTION(Rocket::Core::GetVersion), asCALL_CDECL);
 		if (r < 0)
 			throw Exception("Failed to bind GetVersion()");
-
-		// TODO: Assuming I modify the RAS implementation to utilise the Rocket::Plugin interface, setting these instancers
-		//  should happen in the initialise method
-		Rocket::Core::Factory::RegisterEventListenerInstancer(new Rocket::AngelScript::InlineEventListenerInstancer(engine, "this"))
-			->RemoveReference();
-
-		Rocket::Core::Factory::RegisterElementInstancer("body", new Rocket::AngelScript::ScriptableDocumentInstancer(engine))
-			->RemoveReference();
 
 		engine->SetDefaultNamespace("");
 	}

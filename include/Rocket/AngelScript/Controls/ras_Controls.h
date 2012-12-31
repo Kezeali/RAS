@@ -15,7 +15,11 @@ namespace Rocket { namespace AngelScript {
 	//! Functions / utilities for registering Controls
 	namespace Controls {
 
-		RASCONTROLSDLL_API void RegisterControls(asIScriptEngine *engine);
+		//! Register the script interface and plugin
+		RASCONTROLSDLL_API void Initialise(asIScriptEngine* engine);
+
+		//! Register the script interface
+		void RegisterControls(asIScriptEngine *engine);
 
 	}
 }}

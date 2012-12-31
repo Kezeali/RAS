@@ -19,21 +19,26 @@ namespace Rocket {
 	namespace AngelScript {}
 }
 
+namespace Rocket { namespace AngelScript
+{
 
-namespace Rocket { namespace AngelScript {
-
-	//void ActivateScriptGeneration();
+	//! Register the script interface and plugin
+	RASCOREDLL_API void Initialise(asIScriptEngine* engine);
 
 	//! Registers main Rocket types
-	//! \todo TODO: rewrite Element bindings to use AngelScript 1.17.1's property accessor support (to be more simmilar to the python plugin)
+	//! \todo TODO: rewrite Element bindings to use AngelScript 1.17.1's property accessor support (to be more similar to the python plugin)
 	RASCOREDLL_API void RegisterCore(asIScriptEngine *engine);
+
+	/*! Register rocket class factories
+	* Registers the InlineEventListenerInstancer for executing in-line
+	* AngelScript code in RML events.
+	*/
+	RASCOREDLL_API void RegisterFactories(asIScriptEngine* engine);
 
 	//! Sets up the given module to use certain Rocket functionality
 	/*!
 	* Loads ScriptElement code into the given module, so custom element classes can
-	* be written in AngelScript.<br>
-	* Initializes and registers the InlineEventListenerInstancer for executing in-line
-	* AngelScript code in RML events.
+	* be written in AngelScript.
 	*/
 	RASCOREDLL_API void InitialiseModule(asIScriptEngine *engine, const char *module_name);
 

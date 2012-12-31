@@ -21,13 +21,14 @@ namespace Rocket { namespace AngelScript {
 		/*!
 		* \todo Pass a exception callback (which can then be passed to InlineEventListener instances)
 		* so exceptions can be logged / displayed by the app. A line callback might be nice too.
-		* Maybe it shouldn't be passed here - maybe in another method (or maybe in another aswell)
+		* Maybe it shouldn't be passed here - maybe in another method (or maybe in another as well)
 		*/
-		InlineEventListenerInstancer(asIScriptEngine *engine, const char *module,
+		InlineEventListenerInstancer(asIScriptEngine *engine,
 			asSFuncPtr line_callback, void *line_callback_obj,
 			asSFuncPtr exception_callback, void *exception_callback_obj);
 
-		InlineEventListenerInstancer(asIScriptEngine *engine, const char *module);
+		//! CTOR
+		InlineEventListenerInstancer(asIScriptEngine *engine);
 
 		//! IEL
 		Core::EventListener* InstanceEventListener(const Rocket::Core::String& value, Rocket::Core::Element* element);
@@ -37,7 +38,6 @@ namespace Rocket { namespace AngelScript {
 
 	protected:
 		asIScriptEngine *m_Engine;
-		const char *m_DefaultModule;
 
 		int m_NextId;
 

@@ -14,7 +14,7 @@ namespace Rocket { namespace AngelScript {
 			"ScriptElement(Rocket::Element@ appObj) { @__inner = @appObj; }\n"
 			"void _SetAppObject(Rocket::Element@ newInner) { @__inner = @newInner; }\n"
 			"Rocket::Element@ _GetAppObject() { return __inner; }\n"
-			"Context@ GetContext() { return __inner.GetContext(); }\n"
+			"Rocket::Context@ GetContext() { return __inner.GetContext(); }\n"
 			"void Update() { __inner.Update(); }\n"
 			"void Render() { __inner.Render(); }\n"
 			"bool SetProperty(const Rocket::String&in p1, const Rocket::String&in p2) { return __inner.SetProperty(p1, p2); }\n"

@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\Controls\Plugin.cpp" />
     <ClCompile Include="..\source\Controls\ras_Controls.cpp" />
     <ClCompile Include="..\source\Controls\ras_DataFormatter.cpp" />
     <ClCompile Include="..\source\Controls\ras_DataSource.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataFormatter.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataSource.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_ElementControlInterface.h" />
+    <ClInclude Include="..\source\Controls\Plugin.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\libRocket_AngelScript\libRocket_AngelScript.vcxproj">

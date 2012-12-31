@@ -23,6 +23,9 @@
     <ClCompile Include="..\source\Controls\ras_DataSource.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\Controls\Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_Config.h">
@@ -39,6 +42,9 @@
     </ClInclude>
     <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataSource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\Controls\Plugin.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
