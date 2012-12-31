@@ -21,10 +21,6 @@ namespace Rocket { namespace AngelScript
 			->RemoveReference();
 
 		RegisterScriptableDocumentInstancer(engine);
-
-		if (engine)
-			engine->Release();
-		engine = nullptr;
 	}
 
 	void CorePlugin::OnDocumentLoad(Rocket::Core::ElementDocument* document)
