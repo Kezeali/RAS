@@ -14,125 +14,125 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\Core\ras_Core.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_Decorator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_DecoratorInstancer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_DelegatingEventListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_ElementDocument.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_ElementInstancer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_EventConnection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_EventListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_EventListenerInstancer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_RegisterElement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_RegisterVariantType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_RegistrationUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\source\Core\ras_ScriptedEventListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\source\Core\Plugin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\RegisterElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\RegisterVariantType.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\RegistrationUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\Decorator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\DecoratorInstancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\DelegatingEventListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ElementScriptableDocument.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ElementInstancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\EventConnection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\EventListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\EventListenerInstancer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\Core\ScriptedEventListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Decorator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DecoratorInstancer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DelegatingEventListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementDocument.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementInstancer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementWrapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventConnection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventListenerInstancer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ScriptedEventListener.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_AngelScriptPrimativeTypes.h">
-      <Filter>Header Files\registration_utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.h">
-      <Filter>Header Files\registration_utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterElement.h">
-      <Filter>Header Files\registration_utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterVariantType.h">
-      <Filter>Header Files\registration_utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegistrationUtils.h">
-      <Filter>Header Files\registration_utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.h">
-      <Filter>Header Files\registration_utils</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ScriptElement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\source\Core\Plugin.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\AngelScriptPrimativeTypes.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\EMPSTL.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\RegisterElement.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\RegisterVariantType.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\RegistrationUtils.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\Vector2.h">
+      <Filter>Header Files\registration_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\Config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\Decorator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\DecoratorInstancer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\DelegatingEventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ElementScriptableDocument.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ElementInstancer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ElementWrapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\EventConnection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\EventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\EventListenerInstancer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ScriptedEventListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\Exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.inl">
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\EMPSTL.inl">
       <Filter>Header Files\registration_utils</Filter>
     </None>
-    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterElementMembers.inl">
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\RegisterElementMembers.inl">
       <Filter>Header Files\registration_utils</Filter>
     </None>
-    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterType.inl">
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\RegisterType.inl">
       <Filter>Header Files\registration_utils</Filter>
     </None>
-    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.inl">
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\Vector2.inl">
       <Filter>Header Files\registration_utils</Filter>
     </None>
   </ItemGroup>

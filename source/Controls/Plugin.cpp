@@ -5,7 +5,7 @@
 
 #include "Plugin.h"
 
-#include "../../include/Rocket/AngelScript/Controls/ras_Controls.h"
+#include "../../include/Rocket/AngelScript/Controls/Controls.h"
 
 #include <Rocket/Core/Plugin.h>
 #include <Rocket/Core/Factory.h>

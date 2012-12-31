@@ -170,48 +170,48 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Core\Plugin.cpp" />
-    <ClCompile Include="..\source\Core\ras_Core.cpp" />
-    <ClCompile Include="..\source\Core\ras_Decorator.cpp" />
-    <ClCompile Include="..\source\Core\ras_DecoratorInstancer.cpp" />
-    <ClCompile Include="..\source\Core\ras_DelegatingEventListener.cpp" />
-    <ClCompile Include="..\source\Core\ras_ElementDocument.cpp" />
-    <ClCompile Include="..\source\Core\ras_ElementInstancer.cpp" />
-    <ClCompile Include="..\source\Core\ras_EventConnection.cpp" />
-    <ClCompile Include="..\source\Core\ras_EventListener.cpp" />
-    <ClCompile Include="..\source\Core\ras_EventListenerInstancer.cpp" />
-    <ClCompile Include="..\source\Core\ras_RegisterElement.cpp" />
-    <ClCompile Include="..\source\Core\ras_RegisterVariantType.cpp" />
-    <ClCompile Include="..\source\Core\ras_RegistrationUtils.cpp" />
-    <ClCompile Include="..\source\Core\ras_ScriptedEventListener.cpp" />
+    <ClCompile Include="..\source\Core\Core.cpp" />
+    <ClCompile Include="..\source\Core\Decorator.cpp" />
+    <ClCompile Include="..\source\Core\DecoratorInstancer.cpp" />
+    <ClCompile Include="..\source\Core\DelegatingEventListener.cpp" />
+    <ClCompile Include="..\source\Core\ElementScriptableDocument.cpp" />
+    <ClCompile Include="..\source\Core\ElementInstancer.cpp" />
+    <ClCompile Include="..\source\Core\EventConnection.cpp" />
+    <ClCompile Include="..\source\Core\EventListener.cpp" />
+    <ClCompile Include="..\source\Core\EventListenerInstancer.cpp" />
+    <ClCompile Include="..\source\Core\RegisterElement.cpp" />
+    <ClCompile Include="..\source\Core\RegisterVariantType.cpp" />
+    <ClCompile Include="..\source\Core\RegistrationUtils.cpp" />
+    <ClCompile Include="..\source\Core\ScriptedEventListener.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Config.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Core.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Decorator.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DecoratorInstancer.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_DelegatingEventListener.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementDocument.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementInstancer.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ElementWrapper.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventConnection.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventListener.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_EventListenerInstancer.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_Exception.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\ras_ScriptedEventListener.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_AngelScriptPrimativeTypes.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterElement.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterVariantType.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegistrationUtils.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\Config.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\Core.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\Decorator.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\DecoratorInstancer.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\DelegatingEventListener.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ElementScriptableDocument.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ElementInstancer.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ElementWrapper.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\EventConnection.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\EventListener.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\EventListenerInstancer.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\Exception.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\ScriptedEventListener.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\AngelScriptPrimativeTypes.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\EMPSTL.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\RegisterElement.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\RegisterVariantType.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\RegistrationUtils.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Core\registration_utils\Vector2.h" />
     <ClInclude Include="..\include\Rocket\AngelScript\Core\ScriptElement.h" />
     <ClInclude Include="..\source\Core\Plugin.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_EMPSTL.inl" />
-    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterElementMembers.inl" />
-    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_RegisterType.inl" />
-    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\ras_Vector2.inl" />
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\EMPSTL.inl" />
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\RegisterElementMembers.inl" />
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\RegisterType.inl" />
+    <None Include="..\include\Rocket\AngelScript\Core\registration_utils\Vector2.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

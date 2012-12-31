@@ -154,17 +154,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\source\Controls\Plugin.cpp" />
-    <ClCompile Include="..\source\Controls\ras_Controls.cpp" />
-    <ClCompile Include="..\source\Controls\ras_DataFormatter.cpp" />
-    <ClCompile Include="..\source\Controls\ras_DataSource.cpp" />
-    <ClCompile Include="..\source\Controls\ras_ElementControlInterface.cpp" />
+    <ClCompile Include="..\source\Controls\Controls.cpp" />
+    <ClCompile Include="..\source\Controls\DataFormatter.cpp" />
+    <ClCompile Include="..\source\Controls\DataSource.cpp" />
+    <ClCompile Include="..\source\Controls\ElementControlInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_Config.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_Controls.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataFormatter.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_DataSource.h" />
-    <ClInclude Include="..\include\Rocket\AngelScript\Controls\ras_ElementControlInterface.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Controls\Config.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Controls\Controls.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Controls\DataFormatter.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Controls\DataSource.h" />
+    <ClInclude Include="..\include\Rocket\AngelScript\Controls\ElementControlInterface.h" />
     <ClInclude Include="..\source\Controls\Plugin.h" />
   </ItemGroup>
   <ItemGroup>

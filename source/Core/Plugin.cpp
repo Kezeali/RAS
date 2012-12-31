@@ -5,9 +5,9 @@
 
 #include "Plugin.h"
 
-#include "../../include/Rocket/AngelScript/Core/ras_Core.h"
-#include "../../include/Rocket/AngelScript/Core/ras_EventListenerInstancer.h"
-#include "../../include/Rocket/AngelScript/Core/ras_ElementDocument.h"
+#include "../../include/Rocket/AngelScript/Core/Core.h"
+#include "../../include/Rocket/AngelScript/Core/EventListenerInstancer.h"
+#include "../../include/Rocket/AngelScript/Core/ElementScriptableDocument.h"
 
 #include <Rocket/Core/Plugin.h>
 #include <Rocket/Core/Factory.h>

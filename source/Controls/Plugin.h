@@ -6,7 +6,7 @@
 #ifndef H_ROCKET_AS_CONTROLSPLUGIN
 #define H_ROCKET_AS_CONTROLSPLUGIN
 
-#include "../../include/Rocket/AngelScript/Controls/ras_Config.h"
+#include "../../include/Rocket/AngelScript/Controls/Config.h"
 
 #include <Rocket/Core.h>
 
