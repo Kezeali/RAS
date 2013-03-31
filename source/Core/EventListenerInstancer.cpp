@@ -182,14 +182,6 @@ namespace Rocket { namespace AngelScript {
 	{
 	}
 
-	InlineEventListenerInstancer::InlineEventListenerInstancer(asIScriptEngine *engine,
-		asSFuncPtr line_callback, void *line_callback_obj,
-		asSFuncPtr exception_callback, void *exception_callback_obj)
-		: m_Engine(engine),
-		m_LineCallback(line_callback, line_callback_obj),
-		m_ExceptionCallback(exception_callback, exception_callback_obj)
-	{}
-
 	Core::EventListener * InlineEventListenerInstancer::InstanceEventListener(const Rocket::Core::String &value, Rocket::Core::Element* element)
 	{
 		// Check for non-default module specifier
